@@ -1,15 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import Button from '../components/Button';
 
 
 const Home= () => {
     const router = useRouter();
-
-    const handleClick=()=>{
-        router.push('/login')
-    }
-    
 
     return (
         <div>
@@ -20,12 +16,8 @@ const Home= () => {
             </TextWrapper>
 
             <ButtonWrapper>
-                <Button onClick={()=>{router.push('/login')}}>
-                    Login
-                </Button>
-                <Button onClick={()=>{router.push('/signup')}}>
-                    Signup
-                </Button>
+                <Button path='/login' text='로그인'/>
+                <Button path='/register' text='회원가입'/>
             </ButtonWrapper>
 
         </LoginWrapper>
@@ -65,17 +57,3 @@ justify-content: space-between;
     
 `
 
-
-const Button = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-
-width: 200px;
-height: 40px;
-background-color: black;
-color: white;
-border-radius: 10px;
-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-`

@@ -1,5 +1,7 @@
 import React from 'react';
 import { styled } from 'styled-components';
+import Button from '../../components/Button';
+import Input from '../../components/Input';
 
 
 const Login = () => {
@@ -7,16 +9,10 @@ const Login = () => {
         <Wrapper>
             <TextWrapper>Login</TextWrapper>
             <InputWrapper>
-                <Input>
-                    <div>Id</div>
-                    <input placeholder="Enter your id" type='text'></input>
-                </Input>
-                <Input>
-                    <div>Password</div>
-                    <input placeholder="Enter your password" type='text'></input>
-                </Input>
+                <Input text='Id' place='Enter your id' type='text'/>
+                <Input text='Password' place='Enter your password' type='text'/>
             </InputWrapper>
-            <ButtonWrapper><Button>Submit</Button></ButtonWrapper>
+            <ButtonWrapper><Button path="/project" text='Submit'/></ButtonWrapper>
             
 
         </Wrapper>
@@ -32,24 +28,6 @@ justify-content: center;
 align-items: center;
 `
 
-const Input = styled.div`
-text-align: left;
-font-size: 20px;
-margin-bottom: 40px;
-
-
-input{
-    width: 500px;
-    height:50px;
-    font-size: 15px;
-    margin: 5px 0;
-    
-    
-    border-color: black;
-    border-width:0 0 1.5px;
-}
-    
-`
 
 const Wrapper=styled.div`
 display: flex;
@@ -66,23 +44,6 @@ const TextWrapper=styled.div`
 font-size:50px;
 `
 
-
-
-const Button = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-justify-content: center;
-cursor: pointer;
-
-
-width: 200px;
-height: 40px;
-background-color: black;
-color: white;
-border-radius: 10px;
-box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-`
 
 const ButtonWrapper=styled.div`
     display: flex;
