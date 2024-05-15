@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 
-interface ButtonProps {
+interface InputProps {
     text: string;
     place: string;
     type: string;
 }
 
 
-const Button: React.FC<ButtonProps> = ({text, place, type}) => {
+const Input: React.FC<InputProps> = ({text, place, type}) => {
 
     return (
         <InputWrapper>
@@ -18,7 +18,7 @@ const Button: React.FC<ButtonProps> = ({text, place, type}) => {
     );
 };
 
-export default Button;
+export default Input;
 
 const InputWrapper = styled.div`
 text-align: left;

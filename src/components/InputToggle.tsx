@@ -1,14 +1,20 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 
-interface ButtonProps {
+interface InputProps {
     text: string;
     place: string;
 }
 
+const items:{name:string, type:string, color:string}[]=[
+    {name:'Administrator', type:'admin', color:'black'},
+    {name:'Developer', type:'dev', color:'#21A2FF'},
+    {name:'Project Leader', type:'pl', color:'#FF9E59'},
+    {name:'Tester', type:'test', color:'#4BDD62'}
+]
 
 
-const Button: React.FC<ButtonProps> = ({text, place}) => {
+const InputToggle: React.FC<InputProps> = ({text, place}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useState<string | null>(null);
 
@@ -31,17 +37,20 @@ const Button: React.FC<ButtonProps> = ({text, place}) => {
                 <div id='toggleButton' onClick={handleToggle}>{isVisible ? '▲' : '▼'}</div>
             </ToggleWrapper>
         </InputWrapper>
+
         <ToggleContainer isVisible={isVisible}>
-            <ToggleItem color='black' onClick={() => handleRole('Admin')}>Admin</ToggleItem>
-            <ToggleItem color='#21A2FF' onClick={() => handleRole('Dev')}>Dev</ToggleItem>
-            <ToggleItem color="#FF9E59" onClick={() => handleRole('Pl')}>PL</ToggleItem>
-            <ToggleItem color='#4BDD62' onClick={() => handleRole('Tester')}>Tester</ToggleItem>
+            {items.map(item=>(
+                <ToggleItem key={item.type} onClick={() => handleRole(item.name)}>
+                    <div>{item.name}</div>
+                    <Role color={item.color} >{item.type}</Role>
+                </ToggleItem>
+            ))}
         </ToggleContainer>
     </>
     );
 };
 
-export default Button;
+export default InputToggle;
 
 const InputWrapper = styled.div`
 text-align: left;
@@ -74,8 +83,7 @@ const ToggleContainer = styled.div<{isVisible:boolean}>`
     text-align: left;
     position: absolute;
     width: 500px;
-    top: 652px;
-    padding: 0 20px 20px 20px;
+    top: 650px;
     background-color: white;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.1);
     border-bottom-left-radius: 15px;
@@ -83,16 +91,24 @@ const ToggleContainer = styled.div<{isVisible:boolean}>`
 `
 const ToggleItem = styled.div`
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1.5px solid#757575;
+    padding: 0 20px;
+
+`
+
+const Role = styled.div`
+    display: flex;
     justify-content: center;
     align-items: center;
     height: 36px;
-    margin-top: 10px;
+    margin: 10px 0;
     color: white;
-    width: 70px;
+    width: 60px;
     cursor: pointer;
-    
 
     border-radius: 10px;
     background-color: ${props=>props.color};
-
+    
 `
