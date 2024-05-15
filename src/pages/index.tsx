@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 
-const Landing = () => {
+const Home= () => {
     const router = useRouter();
 
     const handleClick=()=>{
@@ -34,7 +34,7 @@ const Landing = () => {
     );
 };
 
-export default Landing;
+export default Home;
 
 
 const Wrapper = styled.div`
