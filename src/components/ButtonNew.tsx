@@ -10,10 +10,11 @@ import { modalState } from '@/recoil/state';
 
 interface ButtonProps {
     text: string;
+    modalType: string
 }
 
 
-const ButtonNew: React.FC<ButtonProps> = ({text}) => {
+const ButtonNew: React.FC<ButtonProps> = ({text, modalType}) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClick = ()=>{
@@ -34,21 +35,7 @@ const ButtonNew: React.FC<ButtonProps> = ({text}) => {
             {text}
         </button>
         {isVisible&&(
-            <Modal/>
-
-            // <ModalWrapper isVisible={isVisible} onClick={handleClose} >
-            //     <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
-            //         <div id='modalName'>New Project</div>
-            //         <Input text='Title' type='text' place='Enter the project title' modal/>
-            //         <InputToggle text='Member' place='Choose the project member' modal/>
-            //         <div id='button'>
-            //             <div onClick={handleClose}>
-            //                 <Button text='Create' path='/project'/>
-            //             </div>
-            //         </div>
-            //     </ModalContainer>
-            // </ModalWrapper>
-
+            <Modal type={modalType}/>
         )}
         </>
     );

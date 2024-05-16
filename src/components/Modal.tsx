@@ -7,12 +7,13 @@ import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 
 
-const Modal = () => {
-    const [isVisible, setVisiable] = useRecoilState(modalState);
+interface ModalProps {
+    type: string;
+}
 
-    const handleClick = ()=>{
-        setVisiable(true);
-    }
+
+const Modal:React.FC<ModalProps> = ({type}) => {
+    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
         setVisiable(false);
@@ -25,14 +26,26 @@ const Modal = () => {
     return (
         <ModalWrapper isVisible={isVisible} onClick={handleClose} >
                 <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
+                    {type=='project'?
+                    <>
                     <div id='modalName'>New Project</div>
-                    <Input text='Title' type='text' place='Enter the project title' modal/>
+                    <Input text='Title' type='text' place={`Enter the ${type} title`} modal/>
                     <InputToggle text='Member' place='Choose the project member' modal/>
+                    </>
+                    :
+                    <div>
+                    <div id='modalName'>New Issue</div>
+                    <Input text='Title' type='text' place={`Enter the ${type} title`} modal/>
+                    <InputToggle text='Member' place='Choose the project member' modal/>
+                    </div>
+                    }
+                    
                     <div id='button'>
                         <div onClick={handleClose}>
                             <Button text='Create' path='/project'/>
                         </div>
                     </div>
+
                 </ModalContainer>
             </ModalWrapper>
     );

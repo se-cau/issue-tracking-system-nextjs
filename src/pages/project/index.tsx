@@ -21,7 +21,7 @@ const Projects = () => {
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
-                <ButtonNew text='New'/>
+                <ButtonNew text='New' modalType='project'/>
             </BoardTopWrapper>
             
             <BoardWrapper>

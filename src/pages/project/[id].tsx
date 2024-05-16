@@ -26,7 +26,7 @@ const Issues = () => {
                 <ButtonWrapper>
                     <ButtonSearch>전체 검색</ButtonSearch>
                     <ButtonSearch>할당된 이슈</ButtonSearch>
-                    <ButtonNew text='New'/>
+                    <ButtonNew text='New' modalType='issue'/>
                 </ButtonWrapper>
                 
             </BoardTopWrapper>
