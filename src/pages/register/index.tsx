@@ -8,13 +8,11 @@ const Register = () => {
         <Wrapper>
             <TextWrapper>Register</TextWrapper>
             <InputWrapper>
-                <Input text='Id' place='Enter your id' type='text'/>
-                <Input text='Password' place='Enter your password' type='password'/>
-                <InputToggle text='Role' place='Choose your role'/>
+                <Input text='Id' place='Enter your id' type='text' modal={false}/>
+                <Input text='Password' place='Enter your password' type='password' modal={false}/>
+                <InputToggle text='Role' place='Choose your role' modal={false}/>
             </InputWrapper>
             <ButtonWrapper><Button path="/project" text='Submit'/></ButtonWrapper>
-            
-
         </Wrapper>
     );
 };

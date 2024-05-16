@@ -5,15 +5,20 @@ interface InputProps {
     text: string;
     place: string;
     type: string;
+    modal: boolean
 }
 
 
-const Input: React.FC<InputProps> = ({text, place, type}) => {
+const Input: React.FC<InputProps> = ({text, place, type, modal}) => {
 
     return (
         <InputWrapper>
             <div>{text}</div>
-            <input placeholder={place} type={type}></input>
+            {modal?
+            <input id='input' className='forModal' placeholder={place} type={type} ></input>
+            :<input id='input' className='forRegister' placeholder={place} type={type}></input>
+            }
+            
         </InputWrapper>
     );
 };
@@ -23,11 +28,11 @@ export default Input;
 const InputWrapper = styled.div`
 text-align: left;
 font-size: 20px;
-margin-bottom: 40px;
+margin-bottom: 30px;
 
 
-input{
-    width: 500px;
+#input{
+    
     height:50px;
     font-size: 15px;
     margin: 5px 0;
@@ -36,5 +41,12 @@ input{
     border-color: black;
     border-width:0 0 1.5px;
 }
-    
+
+.forModal{
+    width:100%;
+
+}
+.forRegister{
+    width: 500px;
+}
 `

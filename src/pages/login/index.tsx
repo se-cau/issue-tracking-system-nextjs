@@ -9,8 +9,8 @@ const Login = () => {
         <Wrapper>
             <TextWrapper>Login</TextWrapper>
             <InputWrapper>
-                <Input text='Id' place='Enter your id' type='text'/>
-                <Input text='Password' place='Enter your password' type='text'/>
+                <Input text='Id' place='Enter your id' type='text' modal={false}/>
+                <Input text='Password' place='Enter your password' type='text' modal={false}/>
             </InputWrapper>
             <ButtonWrapper><Button path="/project" text='Submit'/></ButtonWrapper>
             

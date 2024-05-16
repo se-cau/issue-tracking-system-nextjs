@@ -32,8 +32,6 @@ justify-content: center;
 text-decoration: none;
 cursor: pointer;
 
-
-width: 200px;
 height: 40px;
 background-color: black;
 color: white;
@@ -43,7 +41,12 @@ box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 
 }
 
-    
+button#forNew {
+  width: 70px;
+  font-size: 18px;
+}
 
+button#forSubmit{
+  width: 200px;
+}
 `
-
