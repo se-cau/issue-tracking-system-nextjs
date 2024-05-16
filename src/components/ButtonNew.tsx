@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import Input from './Input';
 import InputToggle from './InputToggle';
 import Button from './Button';
+import Modal from './Modal';
+
+import {useRecoilState} from 'recoil';
+import { modalState } from '@/recoil/state';
 
 interface ButtonProps {
     text: string;
@@ -10,7 +14,7 @@ interface ButtonProps {
 
 
 const ButtonNew: React.FC<ButtonProps> = ({text}) => {
-    const [isVisible, setVisiable] = useState(false);
+    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClick = ()=>{
         setVisiable(true);
@@ -30,18 +34,20 @@ const ButtonNew: React.FC<ButtonProps> = ({text}) => {
             {text}
         </button>
         {isVisible&&(
-            <ModalWrapper isVisible={isVisible} onClick={handleClose} >
-                <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
-                    <div id='modalName'>New Project</div>
-                    <Input text='Title' type='text' place='Enter the project title' modal/>
-                    <InputToggle text='Member' place='Enter the project member' modal/>
-                    <div id='button'>
-                        <div onClick={handleClose}>
-                            <Button text='Create' path='/project'/>
-                        </div>
-                    </div>
-                </ModalContainer>
-            </ModalWrapper>
+            <Modal/>
+
+            // <ModalWrapper isVisible={isVisible} onClick={handleClose} >
+            //     <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
+            //         <div id='modalName'>New Project</div>
+            //         <Input text='Title' type='text' place='Enter the project title' modal/>
+            //         <InputToggle text='Member' place='Choose the project member' modal/>
+            //         <div id='button'>
+            //             <div onClick={handleClose}>
+            //                 <Button text='Create' path='/project'/>
+            //             </div>
+            //         </div>
+            //     </ModalContainer>
+            // </ModalWrapper>
 
         )}
         </>

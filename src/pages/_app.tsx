@@ -1,13 +1,13 @@
 import type {AppProps} from 'next/app'
 import {GlobalStyle} from '../styles/global.style';
+import { RecoilRoot } from 'recoil';
 
 function MyApp({Component, pageProps} :AppProps){
     return(
-        <div>
+        <RecoilRoot>
             <GlobalStyle />
             <Component {...pageProps}/>
-
-        </div>
+        </RecoilRoot>
     )
 }
 
