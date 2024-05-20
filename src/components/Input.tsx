@@ -32,7 +32,6 @@ margin-bottom: 30px;
 
 
 #input{
-    
     height:50px;
     font-size: 15px;
     margin: 5px 0;

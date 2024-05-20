@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
-import ButtonNew from '@/components/ButtonNew';
+import NewProject from '@/components/modal/NewProject';
+import { useRecoilState } from 'recoil';
+import { modalState } from '@/recoil/state';
 
 const items:{title:string, id:string}[]=[
     {title:'Project01', id:'123'},
@@ -10,6 +12,12 @@ const items:{title:string, id:string}[]=[
 ]
 
 const Projects = () => {
+    const [isVisible, setVisiable] = useRecoilState(modalState);
+
+    const handleModal = ()=>{
+        setVisiable(true);
+    }
+
     const router = useRouter();
 
     const handleClick = (path:string)=>{
@@ -21,7 +29,8 @@ const Projects = () => {
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
-                <ButtonNew text='New' modalType='project'/>
+                <button onClick={handleModal} id="forNew">New</button>
+                {isVisible&&(<NewProject />)}
             </BoardTopWrapper>
             
             <BoardWrapper>

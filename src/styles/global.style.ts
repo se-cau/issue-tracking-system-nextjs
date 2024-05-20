@@ -54,4 +54,8 @@ button#forIssue{
   width: 70px;
   /* height: 30px; */
 }
+
+textarea{
+  font-family: "K2D", sans-serif;
+}
 `

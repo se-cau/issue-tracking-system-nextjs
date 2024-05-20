@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
-import ButtonNew from '@/components/ButtonNew';
 import Button from '@/components/Button';
+import NewIssue from '@/components/modal/NewIssue';
+import { useRecoilState } from 'recoil';
+import { modalState } from '@/recoil/state';
 
 const items:{title:string, id:string, reporter:string, assignee:string, state:string}[]=[
     {title:'Issue01', id:'123', reporter:'HR', assignee:'DM', state:'assinged'},
@@ -12,6 +14,12 @@ const items:{title:string, id:string, reporter:string, assignee:string, state:st
 ]
 
 const Issues = () => {
+    const [isVisible, setVisiable] = useRecoilState(modalState);
+
+    const handleModal = ()=>{
+        setVisiable(true);
+    }
+
     const router = useRouter();
 
     const handleClick = (path:string)=>{
@@ -26,7 +34,8 @@ const Issues = () => {
                 <ButtonWrapper>
                     <ButtonSearch>전체 검색</ButtonSearch>
                     <ButtonSearch>할당된 이슈</ButtonSearch>
-                    <ButtonNew text='New' modalType='issue'/>
+                    <button onClick={handleModal} id="forNew">New</button>
+                    {isVisible&&(<NewIssue />)}
                 </ButtonWrapper>
                 
             </BoardTopWrapper>

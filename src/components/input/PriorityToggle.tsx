@@ -3,36 +3,14 @@ import styled from 'styled-components';
 import { members } from '@/mocks/mockData';
 
 interface InputProps{
-    text: string;
     place: string;
-    modal: boolean;
 }
-
-const items:{name:string, type:string, color:string}[]=[
-    {name:'Administrator', type:'admin', color:'black'},
-    {name:'Developer', type:'dev', color:'#21A2FF'},
-    {name:'Project Leader', type:'pl', color:'#FF9E59'},
-    {name:'Tester', type:'test', color:'#4BDD62'}
-]
-
-//typeColor 인터페이스 정의
-interface TypeColor {
-    [key:string]:string;
-}
-
-//typeColor 객체 정의
-const typeColor: TypeColor = {
-    admin: 'black',
-    dev: '#21A2FF',
-    pl: '#FF9E59',
-    test: '#4BDD62',
-};
 
 
 const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 
 
-const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
+const PriorityToggle: React.FC<InputProps> = ({place}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useState<string | null>(null);
 
@@ -49,45 +27,26 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
     return (
         <>
         <InputWrapper>
-            <div>{text}</div>
-            {modal?
+            <div>Priority</div>
                 <div id='input' className='forModal'>
                     <div id='toggle'>{role?role:place}</div>
                     <div id='toggleButton' onClick={handleToggle}>{isVisible ? '▲' : '▼'}</div>
                 </div>
-            :
-                <div id='input' className='forRegister'>
-                    <div id='toggle'>{role?role:place}</div>
-                    <div id='toggleButton' onClick={handleToggle}>{isVisible ? '▲' : '▼'}</div>
-                </div>
-            }
         </InputWrapper>
         
-        {modal?
+
         <ToggleContainerM isVisible={isVisible}>
-        {members.map(member=>(
-            <ToggleItem key={member.type} onClick={() => handleRole(member.id)}>
-                <div>{member.id}</div>
-                <ToggleRole color={typeColor[member.type]}>{member.type}</ToggleRole>
+        {priorities.map(priority=>(
+            <ToggleItem key={priority} onClick={() => handleRole(priority)}>
+                <div>{priority}</div>
             </ToggleItem>
         ))}
         </ToggleContainerM> 
-        :
-        <ToggleContainer isVisible={isVisible}>
-        {items.map(item=>(
-            <ToggleItem key={item.type} onClick={() => handleRole(item.name)}>
-                <div>{item.name}</div>
-                <ToggleRole color={item.color} >{item.type}</ToggleRole>
-            </ToggleItem>
-        ))}
-        </ToggleContainer> 
-    
-        }
     </>
     );
 };
 
-export default InputToggle;
+export default PriorityToggle;
 
 const InputWrapper = styled.div`
 text-align: left;
@@ -138,9 +97,8 @@ const ToggleContainer = styled.div<{isVisible:boolean}>`
 `
 
 const ToggleContainerM=styled(ToggleContainer)`
-    top: 390px;
+    top: 360px;
     width: 330px;
-    height: 228px;
     overflow: auto;
 
 `
@@ -153,6 +111,7 @@ const ToggleItem = styled.div`
     border-top: 1px solid#CFCFCF;
     padding: 0 20px;
     cursor: pointer;
+    height: 36px;
 
 
     &:hover{
@@ -161,17 +120,3 @@ const ToggleItem = styled.div`
 
 `
 
-const ToggleRole = styled.div<{color:string}>`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 36px;
-    margin: 10px 0;
-    color: white;
-    width: 60px;
-    
-
-    border-radius: 30px;
-    background-color: ${props=>props.color};
-    
-`

@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useRecoilState } from 'recoil';
+import { modalState } from '@/recoil/state';
+import SelectAssignee from '../modal/SelectAssignee';
 
 
 interface InputProps {
@@ -8,12 +11,26 @@ interface InputProps {
 }
 
 const InfoBox: React.FC<InputProps> = ({infoType, data}) => {
+    const [isVisible, setVisiable] = useRecoilState(modalState);
+
+    const handleClick = ()=>{
+        window.alert("상태가 변경되었습니다");
+    }
+
+    const handleAssignee = ()=>{
+        setVisiable(true);
+    }
+
     return (
         <DescBoxWrapper>
             <div id='desc-container'>
                 <div>{infoType}</div>
                 {infoType=="State" &&
-                    <div id="change">변경</div>}
+                    <div id="change" onClick={handleClick}>변경</div>}
+                {infoType=="Assignee" &&
+                    <div id="change" onClick={handleAssignee}>변경</div>}
+                    {isVisible&&(
+                    <SelectAssignee />)}
             </div>
             <div className='forDesc'>{data}</div>
         </DescBoxWrapper>

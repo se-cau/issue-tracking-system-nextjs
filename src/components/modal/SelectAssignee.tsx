@@ -1,18 +1,12 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
-import Input from './Input';
-import InputToggle from './InputToggle';
-import Button from './Button';
+import Input from '../Input';
+import InputToggle from '../InputToggle';
+import Button from '../Button';
 import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 
-
-interface ModalProps {
-    type: string;
-}
-
-
-const Modal:React.FC<ModalProps> = ({type}) => {
+const SelectAssignee=() => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
@@ -26,32 +20,25 @@ const Modal:React.FC<ModalProps> = ({type}) => {
     return (
         <ModalWrapper isVisible={isVisible} onClick={handleClose} >
                 <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
-                    {type=='project'?
-                    <>
-                    <div id='modalName'>New Project</div>
-                    <Input text='Title' type='text' place={`Enter the ${type} title`} modal/>
-                    <InputToggle text='Member' place='Choose the project member' modal/>
-                    </>
-                    :
-                    <div>
-                    <div id='modalName'>New Issue</div>
-                    <Input text='Title' type='text' place={`Enter the ${type} title`} modal/>
-                    <InputToggle text='Member' place='Choose the project member' modal/>
-                    </div>
-                    }
+
+                    <div id='modalName'>Select Assignee</div>
+                    <CandidateWrapper>
+                        <div>Best Candidate</div>
+                        <div id='item'> user01 </div>
+                    </CandidateWrapper>
+                    <InputToggle text='Assignee' place='Choose the assignee' modal/>
                     
                     <div id='button'>
                         <div onClick={handleClose}>
-                            <Button text='Create' path='/project'/>
+                            <Button text='Complete' path='/project'/>
                         </div>
                     </div>
-
                 </ModalContainer>
             </ModalWrapper>
     );
 };
 
-export default Modal;
+export default SelectAssignee;
 
 
 const ModalWrapper= styled.div<{isVisible:boolean}>`
@@ -94,4 +81,20 @@ padding: 40px;
     }
 }
 
+`
+const CandidateWrapper=styled.div`
+text-align: left;
+font-size: 20px;
+margin-bottom: 30px;
+border-bottom: 1.5px solid black;
+
+
+#item{
+    display: flex;
+    align-items: center;
+    height:50px;
+    font-size: 15px;
+    margin: 5px 0;
+    color: grey;
+}
 `
