@@ -49,4 +49,9 @@ button#forNew {
 button#forSubmit{
   width: 200px;
 }
+
+button#forIssue{
+  width: 70px;
+  /* height: 30px; */
+}
 `

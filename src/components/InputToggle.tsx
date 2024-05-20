@@ -74,7 +74,7 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
         {members.map(member=>(
             <ToggleItem key={member.type} onClick={() => handleRole(member.id)}>
                 <div>{member.id}</div>
-                <ToggleRole color={typeColor[member.type]} >{member.type}</ToggleRole>
+                <ToggleRole color={typeColor[member.type]}>{member.type}</ToggleRole>
             </ToggleItem>
         ))}
         </ToggleContainerM> 
