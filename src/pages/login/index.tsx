@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { userNameState } from '@/recoil/state';
 import { passwordState } from '@/recoil/state';
 import useLogin from '@/hooks/useLogin';
+import SubmitBtn from '../../components/button/SubmitBtn';
 
 
 const Login = () => {
@@ -30,7 +31,7 @@ const Login = () => {
                 <Input text='Id' place='Enter your id' type='text' modal={false} value={userName} onChange={(e)=>setUserName(e.target.value)}/>
                 <Input text='Password' place='Enter your password' type='text' modal={false} value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </InputWrapper>
-            <ButtonWrapper><Button path="/project" text='Submit'type="submit" /></ButtonWrapper>
+            <ButtonWrapper><SubmitBtn path="/project" text='Submit' loading={loading} success={!!data} error={error} /></ButtonWrapper>
             
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}

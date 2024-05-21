@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import Button from '../components/Button';
+import RoutingBtn from '../components/button/RoutingBtn';
 
 
 const Home= () => {
@@ -16,8 +16,8 @@ const Home= () => {
             </TextWrapper>
 
             <ButtonWrapper>
-                <Button path='/login' text='로그인' type="submit"/>
-                <Button path='/register' text='회원가입' type="submit"/>
+                <RoutingBtn path='/login' text='로그인' type="submit"/>
+                <RoutingBtn path='/register' text='회원가입' type="submit"/>
             </ButtonWrapper>
 
         </LoginWrapper>
