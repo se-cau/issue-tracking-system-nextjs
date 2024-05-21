@@ -4,10 +4,11 @@ import {useRouter} from 'next/router';
 interface ButtonProps {
     text: string;
     path: string
+    type: string;
 }
 
 
-const Button: React.FC<ButtonProps> = ({text, path}) => {
+const Button: React.FC<ButtonProps> = ({text, path, type}) => {
     const router = useRouter();
 
     const handleClick = ()=>{

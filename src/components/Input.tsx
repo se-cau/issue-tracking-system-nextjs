@@ -5,18 +5,33 @@ interface InputProps {
     text: string;
     place: string;
     type: string;
-    modal: boolean
+    modal: boolean;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
-const Input: React.FC<InputProps> = ({text, place, type, modal}) => {
+const Input: React.FC<InputProps> = ({text, place, type, modal, value, onChange}) => {
 
     return (
         <InputWrapper>
             <div>{text}</div>
             {modal?
-            <input id='input' className='forModal' placeholder={place} type={type} ></input>
-            :<input id='input' className='forRegister' placeholder={place} type={type}></input>
+            <input 
+            id='input' 
+            className='forModal' 
+            placeholder={place} 
+            type={type}
+            value = {value}
+            onChange={onChange}/>
+            :
+            <input 
+            id='input' 
+            className='forRegister' 
+            placeholder={place} 
+            type={type}
+            value={value}
+            onChange={onChange}/>
             }
             
         </InputWrapper>

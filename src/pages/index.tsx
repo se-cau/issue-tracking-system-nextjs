@@ -16,8 +16,8 @@ const Home= () => {
             </TextWrapper>
 
             <ButtonWrapper>
-                <Button path='/login' text='로그인'/>
-                <Button path='/register' text='회원가입'/>
+                <Button path='/login' text='로그인' type="submit"/>
+                <Button path='/register' text='회원가입' type="submit"/>
             </ButtonWrapper>
 
         </LoginWrapper>

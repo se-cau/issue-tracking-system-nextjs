@@ -1,6 +1,9 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import { members } from '@/mocks/mockData';
+import { typeColor } from '@/styles/color';
+import { useRecoilState } from 'recoil';
+import { roleState } from '@/recoil/state';
 
 interface InputProps{
     text: string;
@@ -15,26 +18,13 @@ const items:{name:string, type:string, color:string}[]=[
     {name:'Tester', type:'test', color:'#4BDD62'}
 ]
 
-//typeColor 인터페이스 정의
-interface TypeColor {
-    [key:string]:string;
-}
-
-//typeColor 객체 정의
-const typeColor: TypeColor = {
-    admin: 'black',
-    dev: '#21A2FF',
-    pl: '#FF9E59',
-    test: '#4BDD62',
-};
-
-
 const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 
 
 const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [role, setRole] = useState<string | null>(null);
+    const [role, setRole] = useRecoilState(roleState);
+    // const [role, setRole] = useState<string | null>(null);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
