@@ -12,7 +12,7 @@ const Button: React.FC<ButtonProps> = ({text, path, type}) => {
     const router = useRouter();
 
     const handleClick = ()=>{
-        router.push(path);
+        // router.push(path);
     }
 
     return (
