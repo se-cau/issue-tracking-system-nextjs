@@ -46,6 +46,10 @@ button#forNew {
   font-size: 18px;
 }
 
+button#forLading{
+  width: 200px;
+}
+
 button#forSubmit{
   width: 200px;
 }

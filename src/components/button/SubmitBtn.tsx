@@ -19,7 +19,7 @@ const SubmitBtn: React.FC<SubmitButtonProps> = ({loading, success, error, path, 
     },[success, router]);
 
     return (
-        <button id="forSubmit'" type="submit" disabled={loading}>
+        <button id="forSubmit" type="submit" disabled={loading}>
             {loading ? 'Submitting...' : text }
         </button>
     );
