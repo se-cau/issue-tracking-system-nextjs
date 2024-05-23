@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { members } from '@/mocks/mockData';
 import { typeColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
-import { roleState } from '@/recoil/state';
+import { memberState, roleState } from '@/recoil/state';
 
 interface InputProps{
     text: string;
@@ -12,7 +12,7 @@ interface InputProps{
 }
 
 const items:{name:string, type:string, color:string}[]=[
-    {name:'Administrator', type:'admin', color:'black'},
+    {name:'Admin', type:'admin', color:'black'},
     {name:'Developer', type:'dev', color:'#21A2FF'},
     {name:'Project Leader', type:'pl', color:'#FF9E59'},
     {name:'Tester', type:'test', color:'#4BDD62'}
@@ -24,7 +24,7 @@ const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useRecoilState(roleState);
-    // const [role, setRole] = useState<string | null>(null);
+    const [member, setMember] = useRecoilState(memberState);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
@@ -32,7 +32,30 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
 
     const handleRole = (item:string)=>{
         setRole(item);
-        setIsVisible(false);
+        setIsVisible(false); 
+    }
+
+    const handleMember = (item:string)=>{
+        setMember(item);
+        setIsVisible(false); 
+    }
+
+
+    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+
+    const toggleItem = (id:string) => {
+        setSelectedItems((prevSelectedItems:any) =>
+            prevSelectedItems.includes(id)
+            ? prevSelectedItems.filter((itemId:string) => itemId !== id)
+            : [...prevSelectedItems, id]
+        );
+        
+    };
+    console.log(selectedItems);
+
+    const selectToggle = () =>{
+        setIsVisible(!isVisible); 
+
     }
 
 
@@ -42,8 +65,8 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
             <div>{text}</div>
             {modal?
                 <div id='input' className='forModal'>
-                    <div id='toggle'>{role?role:place}</div>
-                    <div id='toggleButton' onClick={handleToggle}>{isVisible ? '▲' : '▼'}</div>
+                    <div id='toggle'>{selectedItems ? selectedItems+ "  " : place}</div>
+                    <div id='toggleButton' onClick={selectToggle}>{isVisible  ? '▲' : '▼'}</div>
                 </div>
             :
                 <div id='input' className='forRegister'>
@@ -56,12 +79,23 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
         {modal?
         <ToggleContainerM isVisible={isVisible}>
         {members.map(member=>(
-            <ToggleItem key={member.type} onClick={() => handleRole(member.id)}>
-                <div>{member.id}</div>
-                <ToggleRole color={typeColor[member.type]}>{member.type}</ToggleRole>
-            </ToggleItem>
+            <li key={member.id}>
+                <label>
+                    <input
+                    type="checkbox"
+                    className = "checkbox"
+                    checked={selectedItems.includes(member.id)}
+                    onChange={() => toggleItem(member.id)}/>
+                    <ToggleItem>
+                        <div>{member.id}</div>
+                        <ToggleRole color={typeColor[member.type]}>{member.type}</ToggleRole>
+                    </ToggleItem>
+                    
+                </label>
+            </li>
         ))}
-        </ToggleContainerM> 
+        </ToggleContainerM>
+
         :
         <ToggleContainer isVisible={isVisible}>
         {items.map(item=>(
