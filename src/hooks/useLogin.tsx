@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { userIdState } from '@/recoil/userState';
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
+
+    const [userId, setUserId] = useRecoilState(userIdState);
 
     const login = async (username:string, password:string)=>{
         setLoading(true);
@@ -32,7 +36,8 @@ const useLogin = () => {
 
             const result = await response;
             setData(result);
-            console.log(result.status);
+            setUserId(username);
+            console.log(userId);
 
         } catch (err:any){
             alert(err);
