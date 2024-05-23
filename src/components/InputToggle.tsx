@@ -24,7 +24,7 @@ const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useRecoilState(roleState);
-    const [member, setMember] = useRecoilState(memberState);
+    // const [member, setMember] = useRecoilState<string[]>(memberState);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
@@ -35,23 +35,16 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
         setIsVisible(false); 
     }
 
-    const handleMember = (item:string)=>{
-        setMember(item);
-        setIsVisible(false); 
-    }
 
-
-    const [selectedItems, setSelectedItems] = useState<string[]>([]);
+    const [selectedItems, setSelectedItems] = useRecoilState<string[]>(memberState);
 
     const toggleItem = (id:string) => {
-        setSelectedItems((prevSelectedItems:any) =>
+        setSelectedItems((prevSelectedItems:string[]) =>
             prevSelectedItems.includes(id)
             ? prevSelectedItems.filter((itemId:string) => itemId !== id)
             : [...prevSelectedItems, id]
         );
-        
     };
-    console.log(selectedItems);
 
     const selectToggle = () =>{
         setIsVisible(!isVisible); 

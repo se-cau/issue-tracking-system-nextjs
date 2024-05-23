@@ -3,11 +3,29 @@ import styled from 'styled-components';
 import Input from '../Input';
 import InputToggle from '../InputToggle';
 import Button from '../Button';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import { modalState } from '@/recoil/state';
+import { titleState, memberState } from '@/recoil/state';
+import createNewProject from '@/hooks/createNewProject';
+import SubmitBtn from '../button/SubmitBtn';
 
 
 const NewProject = () => {
+    const [projectTitle, setTitle] = useRecoilState(titleState);
+    //member = contributer
+    const [member, setMember] = useRecoilState(memberState);
+
+    const {create, loading, error, data} = createNewProject();
+
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        await create(projectTitle, member);
+
+        console.log(useRecoilValue(titleState));
+        
+    };
+
+
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
@@ -21,16 +39,19 @@ const NewProject = () => {
     return (
         <ModalWrapper isVisible={isVisible} onClick={handleClose} >
                 <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
-
+                    <form onSubmit={handleSubmit}>
                     <div id='modalName'>New Project</div>
-                    <Input text='Title' type='text' place={`Enter the project title`} modal/>
+                    <Input text='Title' type='text' place={`Enter the project title`} modal value={projectTitle} onChange={(e)=>setTitle(e.target.value)}/>
                     <InputToggle text='Member' place='Choose the project member' modal/>
                     
                     <div id='button'>
-                        <div onClick={handleClose}>
-                            <Button text='Create' path='/project'/>
-                        </div>
+                        {/* <div onClick={handleClose}> */}
+                            <SubmitBtn text='Create' path='/project'loading={loading} success={!!data} error={error}/>
+                        {/* </div> */}
                     </div>
+                    </form>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
+                    {data && <p style={{ color: 'green' }}>Login successful!</p>}
 
                 </ModalContainer>
             </ModalWrapper>
