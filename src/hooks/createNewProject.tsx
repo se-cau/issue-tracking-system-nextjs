@@ -1,19 +1,16 @@
-import { titleState } from '@/recoil/state';
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { userIdState } from '@/recoil/userState';
 
 const createNewProject = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
 
-    const create = async (title:string, contributorNames:string[])=>{
+    const create = async (title:string, contributorNames:string[], userId:string)=>{
         setLoading(true);
         setError(null);
         setData(null);
 
-        const requestBody = JSON.stringify({title, contributorNames});
+        const requestBody = JSON.stringify({title, contributorNames, userId});
 
         console.log(requestBody);
 
@@ -28,7 +25,7 @@ const createNewProject = () => {
                 body: JSON.stringify({
                     title, 
                     contributorNames,
-                    userId:useRecoilValue(userIdState)
+                    userId
                 })
 
             });

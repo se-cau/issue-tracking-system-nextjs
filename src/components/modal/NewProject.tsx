@@ -1,9 +1,8 @@
-import React,{useState} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
 import InputToggle from '../InputToggle';
-import Button from '../Button';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 import { titleState, memberState } from '@/recoil/state';
 import createNewProject from '@/hooks/createNewProject';
@@ -14,17 +13,14 @@ const NewProject = () => {
     const [projectTitle, setTitle] = useRecoilState(titleState);
     //member = contributer
     const [member, setMember] = useRecoilState(memberState);
+    const userId = localStorage.getItem('userId')||'defaultUserId';
 
     const {create, loading, error, data} = createNewProject();
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        await create(projectTitle, member);
-
-        console.log(useRecoilValue(titleState));
-        
+        await create(projectTitle, member, userId);
     };
-
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
 

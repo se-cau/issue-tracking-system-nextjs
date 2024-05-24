@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userIdState } from '@/recoil/userState';
+import useRecoilToLocal from './useRecoilToLocal';
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
 
-    const [userId, setUserId] = useRecoilState(userIdState);
+    const [userId, setUserId] = useRecoilToLocal();
 
     const login = async (username:string, password:string)=>{
         setLoading(true);
