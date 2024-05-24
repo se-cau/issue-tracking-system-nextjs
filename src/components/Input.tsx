@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({text, place, type, modal, value, onChange}
             <input 
             id='input' 
             className='forModal' 
-            placeholder={place} 
+            placeholder='Enter your project title'
             type={type}
             value = {value}
             onChange={onChange}/>

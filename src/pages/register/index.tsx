@@ -6,6 +6,7 @@ import InputToggle from '@/components/InputToggle';
 import { useRecoilState } from 'recoil';
 import { userNameState, passwordState, roleState } from '@/recoil/state';
 import useSignup from '@/hooks/useSignup';
+import SubmitBtn from '@/components/button/SubmitBtn';
 
 const Register = () => {
     const [userName, setUserName] = useRecoilState(userNameState);
@@ -31,7 +32,7 @@ const Register = () => {
                 <InputToggle text='Role' place='Choose your role' modal={false}/>
             </InputWrapper>
             <ButtonWrapper>
-                <Button path="/project" text='Submit' type="submit"/>
+                <SubmitBtn path="/login" text='Submit' loading={loading} success={!!data} error={error}/>
             </ButtonWrapper>
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}

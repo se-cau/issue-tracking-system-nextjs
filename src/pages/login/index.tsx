@@ -29,7 +29,7 @@ const Login = () => {
             <TextWrapper>Login</TextWrapper>
             <InputWrapper>
                 <Input text='Id' place='Enter your id' type='text' modal={false} value={userName} onChange={(e)=>setUserName(e.target.value)}/>
-                <Input text='Password' place='Enter your password' type='text' modal={false} value={password} onChange={(e)=>setPassword(e.target.value)}/>
+                <Input text='Password' place='Enter your password' type='password' modal={false} value={password} onChange={(e)=>setPassword(e.target.value)}/>
             </InputWrapper>
             <ButtonWrapper><SubmitBtn path="/project" text='Submit' loading={loading} success={!!data} error={error} /></ButtonWrapper>
             

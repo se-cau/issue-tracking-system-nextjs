@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({text, path}) => {
     }
 
     return (
-        <button id='forSubmit' onClick={handleClick}>
+        <button id='forLanding' onClick={handleClick}>
             {text}
         </button>
     );

@@ -14,7 +14,8 @@ const SubmitBtn: React.FC<SubmitButtonProps> = ({loading, success, error, path, 
 
     React.useEffect(()=>{
         if (success){
-            router.push(path);
+            // router.push(path);
+            alert('성공적으로 제출되었습니다.')
         }
     },[success, router]);
 

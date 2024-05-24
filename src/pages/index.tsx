@@ -16,8 +16,8 @@ const Home= () => {
             </TextWrapper>
 
             <ButtonWrapper>
-                <RoutingBtn path='/login' text='로그인' type="submit"/>
-                <RoutingBtn path='/register' text='회원가입' type="submit"/>
+                <RoutingBtn path='/login' text='로그인'/>
+                <RoutingBtn path='/register' text='회원가입'/>
             </ButtonWrapper>
 
         </LoginWrapper>

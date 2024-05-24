@@ -19,3 +19,14 @@ export const roleState = atom({
     key: 'roleState',
     default: ''
 });
+
+
+export const titleState = atom({
+    key: 'titleState',
+    default: ''
+});
+
+export const memberState = atom<string[]>({
+    key: 'memberState',
+    default: []
+});
