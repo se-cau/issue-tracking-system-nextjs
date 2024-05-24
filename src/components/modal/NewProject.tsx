@@ -91,7 +91,11 @@ padding: 40px;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: absolute;
+    left: 625px;
+    top: 540px;
     padding-top: 130px;
+    z-index: 3;
     div{
         width: 200px;
     }

@@ -44,7 +44,7 @@ button#forNew {
   font-size: 18px;
 }
 
-button#forLading{
+button#forLanding{
   width: 200px;
 }
 

@@ -109,7 +109,7 @@ export default InputToggle;
 const InputWrapper = styled.div`
 text-align: left;
 font-size: 20px;
-margin-bottom: 30px;
+/* margin-bottom: 30px; */
 
 #input{
     display: flex;
@@ -144,18 +144,17 @@ margin-bottom: 30px;
 const ToggleContainer = styled.div<{isVisible:boolean}>`
     display: ${({ isVisible}) => (isVisible ? 'block':'none')};
     text-align: left;
-    position: absolute;
-    width: 500px;
-    top: 650px;
     background-color: white;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.1);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    position: relative;
+    z-index: 1001;
 
 `
 
 const ToggleContainerM=styled(ToggleContainer)`
-    top: 390px;
+    /* top: 390px; */
     width: 330px;
     height: 228px;
     overflow: auto;
