@@ -35,10 +35,9 @@ const useLogin = () => {
                 throw new Error(errorText);
             }
 
-            const result = await response;
+            const result = await response.json();
             setData(result);
-            setUserId(username);
-            console.log(userId);
+            setUserId(result.userId);
 
         } catch (err:any){
             alert(err);

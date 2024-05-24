@@ -5,12 +5,12 @@ const createNewProject = () => {
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
 
-    const create = async (title:string, contributorNames:string[], userId:string)=>{
+    const create = async (title:string, contributorIds:string[], adminId:number)=>{
         setLoading(true);
         setError(null);
         setData(null);
 
-        const requestBody = JSON.stringify({title, contributorNames, userId});
+        const requestBody = JSON.stringify({title, adminId,contributorIds,});
 
         console.log(requestBody);
 
@@ -24,8 +24,8 @@ const createNewProject = () => {
                 },
                 body: JSON.stringify({
                     title, 
-                    contributorNames,
-                    userId
+                    adminId,
+                    contributorIds
                 })
 
             });

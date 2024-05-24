@@ -13,7 +13,7 @@ const NewProject = () => {
     const [projectTitle, setTitle] = useRecoilState(titleState);
     //member = contributer
     const [member, setMember] = useRecoilState(memberState);
-    const userId = localStorage.getItem('userId')||'defaultUserId';
+    const userId = parseInt(localStorage.getItem('userId')||'0');
 
     const {create, loading, error, data} = createNewProject();
 
