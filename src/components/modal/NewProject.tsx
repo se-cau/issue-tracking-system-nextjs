@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Input from '../Input';
 import InputToggle from '../InputToggle';
 import {useRecoilState} from 'recoil';
-import { titleState, contributerId, modalState } from '@/recoil/state';
+import { titleState, contributerId, modalState, contributerName} from '@/recoil/state';
 import createNewProject from '@/hooks/createNewProject';
 import SubmitBtn from '../button/SubmitBtn';
 import { User } from '@/types/type';
@@ -14,17 +14,25 @@ interface UserProps{
 
 const NewProject: React.FC<UserProps> = ({userData}) => {   
     const [projectTitle, setTitle] = useRecoilState(titleState);
-    const [contributerIds, setContributerIds] = useRecoilState<string[]>(contributerId);
+    const [contributerIds, setContributerIds] = useRecoilState<number[]>(contributerId);
+    const [contributerNames, setContributerNames] = useRecoilState<string[]>(contributerName);
     const userId = parseInt(localStorage.getItem('userId')||'0');
+    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const {create, loading, error, data} = createNewProject();
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         await create(projectTitle, contributerIds, userId);
-    };
+        setContributerIds([]);
+        setContributerNames([]);
+        
+        { !error && 
+            alert("성공적으로 생성했습니다.") 
+            setVisiable(false); 
+        }
+    }
 
-    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
         setVisiable(false);
@@ -42,14 +50,13 @@ const NewProject: React.FC<UserProps> = ({userData}) => {
                     <Input text='Title' type='text' place={`Enter the project title`} modal value={projectTitle} onChange={(e)=>setTitle(e.target.value)}/>
                     <InputToggle text='Member' place='Choose the project member' modal data={userData}/>
                     
-                    <div id='button'>
-                        {/* <div onClick={handleClose}> */}
+                    {/* <div id='button'> */}
+                        <div id="button">
                             <SubmitBtn text='Create' path='/project'loading={loading} success={!!data} error={error}/>
-                        {/* </div> */}
-                    </div>
+                        </div>
+                    {/* </div> */}
                     </form>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
-                    {data && <p style={{ color: 'green' }}>Login successful!</p>}
 
                 </ModalContainer>
             </ModalWrapper>
@@ -90,17 +97,11 @@ padding: 40px;
 }
 
 #button{
+    display: ${({isVisible}) => (isVisible ? 'none':'flex')};
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    left: 625px;
-    top: 540px;
-    padding-top: 130px;
-    z-index: 3;
-    div{
-        width: 200px;
-    }
+    margin-top: 100px;
 }
 
 `
