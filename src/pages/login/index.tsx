@@ -35,7 +35,7 @@ const Login = () => {
             
             </form>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {data && <p style={{ color: 'green' }}>Signup successful!</p>}
+            {data && <p style={{ color: 'green' }}>Login successful!</p>}
         </Wrapper>
 
         
