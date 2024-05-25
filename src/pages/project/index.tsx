@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewProject from '@/components/modal/NewProject';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
-import { userIdState } from '@/recoil/userState';
 import useFetchData from '@/hooks/useFetchData';
 import useFetchProject from '@/hooks/useFetchProject';
 import { User, ProjectInfo } from '@/types/type';
@@ -23,12 +22,6 @@ const fetchProjectData = (data:any):ProjectInfo=>({
 
 })
 
-const items:{title:string, id:string}[]=[
-    {title:'Project01', id:'123'},
-    {title:'Project02', id:'555'},
-    {title:'Project03', id:'607'}
-]
-
 const Projects = () => {
     const userId = parseInt(localStorage.getItem('userId')||'0');
     console.log(userId);
@@ -45,13 +38,9 @@ const Projects = () => {
     }
 
     const router = useRouter();
-
     const handleClick = (path:string)=>{
         router.push(path);
     }
-
-    console.log(data);
-    console.log(dataP);
 
     return (
         <Wrapper>
