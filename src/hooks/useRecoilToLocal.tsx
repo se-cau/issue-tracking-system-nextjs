@@ -7,7 +7,7 @@ const useRecoilToLocal = () => {
     const [userId, setUserId] = useRecoilState(userIdState);
 
     useEffect(() => {
-        const savedUserId = localStorage.getItem('userId');
+        const savedUserId = Number(localStorage.getItem('userId'));
         if (savedUserId) {
             setUserId(savedUserId);
         }
@@ -15,7 +15,7 @@ const useRecoilToLocal = () => {
 
     useEffect(()=>{
         (userId!==null?  
-            localStorage.setItem('userId', userId):
+            localStorage.setItem('userId', userId.toString()):
             localStorage.setItem('userId', '')
         )
     },[userId]);

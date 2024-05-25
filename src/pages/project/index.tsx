@@ -2,15 +2,25 @@ import React from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewProject from '@/components/modal/NewProject';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { modalState } from '@/recoil/state';
+import { userIdState } from '@/recoil/userState';
 import useFetchData from '@/hooks/useFetchData';
-import { User } from '@/types/type';
+import useFetchProject from '@/hooks/useFetchProject';
+import { User, ProjectInfo } from '@/types/type';
 
 const fetchUserData = (data:any):User => ({
     userId: data.userId,
     username: data.username,
     role: data.role,
+})
+
+const fetchProjectData = (data:any):ProjectInfo=>({
+    projectId: data.projectId,
+    title: data.title,
+    adminName: data.adminName,
+    contributorNames: data.contributorNames
+
 })
 
 const items:{title:string, id:string}[]=[
@@ -20,11 +30,15 @@ const items:{title:string, id:string}[]=[
 ]
 
 const Projects = () => {
+    const userId = parseInt(localStorage.getItem('userId')||'0');
+    console.log(userId);
     const endpoint = '/users'; 
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
-    const [isVisible, setVisiable] = useRecoilState(modalState);
+    const endpointP = '/projects'; 
+    const {dataP, loadingP, errorP} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
 
+    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleModal = ()=>{
         setVisiable(true);
@@ -37,6 +51,7 @@ const Projects = () => {
     }
 
     console.log(data);
+    console.log(dataP);
 
     return (
         <Wrapper>
@@ -48,9 +63,10 @@ const Projects = () => {
             
             <BoardWrapper>
                 <Attribute>title</Attribute>
-                {items.map(item=>(
-                <Project key={item.id} onClick={()=>{handleClick(`/project/${item.id}`)}}>
-                    <div>{item.title}</div>
+
+                {dataP && dataP.map(data=>(
+                <Project key={data.projectId} onClick={()=>{handleClick(`/project/${data.projectId}`)}}>
+                    <div>{data.title}</div>
                 </Project>
             ))}
             </BoardWrapper>
