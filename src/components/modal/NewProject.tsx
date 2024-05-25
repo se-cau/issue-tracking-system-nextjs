@@ -7,11 +7,14 @@ import { modalState } from '@/recoil/state';
 import { titleState, memberState } from '@/recoil/state';
 import createNewProject from '@/hooks/createNewProject';
 import SubmitBtn from '../button/SubmitBtn';
+import { User } from '@/types/type';
 
+interface UserProps{
+    userData: User | null;
+}
 
-const NewProject = () => {
+const NewProject: React.FC<UserProps> = ({userData}) => {   
     const [projectTitle, setTitle] = useRecoilState(titleState);
-    //member = contributer
     const [member, setMember] = useRecoilState(memberState);
     const userId = parseInt(localStorage.getItem('userId')||'0');
 
@@ -38,7 +41,7 @@ const NewProject = () => {
                     <form onSubmit={handleSubmit}>
                     <div id='modalName'>New Project</div>
                     <Input text='Title' type='text' place={`Enter the project title`} modal value={projectTitle} onChange={(e)=>setTitle(e.target.value)}/>
-                    <InputToggle text='Member' place='Choose the project member' modal/>
+                    <InputToggle text='Member' place='Choose the project member' modal data={userData}/>
                     
                     <div id='button'>
                         {/* <div onClick={handleClose}> */}

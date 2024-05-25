@@ -4,11 +4,14 @@ import { members } from '@/mocks/mockData';
 import { typeColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
 import { memberState, roleState } from '@/recoil/state';
+import { User } from '@/types/type';
+
 
 interface InputProps{
     text: string;
     place: string;
     modal: boolean;
+    data: User[] | null;
 }
 
 const items:{name:string, type:string, color:string}[]=[
@@ -21,10 +24,11 @@ const items:{name:string, type:string, color:string}[]=[
 const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 
 
-const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
+const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useRecoilState(roleState);
-    // const [member, setMember] = useRecoilState<string[]>(memberState);
+
+    console.log("data:",data);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
@@ -37,7 +41,6 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
 
 
     const [selectedItems, setSelectedItems] = useRecoilState<string[]>(memberState);
-
     const toggleItem = (id:string) => {
         setSelectedItems((prevSelectedItems:string[]) =>
             prevSelectedItems.includes(id)
@@ -69,19 +72,19 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal}) => {
             }
         </InputWrapper>
         
-        {modal?
+        {modal && data ?
         <ToggleContainerM isVisible={isVisible}>
-        {members.map(member=>(
-            <li key={member.id}>
+        {data.map(datas=>(
+            <li key={datas.userId}>
                 <label>
                     <input
                     type="checkbox"
                     className = "checkbox"
-                    checked={selectedItems.includes(member.id)}
-                    onChange={() => toggleItem(member.id)}/>
+                    checked={selectedItems.includes(datas.userId.toString())}
+                    onChange={() => toggleItem(datas.userId.toString())}/>
                     <ToggleItem>
-                        <div>{member.id}</div>
-                        <ToggleRole color={typeColor[member.type]}>{member.type}</ToggleRole>
+                        <div>{datas.username}</div>
+                        <ToggleRole color={typeColor[datas.role]}>{datas.role}</ToggleRole>
                     </ToggleItem>
                     
                 </label>

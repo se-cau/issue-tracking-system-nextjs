@@ -4,6 +4,14 @@ import {useRouter} from 'next/router';
 import NewProject from '@/components/modal/NewProject';
 import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
+import useFetchData from '@/hooks/useFetchData';
+import { User } from '@/types/type';
+
+const fetchUserData = (data:any):User => ({
+    userId: data.userId,
+    username: data.username,
+    role: data.role,
+})
 
 const items:{title:string, id:string}[]=[
     {title:'Project01', id:'123'},
@@ -12,7 +20,11 @@ const items:{title:string, id:string}[]=[
 ]
 
 const Projects = () => {
+    const endpoint = '/users'; 
+    const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
+
     const [isVisible, setVisiable] = useRecoilState(modalState);
+
 
     const handleModal = ()=>{
         setVisiable(true);
@@ -24,13 +36,16 @@ const Projects = () => {
         router.push(path);
     }
 
+    console.log(data);
 
+    if (loading) return <div>Loading</div>
+    if (error) return <div>Error: {error}</div>
     return (
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
                 <button onClick={handleModal} id="forNew">New</button>
-                {isVisible&&(<NewProject />)}
+                {isVisible && <NewProject userData={data}/>}
             </BoardTopWrapper>
             
             <BoardWrapper>
