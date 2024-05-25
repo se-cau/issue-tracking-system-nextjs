@@ -5,7 +5,7 @@ const createNewProject = () => {
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
 
-    const create = async (title:string, contributorIds:string[], adminId:number)=>{
+    const create = async (title:string, contributorIds:number[], adminId:number)=>{
         setLoading(true);
         setError(null);
         setData(null);

@@ -20,7 +20,6 @@ const useFetchData = <T,>(endpoint: string, fetchedData: (data: any) => T): Fetc
           throw new Error('Network response was not ok');
         }
         const result = await response.json();
-        // const fetchedDatas = fetchedData(result);
         setData(result);
         setError(null);
 

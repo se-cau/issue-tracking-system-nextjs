@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
-import { members } from '@/mocks/mockData';
 import { typeColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
 import { contributerId, contributerName, roleState } from '@/recoil/state';
@@ -27,8 +26,6 @@ const priorities = ["major", "critical", "blocker", "minor", "trivial"];
 const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useRecoilState(roleState);
-
-    console.log("data:",data);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
@@ -80,6 +77,7 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
         {modal && data ?
         <ToggleContainerM isVisible={isVisible}>
         {data.map(datas=>(
+            datas.role !== 'Admin' &&
             <li key={datas.userId}>
                 <label>
                     <input
