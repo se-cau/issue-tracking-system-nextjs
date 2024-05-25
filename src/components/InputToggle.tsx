@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { members } from '@/mocks/mockData';
 import { typeColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
-import { memberState, roleState } from '@/recoil/state';
+import { contributerId, contributerName, roleState } from '@/recoil/state';
 import { User } from '@/types/type';
 
 
@@ -40,18 +40,23 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
     }
 
 
-    const [selectedItems, setSelectedItems] = useRecoilState<string[]>(memberState);
-    const toggleItem = (id:string) => {
-        setSelectedItems((prevSelectedItems:string[]) =>
-            prevSelectedItems.includes(id)
-            ? prevSelectedItems.filter((itemId:string) => itemId !== id)
-            : [...prevSelectedItems, id]
+    const [selectedItems, setSelectedItems] = useRecoilState<number[]>(contributerId);
+    const [contributerNames, setContributerNames] = useRecoilState<string[]>(contributerName);
+    const toggleItem = (id:number, name:string) => {
+        setSelectedItems((prevSelected:number[]) =>
+            prevSelected.includes(id)
+            ? prevSelected.filter((userId:number) => userId !== id)
+            : [...prevSelected, id]
+        );
+        setContributerNames((prevSelected:string[]) =>
+            prevSelected.includes(name)
+            ? prevSelected.filter((username:string) => username !== name)
+            : [...prevSelected, name]
         );
     };
 
     const selectToggle = () =>{
         setIsVisible(!isVisible); 
-
     }
 
 
@@ -61,7 +66,7 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
             <div>{text}</div>
             {modal?
                 <div id='input' className='forModal'>
-                    <div id='toggle'>{selectedItems ? selectedItems+ "  " : place}</div>
+                    <div id='toggle'>{contributerNames ? contributerNames+ "  " : place}</div>
                     <div id='toggleButton' onClick={selectToggle}>{isVisible  ? '▲' : '▼'}</div>
                 </div>
             :
@@ -80,8 +85,8 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
                     <input
                     type="checkbox"
                     className = "checkbox"
-                    checked={selectedItems.includes(datas.userId.toString())}
-                    onChange={() => toggleItem(datas.userId.toString())}/>
+                    checked={selectedItems.includes(datas.userId)}
+                    onChange={() => toggleItem(datas.userId, datas.username)}/>
                     <ToggleItem>
                         <div>{datas.username}</div>
                         <ToggleRole color={typeColor[datas.role]}>{datas.role}</ToggleRole>

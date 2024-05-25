@@ -26,7 +26,12 @@ export const titleState = atom({
     default: ''
 });
 
-export const memberState = atom<string[]>({
-    key: 'memberState',
+export const contributerName = atom<string[]>({
+    key: 'contributerName',
+    default: []
+});
+
+export const contributerId = atom<number[]>({
+    key: 'contributerId',
     default: []
 });

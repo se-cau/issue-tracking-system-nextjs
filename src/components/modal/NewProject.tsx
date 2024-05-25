@@ -3,26 +3,25 @@ import styled from 'styled-components';
 import Input from '../Input';
 import InputToggle from '../InputToggle';
 import {useRecoilState} from 'recoil';
-import { modalState } from '@/recoil/state';
-import { titleState, memberState } from '@/recoil/state';
+import { titleState, contributerId, modalState } from '@/recoil/state';
 import createNewProject from '@/hooks/createNewProject';
 import SubmitBtn from '../button/SubmitBtn';
 import { User } from '@/types/type';
 
 interface UserProps{
-    userData: User | null;
+    userData: User[] | null;
 }
 
 const NewProject: React.FC<UserProps> = ({userData}) => {   
     const [projectTitle, setTitle] = useRecoilState(titleState);
-    const [member, setMember] = useRecoilState(memberState);
+    const [contributerIds, setContributerIds] = useRecoilState<string[]>(contributerId);
     const userId = parseInt(localStorage.getItem('userId')||'0');
 
     const {create, loading, error, data} = createNewProject();
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        await create(projectTitle, member, userId);
+        await create(projectTitle, contributerIds, userId);
     };
 
     const [isVisible, setVisiable] = useRecoilState(modalState);

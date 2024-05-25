@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react';
 
 interface FetchResult<T>{
-  data: T | null;
+  data: T[] | null;
   loading: boolean;
   error: string | null;
 }
 
 const useFetchData = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> =>{
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<T[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,8 +24,6 @@ const useFetchData = <T,>(endpoint: string, fetchedData: (data: any) => T): Fetc
         setData(result);
         setError(null);
 
-        // console.log(fetchedDatas);
-        // console.log(data);
       } catch (error:any) {
         setError(error.message);
         setData(null);

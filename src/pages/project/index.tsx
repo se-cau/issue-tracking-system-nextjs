@@ -7,7 +7,7 @@ import { modalState } from '@/recoil/state';
 import useFetchData from '@/hooks/useFetchData';
 import { User } from '@/types/type';
 
-const fetchUserData = (data:any):User => ({
+const fetchUserData = (data:User[]|null) => ({
     userId: data.userId,
     username: data.username,
     role: data.role,
