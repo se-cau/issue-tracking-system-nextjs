@@ -25,14 +25,6 @@ export interface IssueInfo{
     updated_at: string;
 }
 
-export interface CommentInfo{
-    id: number;
-    message: string;
-    created_at: string;
-    authorid: number;
-}
-
-
 
 export interface NewIssue{
     title: string;
@@ -41,4 +33,19 @@ export interface NewIssue{
     status: string;
     userid: number;
     assigneeid: number;
+}
+
+export interface CommentInfo{
+    id: number;
+    username: string;
+    role: string;
+    message: string;
+    created_at: string;
+    authorid: number;
+}
+
+
+export interface NewComment{
+    message: string;
+    authorid: string|null;
 }

@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { typeColor } from '@/styles/color';
 import InfoBox from '@/components/issue/InfoBox';
-import { CommentInfo, IssueInfo } from '@/types/type';
+import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
-
+import addComment from '@/hooks/addComment';
 
 const fetchIssueData = (data:any):IssueInfo => ({
     id: data.id,
@@ -25,6 +25,8 @@ const fetchComment = (data:any):CommentInfo => ({
     message: data.message,
     authorid: data.authorid,
     created_at: data.created_at,
+    username: data.username,
+    role: data.role
 })
 
 
@@ -32,34 +34,31 @@ const Issue = () => {
     const endpoint = '/issues/details'; 
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
-
-    console.log(data);
-
     const endpointC = '/comments';
     const {comments, loadingC, errorC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
 
-    // const comments = [{
-    //     userId: "user1",
-    //     userType: "Pl",
-    //     contents: "일을 열심히 하세요",
-    // },{
-    //     userId: "user02",
-    //     userType: "Dev",
-    //     contents: "싫어요. 나는야 배짱이가 될래요",
-    // },{
-    //     userId: "user03",
-    //     userType: "Tester",
-    //     contents: "인생 날로 먹고 싶네요",
-    // }
-    // ]
+    const [messageC, setMessage] = useState('');
+    const {create, errorA, dataA} = addComment();
 
+
+    const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        const authorid = localStorage.getItem('userId');
+
+        const newComment: NewComment  = {
+            message: messageC,
+            authorid: authorid
+        }
+        await create(newComment);
+        console.log(newComment);
+    }
 
     return (
         <>
         {data &&
             <Wrapper>
             <BoardTopWrapper>
-            <div id='boardName'>Issue {data.title} </div>
+            <div id='boardName'> {data.title} </div>
             </BoardTopWrapper>
 
             <DescWrapper>
@@ -82,26 +81,29 @@ const Issue = () => {
             </DescWrapper>
 
             <CommentWrapper>
+                <form onClick={handleSubmit}>
                 <InputBoxWrapper>
                     <div id='desc-type'>Comment</div>
                     <div id="comment-input-container">
-                        <input id='comment-input' placeholder='댓글 추가...'></input>
-                        <button id="forIssue">Submit</button>
+                        <input id='comment-input' placeholder='댓글 추가...' value={messageC} onChange={(e)=>setMessage(e.target.value)}></input>
+                        <button id="forIssue" type='submit'>Submit</button>
                     </div>
                 </InputBoxWrapper>
+                </form>
                     
                 <CommentBoxWrapper>
                     {comments&& comments.map(comment=>(
                         <div id='comment-container'>
-                            <CommentUser id="userType" color={typeColor['Pl']}> 
-                                <div id='user'>{comment.id}</div>
-                                <div id='user-type'>role</div>
+                            <CommentUser id="userType" color={typeColor[comment.role]}> 
+                                <div id='user'>{comment.username}</div>
+                                <div id='user-type'>{comment.role}</div>
                             </CommentUser>
                             <div id="contents"> {comment.message} </div>
                         </div>
                         ))}
 
                 </CommentBoxWrapper>
+                
             </CommentWrapper>
         </Wrapper>
         
