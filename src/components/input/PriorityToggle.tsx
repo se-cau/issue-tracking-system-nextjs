@@ -1,26 +1,29 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import { members } from '@/mocks/mockData';
+import { issuePriority } from '@/recoil/issueState';
+import { useRecoilState } from 'recoil';
 
 interface InputProps{
     place: string;
+    value: string;
 }
 
 
-const priorities = ["major", "critical", "blocker", "minor", "trivial"];
+const priorities = ["Major", "Critical", "Blocker", "Minor", "Trivial"];
 
 
-const PriorityToggle: React.FC<InputProps> = ({place}) => {
+const PriorityToggle: React.FC<InputProps> = ({place, value}) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [role, setRole] = useState<string | null>(null);
+    const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
     }
 
-    const handleRole = (item:string)=>{
-        setRole(item);
-        setIsVisible(false);
+
+    const toggleItem = (issuePrior:string) =>{
+        setIssuePrior(issuePrior);
     }
 
 
@@ -29,15 +32,15 @@ const PriorityToggle: React.FC<InputProps> = ({place}) => {
         <InputWrapper>
             <div>Priority</div>
                 <div id='input' className='forModal'>
-                    <div id='toggle'>{role?role:place}</div>
-                    <div id='toggleButton' onClick={handleToggle}>{isVisible ? '▲' : '▼'}</div>
+                    <div id='toggle'>{issuePrior?issuePrior:place}</div>
+                    <div id='toggleButton' >{isVisible ? '▲' : '▼'}</div>
                 </div>
         </InputWrapper>
         
 
         <ToggleContainerM isVisible={isVisible}>
         {priorities.map(priority=>(
-            <ToggleItem key={priority} onClick={() => handleRole(priority)}>
+            <ToggleItem key={priority} onClick={() => toggleItem(priority)}>
                 <div>{priority}</div>
             </ToggleItem>
         ))}

@@ -20,9 +20,6 @@ const items:{name:string, type:string, color:string}[]=[
     {name:'Tester', type:'test', color:'#4BDD62'}
 ]
 
-const priorities = ["major", "critical", "blocker", "minor", "trivial"];
-
-
 const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [role, setRole] = useRecoilState(roleState);
@@ -65,7 +62,6 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
                 <div id='input' className='forModal'>
                     <div id='toggle'>
                         {contributerNames.length ? contributerNames+ " " : place}
-                        {/* {place} */}
                     </div>
                     <div id='toggleButton' onClick={selectToggle}>{isVisible  ? '▲' : '▼'}</div>
                 </div>

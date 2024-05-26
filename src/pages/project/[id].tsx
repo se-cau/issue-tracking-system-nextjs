@@ -7,13 +7,6 @@ import { modalState } from '@/recoil/state';
 import { IssueInfo } from '@/types/type';
 import useFetchIssue from '../../hooks/useFetchIssue';
 
-// const items:{title:string, id:string, reporter:string, assignee:string, state:string}[]=[
-//     {title:'Issue01', id:'123', reporter:'HR', assignee:'DM', state:'assinged'},
-//     {title:'Issue02', id:'555', reporter:'PP', assignee:'', state:'new'},
-//     {title:'Issue03', id:'607', reporter:'PO', assignee:'WHO', state:'fixed'},
-//     {title:'Issue03', id:'607', reporter:'PO', assignee:'Wa', state:'resolved'}
-// ]
-
 const Issues = () => {
     const fetchIssueData = (data:any):IssueInfo => ({
         id: data.id,

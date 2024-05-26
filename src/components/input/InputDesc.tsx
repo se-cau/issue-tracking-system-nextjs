@@ -2,19 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface InputProps {
-    text: string;
     place: string;
-    type: string;
-    modal: boolean
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 
-const InputDesc=() => {
+const InputDesc: React.FC<InputProps> = ({place, value, onChange}) => {
 
     return (
         <InputWrapper>
             <div>Description</div>
-            <textarea id='input' placeholder="Add the issue description"></textarea>
+            <input type='textarea' id='input' placeholder="Add the issue description" value={value} onChange={onChange}/>
         </InputWrapper>
     );
 };
@@ -30,6 +29,7 @@ margin-bottom: 10px;
 #input{
     height:100px;
     font-size: 15px;
+
     margin: 15px 0;
     width: 100%;
 

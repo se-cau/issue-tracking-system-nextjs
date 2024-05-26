@@ -1,5 +1,3 @@
-import { userIdState } from '@/recoil/userState';
-import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 
 interface FetchResult<T>{

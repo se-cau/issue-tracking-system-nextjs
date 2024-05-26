@@ -24,14 +24,6 @@ const fetchProjectData = (data:any):ProjectInfo=>({
 
 const Projects = () => {
     const userId = parseInt(localStorage.getItem('userId')||'0');
-    // const [userId, setUserId] = useState<number>(0);
-
-    // useEffect(() => {
-    //     if (typeof window !== 'undefined') {
-    //         const toNum = Number(localStorage.getItem('userId') || '0');
-    //         setUserId(toNum);
-    //     }
-    // }, []); 
 
 
     console.log("userId", userId);
@@ -40,7 +32,7 @@ const Projects = () => {
 
     const endpointP = '/projects'; 
     const {dataP, loadingP, errorP} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
-    // console.log(dataP);
+    
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleModal = ()=>{

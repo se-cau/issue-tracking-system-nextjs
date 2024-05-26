@@ -24,3 +24,14 @@ export interface IssueInfo{
     created_at: string;
     updated_at: string;
 }
+
+
+
+export interface NewIssue{
+    title: string;
+    description: string;
+    priority: string;
+    status: string;
+    userid: number;
+    assigneeid: number;
+}

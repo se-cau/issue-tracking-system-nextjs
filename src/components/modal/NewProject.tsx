@@ -50,11 +50,10 @@ const NewProject: React.FC<UserProps> = ({userData}) => {
                     <Input text='Title' type='text' place={`Enter the project title`} modal value={projectTitle} onChange={(e)=>setTitle(e.target.value)}/>
                     <InputToggle text='Member' place='Choose the project member' modal data={userData}/>
                     
-                    {/* <div id='button'> */}
-                        <div id="button">
-                            <SubmitBtn text='Create' path='/project'loading={loading} success={!!data} error={error}/>
-                        </div>
-                    {/* </div> */}
+                    <div id="button">
+                        <SubmitBtn text='Create' path='/project' success={!!data} error={error}/>
+                    </div>
+
                     </form>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
 

@@ -1,39 +1,79 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
-import InputToggle from '../InputToggle';
-import Button from '../Button';
+import SubmitBtn from '../button/SubmitBtn';
 import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
-import InputDesc from '../InputDesc';
+import InputDesc from '../input/InputDesc';
 import PriorityToggle from '../input/PriorityToggle';
+import { NewIssue } from '@/types/type';
+import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueState';
+import createNewIssue from '@/hooks/createNewIssue';
+
+interface IssueProps {
+    IssueData: NewIssue[] | null;
+
+}
 
 
 const NewIssue = () => {
+    const [issueTitle, setIssueTitle] = useRecoilState(issueTitleState);
+    const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
+    const [issueDesc, setIssueDesc] = useRecoilState(issueDescState);
+
+    const {create, error, data} = createNewIssue();
+
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
-        setVisiable(false);
+        // setVisiable(false);
     }
 
     const handleModalClick=(e: React.MouseEvent)=>{
-        e.stopPropagation();
+        // e.stopPropagation();
+    }
+
+
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
+        e.preventDefault();
+        const userId = parseInt(localStorage.getItem('userId')||'0', 10);
+
+        const newIssue: NewIssue  = {
+            title: issueTitle,
+            description: issueDesc,
+            priority: issuePrior,
+            status: 'New',
+            userid: userId,
+            assigneeid: 0,
+        }
+        
+
+        await create(newIssue);
+        { error && 
+            alert("성공적으로 생성했습니다.") 
+            // setVisiable(false); 
+        }
+        setIssueTitle('');
+        setIssuePrior('');
+        setIssueDesc('');
     }
 
     return (
         <ModalWrapper isVisible={isVisible} onClick={handleClose} >
                 <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
-
+                    <form onSubmit={handleSubmit}>
                     <div id='modalName'>New Issue</div>
-                    <Input text='Title' type='text' place={`Enter the issue title`} modal/>
-                    <PriorityToggle place='Choose the Priority'/>
-                    <InputDesc />
+                    <Input text='Title' type='text' place={`Enter the issue title`} modal value={issueTitle} onChange={(e)=>setIssueTitle(e.target.value)}/>
+                    <PriorityToggle place='Choose the Priority' value={issuePrior}/>
+                    <InputDesc place='Write issue description' value={issueDesc} onChange={(e)=>setIssueDesc(e.target.value)}/>
 
                     <div id='button'>
                         <div onClick={handleClose}>
-                            <Button text='Create' path='/project'/>
+                            <SubmitBtn text='Create' path='/project' success={!!data} error={error}/>
                         </div>
                     </div>
+                    </form>
+                    {error && <p style={{ color: 'red' }}>{error}</p>}
 
                 </ModalContainer>
             </ModalWrapper>
