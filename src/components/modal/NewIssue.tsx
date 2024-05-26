@@ -25,15 +25,6 @@ const NewIssue = () => {
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
-    const handleClose = ()=>{
-        setVisiable(false);
-    }
-
-    const handleModalClick=(e: React.MouseEvent)=>{
-        e.stopPropagation();
-    }
-
-
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         const userId = parseInt(localStorage.getItem('userId')||'0', 10);
@@ -49,13 +40,21 @@ const NewIssue = () => {
         
 
         await create(newIssue);
-        { error && 
+        {!error && 
             alert("성공적으로 생성했습니다.") 
             setVisiable(false); 
         }
         setIssueTitle('');
         setIssuePrior('');
         setIssueDesc('');
+    }
+
+    const handleClose = ()=>{
+        setVisiable(false);
+    }
+
+    const handleModalClick=(e: React.MouseEvent)=>{
+        e.stopPropagation();
     }
 
     return (

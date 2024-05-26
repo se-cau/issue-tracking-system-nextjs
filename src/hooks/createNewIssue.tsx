@@ -32,6 +32,8 @@ const createNewIssue = () => {
                 body: requestBody
 
             });
+
+
             console.log(requestBody);
             console.log(url);
 
