@@ -10,12 +10,17 @@ interface InputProps{
 }
 
 
-const priorities = ["Major", "Critical", "Blocker", "Minor", "Trivial"];
+const priorities = ["MAJOR", "CRITICAL", "BLOCKER", "MINOR", "TRIVIAL"];
 
 
 const PriorityToggle: React.FC<InputProps> = ({place, value}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
+
+    const selectToggle = () =>{
+        setIsVisible(!isVisible); 
+    }
+
 
     const handleToggle = ()=>{
         setIsVisible(!isVisible);
@@ -24,6 +29,8 @@ const PriorityToggle: React.FC<InputProps> = ({place, value}) => {
 
     const toggleItem = (issuePrior:string) =>{
         setIssuePrior(issuePrior);
+        setIsVisible(false);
+        console.log(issuePrior);
     }
 
 
@@ -33,7 +40,7 @@ const PriorityToggle: React.FC<InputProps> = ({place, value}) => {
             <div>Priority</div>
                 <div id='input' className='forModal'>
                     <div id='toggle'>{issuePrior?issuePrior:place}</div>
-                    <div id='toggleButton' >{isVisible ? '▲' : '▼'}</div>
+                    <div id='toggleButton' onClick={selectToggle}>{isVisible ? '▲' : '▼'}</div>
                 </div>
         </InputWrapper>
         

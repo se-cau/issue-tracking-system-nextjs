@@ -26,11 +26,11 @@ const NewIssue = () => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleClose = ()=>{
-        // setVisiable(false);
+        setVisiable(false);
     }
 
     const handleModalClick=(e: React.MouseEvent)=>{
-        // e.stopPropagation();
+        e.stopPropagation();
     }
 
 
@@ -42,7 +42,7 @@ const NewIssue = () => {
             title: issueTitle,
             description: issueDesc,
             priority: issuePrior,
-            status: 'New',
+            status: 'NEW',
             userid: userId,
             assigneeid: 0,
         }
@@ -51,7 +51,7 @@ const NewIssue = () => {
         await create(newIssue);
         { error && 
             alert("성공적으로 생성했습니다.") 
-            // setVisiable(false); 
+            setVisiable(false); 
         }
         setIssueTitle('');
         setIssuePrior('');
