@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import { getCookie } from '@/utils/cookie';
+import { userIdState } from '@/recoil/userState';
+import { useRecoilState } from 'recoil';
 
 interface FetchResult<T>{
     dataP: T[] | null;
@@ -11,13 +14,18 @@ const useFetchProject = <T,>(endpoint: string, fetchedData: (data: any) => T, us
 const [dataP, setData] = useState<T[] | null>(null);
 const [loadingP, setLoading] = useState<boolean>(false);
 const [errorP, setError] = useState<string | null>(null);
+const [userIdT, setUserId] = useRecoilState<number>(userIdState);
 
 useEffect(() => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`);
-            url.searchParams.append('userId', userId.toString());
+            const id = localStorage.getItem('userId');
+            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}?userId=${id}`);
+            console.log(getCookie('userId'));
+            console.log(id);
+            console.log(userIdT);
+            console.log(localStorage.getItem('userId'));
 
             const response = await fetch(url.toString());
         if (!response.ok) {

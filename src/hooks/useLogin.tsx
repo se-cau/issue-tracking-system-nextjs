@@ -10,7 +10,7 @@ const useLogin = () => {
     const [data, setData] = useState<any>(null);
     const router = useRouter();
 
-    const [userId, setUserId] = useRecoilToLocal();
+    const [userId, setUserId] = useRecoilState(userIdState);
 
     const login = async (username:string, password:string)=>{
         setLoading(true);
@@ -40,6 +40,7 @@ const useLogin = () => {
             const result = await response.json();
             setData(result);
             setUserId(result.userId);
+            localStorage.setItem('userId', result.userId);
             router.push('/project');
             
 

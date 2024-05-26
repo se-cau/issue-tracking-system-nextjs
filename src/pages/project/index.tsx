@@ -7,6 +7,9 @@ import { modalState } from '@/recoil/state';
 import useFetchData from '@/hooks/useFetchData';
 import useFetchProject from '@/hooks/useFetchProject';
 import { User, ProjectInfo } from '@/types/type';
+import { setCookie, getCookie } from '@/utils/cookie';
+import Cookies from 'js-cookie';
+import { userIdState } from '@/recoil/userState';
 
 const fetchUserData = (data:any):User => ({
     userId: data.userId,
@@ -23,23 +26,26 @@ const fetchProjectData = (data:any):ProjectInfo=>({
 })
 
 const Projects = () => {
-    const userId = parseInt(localStorage.getItem('userId')||'0');
+    const router = useRouter();
+    const [userId, setUserId] = useRecoilState<number>(userIdState);
+    const [isVisible, setVisiable] = useRecoilState(modalState);
 
 
-    console.log("userId", userId);
+    useEffect(() => {
+        Cookies.set('userId', userId.toString());
+    }, []);
+
     const endpoint = '/users'; 
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
     const endpointP = '/projects'; 
     const {dataP, loadingP, errorP} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
     
-    const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleModal = ()=>{
         setVisiable(true);
     }
 
-    const router = useRouter();
     const handleClick = (path:string)=>{
         router.push(path);
     }
