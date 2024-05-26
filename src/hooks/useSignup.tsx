@@ -1,14 +1,17 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 const useSignup = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
+    const router = useRouter();
 
     const signup = async (username:string, password:string, role:string)=>{
         setLoading(true);
         setError(null);
         setData(null);
+        
 
         const requestBody = JSON.stringify({ username, password, role });
 
@@ -33,6 +36,7 @@ const useSignup = () => {
             const result = await response;
             setData(result);
             console.log(result.status);
+            router.push('/login');
 
         } catch (err:any){
             alert(err);
