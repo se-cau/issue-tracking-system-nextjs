@@ -22,11 +22,11 @@ const Issues = () => {
     })
 
     const router = useRouter();
-    const query=router.query;
-    const projectId = Number(query.id);
     const endpoint = '/issues'; 
-    const {data, loading, error} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData, projectId);
-    console.log("project id:", projectId);
+
+    const {data, loading, error} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
+
+    console.log("issue 상세:", data);
 
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
@@ -35,12 +35,9 @@ const Issues = () => {
         setVisiable(true);
     }
 
-
-
     const handleClick = (path:string)=>{
         router.push(path);
     }
-
 
     return (
         <Wrapper>
@@ -65,12 +62,14 @@ const Issues = () => {
                 </Attribute>
 
                 {data && data.map(item=>(
-                <Issue onClick={()=>{handleClick(`/issue/${item.id}`)}}>
+                <Issue key={item.id} onClick={()=>{
+                    handleClick(`/issue/${item.id}`)
+                    localStorage.setItem('issueId', item.id.toString())
+                    }}>
                     <div className='item'>{item.title}</div>
                     <div className='item'>{item.status}</div>
                     <div className='item'>{item.reporter}</div>
                     <div className='item'>{item.assignee}</div>
-                    
                 </Issue>
             ))}
             </BoardWrapper>

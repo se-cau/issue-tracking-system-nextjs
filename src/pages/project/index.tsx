@@ -30,11 +30,6 @@ const Projects = () => {
     const [userId, setUserId] = useRecoilState<number>(userIdState);
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
-
-    useEffect(() => {
-        Cookies.set('userId', userId.toString());
-    }, []);
-
     const endpoint = '/users'; 
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
@@ -62,7 +57,10 @@ const Projects = () => {
                 <Attribute>title</Attribute>
 
                 {dataP && dataP.map(data=>(
-                <Project key={data.projectId} onClick={()=>{handleClick(`/project/${data.projectId}`)}}>
+                <Project key={data.projectId} onClick={()=>{
+                    handleClick(`/project/${data.projectId}`)
+                    localStorage.setItem('projectId', data.projectId.toString())
+                    }}>
                     <div>{data.title}</div>
                 </Project>
             ))}

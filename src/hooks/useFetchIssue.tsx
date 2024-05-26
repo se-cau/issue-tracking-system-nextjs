@@ -1,5 +1,3 @@
-import { userIdState } from '@/recoil/userState';
-import { useRecoilValue } from 'recoil';
 import { useState, useEffect } from 'react';
 
 interface FetchResult<T>{
@@ -9,7 +7,7 @@ interface FetchResult<T>{
 }
 
 
-const useFetchIssue = <T,>(endpoint: string, fetchedData: (data: any) => T, projectId:number): FetchResult<T> =>{
+const useFetchIssue = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> =>{
 const [data, setData] = useState<T[] | null>(null);
 const [loading, setLoading] = useState<boolean>(false);
 const [error, setError] = useState<string | null>(null);
@@ -18,8 +16,9 @@ useEffect(() => {
     const fetchData = async () => {
         setLoading(true);
         try {
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}`);
-            url.searchParams.append('projectId', projectId.toString());
+            const id = localStorage.getItem('projectId');
+            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}?projectId=${id}`);
+
             console.log(url);
 
             const response = await fetch(url.toString());
@@ -29,6 +28,7 @@ useEffect(() => {
         const result = await response.json();
         setData(result);
         setError(null);
+        
         console.log(response);
 
     } catch (error:any) {
