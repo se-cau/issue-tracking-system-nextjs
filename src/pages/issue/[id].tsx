@@ -3,21 +3,39 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { typeColor } from '@/styles/color';
 import InfoBox from '@/components/issue/InfoBox';
+import { IssueInfo } from '@/types/type';
+import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 
+
+const fetchIssueData = (data:any):IssueInfo => ({
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    reporter: data.reporter,
+    assignee: data.assignee,
+    fixer: data.fixer,
+    status: data.status,
+    priority: data.priority,
+    created_at: data.created_at,
+    updated_at: data.updated_at
+})
 const Issue = () => {
-    const router = useRouter();
-    const {id, query} = router.query;
+    const endpoint = '/issues/details'; 
+    const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
-    const data = {
-        title: "Issue 123",
-        state: "fixed",
-        priority: "Major",
-        reporter: "ccc",
-        reportedDate: "2024.03.05",
-        assginee: "ddd",
-        fixer: "aaa",
-        description: "이렇게 저렇게 바꿔 주세요",
-    }
+    console.log(data);
+
+    // const dataP = {
+    //     id: 123,
+    //     title: "Issue 123",
+    //     status: "fixed",
+    //     priority: "Major",
+    //     reporter: "ccc",
+    //     created_at: "2024.03.05",
+    //     assignee: "ddd",
+    //     fixer: "aaa",
+    //     description: "이렇게 저렇게 바꿔 주세요",
+    // }
 
     const comments = [{
         userId: "user1",
@@ -36,23 +54,25 @@ const Issue = () => {
 
 
     return (
-        <Wrapper>
+        <>
+        {data &&
+            <Wrapper>
             <BoardTopWrapper>
-            <div id='boardName'>Issue {id} </div>
+            <div id='boardName'>Issue {data.title} </div>
             </BoardTopWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="State" data={data.state} />
+                <InfoBox infoType="State" data={data.status} />
                 <InfoBox infoType="Priority" data={data.priority} />
             </DescWrapper>
 
             <DescWrapper>
                 <InfoBox infoType="Reporter" data={data.reporter} />
-                <InfoBox infoType="Reported Date" data={data.reportedDate} />
+                <InfoBox infoType="Reported Date" data={data.created_at} />
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Assignee" data={data.assginee} />
+                <InfoBox infoType="Assignee" data={data.assignee} />
                 <InfoBox infoType="Fixer" data={data.fixer} />
             </DescWrapper>
 
@@ -83,6 +103,10 @@ const Issue = () => {
                 </CommentBoxWrapper>
             </CommentWrapper>
         </Wrapper>
+        
+        }
+        </>
+
     );
 };
 

@@ -30,6 +30,7 @@ useEffect(() => {
         const result = await response.json();
         setData(result);
         setError(null);
+        console.log(result);
         
 
     } catch (error:any) {
