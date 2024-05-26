@@ -13,7 +13,6 @@ const SubmitBtn: React.FC<SubmitButtonProps> = ({success, error, path, text }) =
 
     React.useEffect(()=>{
         if (success){
-            // router.push(path);
             alert('성공적으로 제출되었습니다.')
         }
     },[success, router]);

@@ -22,10 +22,6 @@ useEffect(() => {
         try {
             const id = localStorage.getItem('userId');
             const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}?userId=${id}`);
-            console.log(getCookie('userId'));
-            console.log(id);
-            console.log(userIdT);
-            console.log(localStorage.getItem('userId'));
 
             const response = await fetch(url.toString());
         if (!response.ok) {
