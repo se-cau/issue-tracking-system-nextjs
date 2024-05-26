@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewProject from '@/components/modal/NewProject';
@@ -24,13 +24,23 @@ const fetchProjectData = (data:any):ProjectInfo=>({
 
 const Projects = () => {
     const userId = parseInt(localStorage.getItem('userId')||'0');
-    console.log(userId);
+    // const [userId, setUserId] = useState<number>(0);
+
+    // useEffect(() => {
+    //     if (typeof window !== 'undefined') {
+    //         const toNum = Number(localStorage.getItem('userId') || '0');
+    //         setUserId(toNum);
+    //     }
+    // }, []); 
+
+
+    console.log("userId", userId);
     const endpoint = '/users'; 
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
     const endpointP = '/projects'; 
     const {dataP, loadingP, errorP} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
-
+    // console.log(dataP);
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleModal = ()=>{

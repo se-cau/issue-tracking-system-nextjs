@@ -11,3 +11,16 @@ export interface ProjectInfo{
     adminName: string;
     contributorNames: string[];
 }
+
+export interface IssueInfo{
+    id: number;
+    title: string;
+    description: string;
+    reporter: string;
+    assignee: string;
+    fixer: string;
+    status: string; 
+    priority: string;
+    created_at: string;
+    updated_at: string;
+}

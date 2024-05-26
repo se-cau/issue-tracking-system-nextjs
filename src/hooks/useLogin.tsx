@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userIdState } from '@/recoil/userState';
 import useRecoilToLocal from './useRecoilToLocal';
+import { useRouter } from 'next/router';
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
+    const router = useRouter();
 
     const [userId, setUserId] = useRecoilToLocal();
 
@@ -38,6 +40,8 @@ const useLogin = () => {
             const result = await response.json();
             setData(result);
             setUserId(result.userId);
+            router.push('/project');
+            
 
         } catch (err:any){
             alert(err);

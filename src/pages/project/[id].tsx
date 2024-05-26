@@ -1,26 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
-import Button from '@/components/Button';
 import NewIssue from '@/components/modal/NewIssue';
 import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
+import { IssueInfo } from '@/types/type';
+import useFetchIssue from '../../hooks/useFetchIssue';
 
-const items:{title:string, id:string, reporter:string, assignee:string, state:string}[]=[
-    {title:'Issue01', id:'123', reporter:'HR', assignee:'DM', state:'assinged'},
-    {title:'Issue02', id:'555', reporter:'PP', assignee:'', state:'new'},
-    {title:'Issue03', id:'607', reporter:'PO', assignee:'WHO', state:'fixed'},
-    {title:'Issue03', id:'607', reporter:'PO', assignee:'Wa', state:'resolved'}
-]
+// const items:{title:string, id:string, reporter:string, assignee:string, state:string}[]=[
+//     {title:'Issue01', id:'123', reporter:'HR', assignee:'DM', state:'assinged'},
+//     {title:'Issue02', id:'555', reporter:'PP', assignee:'', state:'new'},
+//     {title:'Issue03', id:'607', reporter:'PO', assignee:'WHO', state:'fixed'},
+//     {title:'Issue03', id:'607', reporter:'PO', assignee:'Wa', state:'resolved'}
+// ]
 
 const Issues = () => {
+    const fetchIssueData = (data:any):IssueInfo => ({
+        id: data.id,
+        title: data.title,
+        description: data.description,
+        reporter: data.reporter,
+        assignee: data.assignee,
+        fixer: data.fixer,
+        status: data.status,
+        priority: data.priority,
+        created_at: data.created_at,
+        updated_at: data.updated_at
+    })
+
+    const router = useRouter();
+    const query=router.query;
+    const projectId = Number(query.id);
+    const endpoint = '/issues'; 
+    const {data, loading, error} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData, projectId);
+    console.log("project id:", projectId);
+
+
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
     const handleModal = ()=>{
         setVisiable(true);
     }
 
-    const router = useRouter();
+
 
     const handleClick = (path:string)=>{
         router.push(path);
@@ -48,12 +70,14 @@ const Issues = () => {
                     <div className='atr'>assignee</div>
                     
                 </Attribute>
-                {items.map(item=>(
-                <Issue key={item.id} onClick={()=>{handleClick(`/issue/${item.id}`)}}>
+
+                {data && data.map(item=>(
+                <Issue onClick={()=>{handleClick(`/issue/${item.id}`)}}>
                     <div className='item'>{item.title}</div>
+                    <div className='item'>{item.status}</div>
                     <div className='item'>{item.reporter}</div>
                     <div className='item'>{item.assignee}</div>
-                    <div className='item'>{item.state}</div>
+                    
                 </Issue>
             ))}
             </BoardWrapper>
