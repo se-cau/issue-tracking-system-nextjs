@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 import { typeColor } from '@/styles/color';
 import InfoBox from '@/components/issue/InfoBox';
-import { IssueInfo } from '@/types/type';
+import { CommentInfo, IssueInfo } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
+import useFetchComment from '@/hooks/useFetchComment';
 
 
 const fetchIssueData = (data:any):IssueInfo => ({
@@ -19,38 +19,39 @@ const fetchIssueData = (data:any):IssueInfo => ({
     created_at: data.created_at,
     updated_at: data.updated_at
 })
+
+const fetchComment = (data:any):CommentInfo => ({
+    id: data.id,
+    message: data.message,
+    authorid: data.authorid,
+    created_at: data.created_at,
+})
+
+
 const Issue = () => {
     const endpoint = '/issues/details'; 
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
+
     console.log(data);
 
-    // const dataP = {
-    //     id: 123,
-    //     title: "Issue 123",
-    //     status: "fixed",
-    //     priority: "Major",
-    //     reporter: "ccc",
-    //     created_at: "2024.03.05",
-    //     assignee: "ddd",
-    //     fixer: "aaa",
-    //     description: "이렇게 저렇게 바꿔 주세요",
-    // }
+    const endpointC = '/comments';
+    const {comments, loadingC, errorC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
 
-    const comments = [{
-        userId: "user1",
-        userType: "pl",
-        contents: "일을 열심히 하세요",
-    },{
-        userId: "user02",
-        userType: "dev",
-        contents: "싫어요. 나는야 배짱이가 될래요",
-    },{
-        userId: "user03",
-        userType: "test",
-        contents: "인생 날로 먹고 싶네요",
-    }
-    ]
+    // const comments = [{
+    //     userId: "user1",
+    //     userType: "Pl",
+    //     contents: "일을 열심히 하세요",
+    // },{
+    //     userId: "user02",
+    //     userType: "Dev",
+    //     contents: "싫어요. 나는야 배짱이가 될래요",
+    // },{
+    //     userId: "user03",
+    //     userType: "Tester",
+    //     contents: "인생 날로 먹고 싶네요",
+    // }
+    // ]
 
 
     return (
@@ -90,13 +91,13 @@ const Issue = () => {
                 </InputBoxWrapper>
                     
                 <CommentBoxWrapper>
-                    {comments.map(comment=>(
+                    {comments&& comments.map(comment=>(
                         <div id='comment-container'>
-                            <CommentUser id="userType" color={typeColor[comment.userType]}> 
-                                <div id='user'>{comment.userId}</div>
-                                <div id='user-type'>{comment.userType}</div>
+                            <CommentUser id="userType" color={typeColor['Pl']}> 
+                                <div id='user'>{comment.id}</div>
+                                <div id='user-type'>role</div>
                             </CommentUser>
-                            <div id="contents"> {comment.contents} </div>
+                            <div id="contents"> {comment.message} </div>
                         </div>
                         ))}
 
