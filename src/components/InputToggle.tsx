@@ -4,6 +4,7 @@ import { typeColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
 import { contributerId, contributerName, roleState } from '@/recoil/state';
 import { User } from '@/types/type';
+import { visibleState } from '@/recoil/state';
 
 
 interface InputProps{
@@ -21,7 +22,7 @@ const items:{name:string, type:string, color:string}[]=[
 ]
 
 const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useRecoilState<boolean>(visibleState);
     const [role, setRole] = useRecoilState(roleState);
 
     const handleToggle = ()=>{
@@ -114,7 +115,6 @@ export default InputToggle;
 const InputWrapper = styled.div`
 text-align: left;
 font-size: 20px;
-/* margin-bottom: 30px; */
 
 #input{
     display: flex;
@@ -154,13 +154,14 @@ const ToggleContainer = styled.div<{isVisible:boolean}>`
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.1);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    position: relative;
+    /* position: relative; */
     z-index: 1001;
+    width: 500px;
+
 
 `
 
 const ToggleContainerM=styled(ToggleContainer)`
-    /* top: 390px; */
     width: 330px;
     height: 228px;
     overflow: auto;

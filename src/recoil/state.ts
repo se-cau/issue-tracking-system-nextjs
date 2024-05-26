@@ -35,3 +35,8 @@ export const contributerId = atom<number[]>({
     key: 'contributerId',
     default: []
 });
+
+export const visibleState = atom<boolean>({
+    key: 'visibleState',
+    default: false
+})
