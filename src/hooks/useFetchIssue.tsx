@@ -7,13 +7,13 @@ interface FetchResult<T>{
 }
 
 
-const useFetchIssue = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> =>{
+const useFetchIssue = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> & { refetch: () => void }=>{
 const [data, setData] = useState<T[] | null>(null);
 const [loading, setLoading] = useState<boolean>(false);
 const [error, setError] = useState<string | null>(null);
 
-useEffect(() => {
-    const fetchData = async () => {
+// useEffect(() => {
+const fetchData = async () => {
         setLoading(true);
         try {
             const id = localStorage.getItem('projectId');
@@ -38,12 +38,21 @@ useEffect(() => {
         } finally {
         setLoading(false);
     }
-    };
+}
 
+useEffect(()=>{
     fetchData();
-}, [endpoint]);
+},[endpoint]);
 
-    return {data, loading, error};
+const refetch = () =>{
+    fetchData();
+}
+//     };
+
+//     fetchData();
+// }, [endpoint]);
+
+    return {data, loading, error, refetch};
 };
 
 export default useFetchIssue;

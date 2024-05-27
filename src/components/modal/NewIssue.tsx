@@ -11,12 +11,13 @@ import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueSt
 import createNewIssue from '@/hooks/createNewIssue';
 
 interface IssueProps {
-    IssueData: NewIssue[] | null;
+    // IssueData: NewIssue[] | null;
+    onIssueCreated: () => void;
 
 }
 
 
-const NewIssue = () => {
+const NewIssue = ({onIssueCreated }: IssueProps) => {
     const [issueTitle, setIssueTitle] = useRecoilState(issueTitleState);
     const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
     const [issueDesc, setIssueDesc] = useRecoilState(issueDescState);
@@ -43,10 +44,12 @@ const NewIssue = () => {
         {!error && 
             alert("성공적으로 생성했습니다.") 
             setVisiable(false); 
+            onIssueCreated();
+            setIssueTitle('');
+            setIssuePrior('');
+            setIssueDesc('');
         }
-        setIssueTitle('');
-        setIssuePrior('');
-        setIssueDesc('');
+        
     }
 
     const handleClose = ()=>{
@@ -67,9 +70,9 @@ const NewIssue = () => {
                     <InputDesc place='Write issue description' value={issueDesc} onChange={(e)=>setIssueDesc(e.target.value)}/>
 
                     <div id='button'>
-                        <div onClick={handleClose}>
+                        <button type="submit">
                             <SubmitBtn text='Create' path='/project' success={!!data} error={error}/>
-                        </div>
+                        </button>
                     </div>
                     </form>
                     {error && <p style={{ color: 'red' }}>{error}</p>}

@@ -24,7 +24,7 @@ const Issues = () => {
     const router = useRouter();
     const endpoint = '/issues'; 
 
-    const {data, loading, error} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
+    const {data, loading, error, refetch} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
 
     console.log("issue 상세:", data);
 
@@ -39,6 +39,10 @@ const Issues = () => {
         router.push(path);
     }
 
+    const handleNewIssueCreated = ()=>{
+        refetch();
+    }
+
     return (
         <Wrapper>
             <BoardTopWrapper>
@@ -47,7 +51,7 @@ const Issues = () => {
                     <ButtonSearch>전체 검색</ButtonSearch>
                     <ButtonSearch>할당된 이슈</ButtonSearch>
                     <button onClick={handleModal} id="forNew">New</button>
-                    {isVisible&&(<NewIssue />)}
+                    {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
                 </ButtonWrapper>
                 
             </BoardTopWrapper>

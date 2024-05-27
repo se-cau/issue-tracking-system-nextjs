@@ -35,12 +35,11 @@ const addComment = () => {
             const result = response.data;
             setData(result);
 
+            alert("코멘트가 등록되었습니다.");
             router.replace(router.asPath);
-
             return result;
 
         } catch (err:any){
-            alert(err);
             setError(err.message);
             console.error("error:", err);
             return null;

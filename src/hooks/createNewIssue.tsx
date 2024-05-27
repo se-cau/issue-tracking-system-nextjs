@@ -43,6 +43,7 @@ const createNewIssue = () => {
             }
 
             const result = await response;
+            alert(result);
             setData(result);
             console.log(result.status);
 
