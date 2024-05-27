@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { typeColor } from '@/styles/color';
 import InfoBox from '@/components/issue/InfoBox';
@@ -35,22 +35,38 @@ const Issue = () => {
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
     const endpointC = '/comments';
-    const {comments, loadingC, errorC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
+    const {comments:initialComment, loadingC, errorC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
 
+    const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
     const {create, errorA, dataA} = addComment();
+
+    useEffect(() => {
+        if (initialComment){
+            setComments(initialComment);
+        }
+    }, [initialComment]);
 
 
     const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         const authorid = localStorage.getItem('userId');
 
+        if (!authorid) {
+            alert('User ID is required to post a comment.');
+            return;
+        }
+
+
         const newComment: NewComment  = {
             message: messageC,
             authorid: authorid
         }
-        await create(newComment);
-        console.log(newComment);
+        const createdComment = await create(newComment);
+        if (createdComment) {
+            setComments([...comments, createdComment]);
+            setMessage('');
+        }
     }
 
     return (
@@ -81,7 +97,7 @@ const Issue = () => {
             </DescWrapper>
 
             <CommentWrapper>
-                <form onClick={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                 <InputBoxWrapper>
                     <div id='desc-type'>Comment</div>
                     <div id="comment-input-container">
