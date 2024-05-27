@@ -14,7 +14,6 @@ interface IssueProps {
     onIssueCreated: () => void;
 }
 
-
 const NewIssue = ({onIssueCreated }: IssueProps) => {
     const [issueTitle, setIssueTitle] = useRecoilState(issueTitleState);
     const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
