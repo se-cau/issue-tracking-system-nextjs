@@ -47,10 +47,6 @@ useEffect(()=>{
 const refetch = () =>{
     fetchData();
 }
-//     };
-
-//     fetchData();
-// }, [endpoint]);
 
     return {data, loading, error, refetch};
 };
