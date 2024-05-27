@@ -227,6 +227,14 @@ const CommentBoxWrapper=styled.div`
         flex: 8;
         margin-left: 30px;
     }
+
+    #deleteBtn{
+        background-color: white;
+        box-shadow: none;
+        color: black;
+        font-size: 15px;
+
+    }
 }
 `
 
