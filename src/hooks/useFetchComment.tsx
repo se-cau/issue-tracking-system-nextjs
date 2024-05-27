@@ -6,7 +6,6 @@ interface FetchResult<T>{
     errorC: string | null;
 }
 
-
 const useFetchComment = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> =>{
 const [comments, setData] = useState<T[] | null>(null);
 const [loadingC, setLoading] = useState<boolean>(false);
@@ -25,7 +24,7 @@ useEffect(() => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        const result = await response.json();
+        const result:T[] = await response.json();
         setData(result);
         setError(null);
         

@@ -6,6 +6,7 @@ import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
 import addComment from '@/hooks/addComment';
+import deleteComment from '@/hooks/deleteComment';
 
 const fetchIssueData = (data:any):IssueInfo => ({
     id: data.id,
@@ -62,12 +63,28 @@ const Issue = () => {
             message: messageC,
             authorid: authorid
         }
+        createComment(newComment);
+    }
+
+    const createComment = async (newComment:NewComment) =>{
         const createdComment = await create(newComment);
-        if (createdComment) {
+        if(createdComment){
             setComments([...comments, createdComment]);
             setMessage('');
         }
     }
+
+    const handleDeleteComment = async (commentId:string) =>{
+        try {
+            const deleted = await deleteComment(commentId);
+            if (deleted) {
+                setComments(comments.filter(comment => comment.id !== Number(commentId)));
+            }
+        } catch (error) {
+            console.error('Error deleting comment:', error);
+        }
+    };
+
 
     return (
         <>
@@ -109,12 +126,13 @@ const Issue = () => {
                     
                 <CommentBoxWrapper>
                     {comments&& comments.map(comment=>(
-                        <div id='comment-container'>
+                        <div id={comment.id.toString()} className='comment-container'>
                             <CommentUser id="userType" color={typeColor[comment.role]}> 
                                 <div id='user'>{comment.username}</div>
                                 <div id='user-type'>{comment.role}</div>
                             </CommentUser>
                             <div id="contents"> {comment.message} </div>
+                            <button id="deleteBtn" onClick={() => handleDeleteComment(comment.id.toString())}> X </button>
                         </div>
                         ))}
 
@@ -197,7 +215,7 @@ const CommentWrapper=styled(DescWrapper)`
     flex-direction: column;
 `
 const CommentBoxWrapper=styled.div`
-#comment-container{
+.comment-container{
     display: flex;
     align-items: center;
     height: 50px;
