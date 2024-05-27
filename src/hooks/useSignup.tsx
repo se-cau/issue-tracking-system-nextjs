@@ -29,8 +29,9 @@ const useSignup = () => {
             });
 
             if(!response.ok){
-                const errorText = `Network response was not ok. Status: ${response.status} ${response.statusText}`
-                throw new Error(errorText);
+                const errorResponse = await response.json();
+                throw new Error(errorResponse.message || 'Something went wrong');
+
             }
 
             const result = await response;
@@ -39,7 +40,7 @@ const useSignup = () => {
             router.push('/login');
 
         } catch (err:any){
-            alert(err);
+            alert(err.message);
             const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
             setError(err.message);
             console.error("Signup error:", errorMessage);

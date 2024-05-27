@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
-import { typeColor } from '@/styles/color';
+import { typeColor, matchedColor } from '@/styles/color';
 import { useRecoilState } from 'recoil';
 import { contributerId, contributerName, roleState } from '@/recoil/state';
 import { User } from '@/types/type';
@@ -14,12 +14,7 @@ interface InputProps{
     data: User[] | null;
 }
 
-const items:{name:string, type:string, color:string}[]=[
-    {name:'Admin', type:'admin', color:'black'},
-    {name:'Developer', type:'dev', color:'#21A2FF'},
-    {name:'Project Leader', type:'pl', color:'#FF9E59'},
-    {name:'Tester', type:'test', color:'#4BDD62'}
-]
+
 
 const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
     const [isVisible, setIsVisible] = useRecoilState<boolean>(visibleState);
@@ -97,7 +92,7 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
 
         :
         <ToggleContainer isVisible={isVisible}>
-        {items.map(item=>(
+        {matchedColor.map(item=>(
             <ToggleItem key={item.type} onClick={() => handleRole(item.name)}>
                 <div>{item.name}</div>
                 <ToggleRole color={item.color} >{item.type}</ToggleRole>
