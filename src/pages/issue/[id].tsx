@@ -7,6 +7,7 @@ import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
 import addComment from '@/hooks/addComment';
 import deleteComment from '@/hooks/deleteComment';
+import { useRouter } from 'next/router';
 
 const fetchIssueData = (data:any):IssueInfo => ({
     id: data.id,
@@ -41,6 +42,7 @@ const Issue = () => {
     const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
     const {create, errorA, dataA} = addComment();
+    const router = useRouter();
 
     useEffect(() => {
         if (initialComment){
@@ -85,13 +87,18 @@ const Issue = () => {
         }
     };
 
+    const handleBack  = () =>{
+        router.push(`/project/${localStorage.getItem('projectId')}`);
+    }
+
 
     return (
         <>
         {data &&
             <Wrapper>
             <BoardTopWrapper>
-            <div id='boardName'> {data.title} </div>
+                <button id='arrow' onClick={handleBack}> ← back</button>
+                <div id='boardName'> {data.title} </div>
             </BoardTopWrapper>
 
             <DescWrapper>
@@ -155,21 +162,31 @@ display: flex;
 flex-direction: column;
 justify-content: space-around;
 font-family: "K2D", sans-serif;
-margin: 100px 100px 0 100px;
+margin: 50px 100px 0 100px;
 
 #boardName{
     font-size:50px;
 
 }
+
+
 `
 
 const BoardTopWrapper=styled.div`
 display: flex;
-flex-direction: row;
+flex-direction: column;
 justify-content: space-between;
-align-items: flex-end;
 
 margin-bottom: 10px;
+
+#arrow{
+    margin-bottom: 50px;
+    font-size: 20px;
+    background-color: white;
+    color: black;
+    box-shadow: none;
+    width: 100px;
+}
 `
 
 
