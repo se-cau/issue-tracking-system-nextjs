@@ -10,9 +10,11 @@ import { User } from '@/types/type';
 
 interface UserProps{
     userData: User[] | null;
+    onProjectCreated: () => void;
+
 }
 
-const NewProject: React.FC<UserProps> = ({userData}) => {   
+const NewProject = ({userData, onProjectCreated}:UserProps )=> {   
     const [projectTitle, setTitle] = useRecoilState(titleState);
     const [contributerIds, setContributerIds] = useRecoilState<number[]>(contributerId);
     const [contributerNames, setContributerNames] = useRecoilState<string[]>(contributerName);
@@ -24,12 +26,13 @@ const NewProject: React.FC<UserProps> = ({userData}) => {
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
         await create(projectTitle, contributerIds, userId);
-        setContributerIds([]);
-        setContributerNames([]);
         
         { !error && 
-            alert("성공적으로 생성했습니다.") 
             setVisiable(false); 
+            onProjectCreated();
+            setContributerIds([]);
+            setContributerNames([]);
+            setTitle('');
         }
     }
 

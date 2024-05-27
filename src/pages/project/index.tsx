@@ -34,7 +34,7 @@ const Projects = () => {
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
     const endpointP = '/projects'; 
-    const {dataP, loadingP, errorP} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
+    const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
     
 
     const handleModal = ()=>{
@@ -45,12 +45,17 @@ const Projects = () => {
         router.push(path);
     }
 
+    const handleNewProjectCreated = ()=>{
+        refetch();
+    }
+
+
     return (
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
                 <button onClick={handleModal} id="forNew">New</button>
-                {isVisible && <NewProject userData={data}/>}
+                {isVisible && <NewProject userData={data} onProjectCreated={handleNewProjectCreated}/>}
             </BoardTopWrapper>
             
             <BoardWrapper>

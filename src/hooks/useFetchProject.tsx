@@ -10,13 +10,12 @@ interface FetchResult<T>{
 }
 
 
-const useFetchProject = <T,>(endpoint: string, fetchedData: (data: any) => T, userId:number): FetchResult<T> =>{
+const useFetchProject = <T,>(endpoint: string, fetchedData: (data: any) => T, userId:number): FetchResult<T> & { refetch: () => void } =>{
 const [dataP, setData] = useState<T[] | null>(null);
 const [loadingP, setLoading] = useState<boolean>(false);
 const [errorP, setError] = useState<string | null>(null);
 const [userIdT, setUserId] = useRecoilState<number>(userIdState);
 
-useEffect(() => {
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -41,10 +40,16 @@ useEffect(() => {
     }
     };
 
-    fetchData();
-}, [endpoint]);
 
-    return { dataP, loadingP, errorP};
+useEffect(()=>{
+    fetchData();
+},[endpoint]);
+
+const refetch = () =>{
+    fetchData();
+}
+
+    return { dataP, loadingP, errorP, refetch};
     
 };
 
