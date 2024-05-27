@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userIdState } from '@/recoil/userState';
-import useRecoilToLocal from './useRecoilToLocal';
 import { useRouter } from 'next/router';
 
 const useLogin = () => {
@@ -41,7 +40,9 @@ const useLogin = () => {
             setData(result);
             setUserId(result.userId);
             localStorage.setItem('userId', result.userId);
-            router.push('/project');
+            localStorage.setItem('userName', result.username);
+            localStorage.setItem('userRole', result.role);
+            router.push('project');
             
 
         } catch (err:any){
