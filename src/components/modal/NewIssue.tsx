@@ -11,9 +11,7 @@ import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueSt
 import createNewIssue from '@/hooks/createNewIssue';
 
 interface IssueProps {
-    // IssueData: NewIssue[] | null;
     onIssueCreated: () => void;
-
 }
 
 
