@@ -7,7 +7,7 @@ interface ButtonProps {
 }
 
 
-const Button: React.FC<ButtonProps> = ({text, path}) => {
+const RoutingBtn: React.FC<ButtonProps> = ({text, path}) => {
     const router = useRouter();
 
     const handleClick = ()=>{
@@ -21,4 +21,4 @@ const Button: React.FC<ButtonProps> = ({text, path}) => {
     );
 };
 
-export default Button;
+export default RoutingBtn;
