@@ -17,7 +17,7 @@ export const matchedColor:{name:string, type:string, color:string}[]=[
 export const typeColor: TypeColor = {
     Admin: 'black',
     Dev: '#21A2FF',
-    Pl: '#FF9E59',
+    PL: '#FF9E59',
     Tester: '#4BDD62',
 };
 

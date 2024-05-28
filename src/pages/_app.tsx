@@ -50,6 +50,11 @@ function MyApp({Component, pageProps} :AppProps){
                     </div>
                 </NavWrapper>
             }
+            {isLoginPage && isRegisterPage && 
+                <NavWrapper>
+                    <Btn text='← back' path='/'/>
+                </NavWrapper>
+            }
             <Component {...pageProps}/>
         </RecoilRoot>
     )

@@ -2,7 +2,7 @@ export interface User{
     userId: number;
     username: string;
     role: string;
-    //role: Admin, Dev, Pl, Tester
+    //role: Admin, Dev, PL, Tester
 }
 
 export interface ProjectInfo{

@@ -7,6 +7,7 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import { userNameState, passwordState, roleState, visibleState } from '@/recoil/state';
 import useSignup from '@/hooks/useSignup';
 import SubmitBtn from '@/components/button/SubmitBtn';
+import RoutingBtn from '@/components/button/RoutingBtn';
 
 const Register = () => {
     const [userName, setUserName] = useRecoilState(userNameState);
@@ -24,6 +25,10 @@ const Register = () => {
     };
 
     return (
+        <>
+        <NavWrapper>
+                <Btn text='← back' path='/'/>
+        </NavWrapper>
         <Wrapper>
             <TextWrapper>Register</TextWrapper>
             <form onSubmit={handleSubmit}>
@@ -42,10 +47,34 @@ const Register = () => {
             {error && <p style={{ color: 'red' }}>{error}</p>}
             {data && <p style={{ color: 'green' }}>Signup successful!</p>}
         </Wrapper>
+        </>
     );
 };
 
 export default Register;
+
+const NavWrapper = styled.div`
+    display: flex;
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    background-color: black;
+    color: white;
+    font-family: "K2D", sans-serif;
+`
+
+const Btn = styled(RoutingBtn)`
+&& {
+    box-shadow: none;
+    border-radius: 30px;
+    border: solid white 1px;
+    width: 100px;
+    height: 50px;
+    background-color: pink;
+
+}
+
+`
 
 const InputWrapper=styled.div`
 display: flex;
