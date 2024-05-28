@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
 import { IssueInfo } from '@/types/type';
 import useFetchIssue from '../../hooks/useFetchIssue';
+import Navbar from '@/components/nav/Navbar';
 
 const Issues = () => {
     const fetchIssueData = (data:any):IssueInfo => ({
@@ -44,6 +45,8 @@ const Issues = () => {
     }
 
     return (
+        <>
+        <Navbar/>
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Issue</div>
@@ -78,6 +81,7 @@ const Issues = () => {
             ))}
             </BoardWrapper>
         </Wrapper>
+        </>
     );
 };
 

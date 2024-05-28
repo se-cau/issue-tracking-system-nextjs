@@ -8,6 +8,7 @@ import useFetchComment from '@/hooks/useFetchComment';
 import addComment from '@/hooks/addComment';
 import deleteComment from '@/hooks/deleteComment';
 import { useRouter } from 'next/router';
+import Navbar from '@/components/nav/Navbar';
 
 const fetchIssueData = (data:any):IssueInfo => ({
     id: data.id,
@@ -95,6 +96,8 @@ const Issue = () => {
     return (
         <>
         {data &&
+        <>
+            <Navbar/>
             <Wrapper>
             <BoardTopWrapper>
                 <button id='arrow' onClick={handleBack}> ← back</button>
@@ -147,6 +150,7 @@ const Issue = () => {
                 
             </CommentWrapper>
         </Wrapper>
+        </>
         
         }
         </>

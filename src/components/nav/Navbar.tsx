@@ -1,20 +1,18 @@
-import {useEffect, useState} from 'react';
-import type {AppProps} from 'next/app'
-import {GlobalStyle} from '../styles/global.style';
-import { RecoilRoot } from 'recoil';
-import { styled } from 'styled-components';
-import { useRouter } from 'next/router';
-import RoutingBtn from '../components/button/RoutingBtn';
-import { typeColor } from '@/styles/color';
-import { userNameState, roleState } from '@/recoil/state';
+// Navbar.tsx
 
-function MyApp({Component, pageProps} :AppProps){
+import { useRouter } from 'next/router';
+import { useState, useEffect } from 'react';
+import { RecoilRoot } from 'recoil';
+import styled from 'styled-components';
+import RoutingBtn from '../button/RoutingBtn';
+import { typeColor } from '@/styles/color';
+
+const Navbar = () => {
     const router = useRouter();
     const isHomePage = router.pathname === '/';
     const isLoginPage = router.pathname === '/login';
     const isRegisterPage = router.pathname === '/register';
 
-    const [userId, setUserId] = useState<string | null>(null);
     const [userInfo, setUserInfo] = useState<{ userName: string | null, userRole: string | null }>({ userName: null, userRole: null });
 
     useEffect(() => {
@@ -24,57 +22,29 @@ function MyApp({Component, pageProps} :AppProps){
         if (storedUserName !== null && storedUserRole !== null) {
             setUserInfo({ userName: storedUserName, userRole: storedUserRole });
         }
-
-        // console.log(storedUserName);
-        // console.log(storedUserRole);
     }, []);
 
-    const handleClick = ()=>{
+    const handleClick = () => {
         localStorage.removeItem('userId');
         localStorage.removeItem('userName');
         localStorage.removeItem('userRole');
-        setUserId('');
         setUserInfo({ userName: null, userRole: null });
         router.push('/');
-
     }
 
-
-    return(
-        <RecoilRoot>
-            <GlobalStyle />
-            {/* {!isHomePage && !isLoginPage && !isRegisterPage &&
-                <NavWrapper>
-                    <Btn text='home' path='/'/>
-                    <Btn text='project' path='/project'/>
-                    <button onClick={handleClick}>logout</button>
-                    <div id='userInfo'>
-                        <Role color={userInfo.userRole?typeColor[userInfo.userRole]:'black'}> {userInfo.userName} </Role>
-                    </div>
-                </NavWrapper>
-            } */}
-            <Component {...pageProps}/>
-        </RecoilRoot>
-    )
+    return (
+        <NavWrapper>
+            <Btn text='home' path='/'/>
+            <Btn text='project' path='/project'/>
+            <button onClick={handleClick}>logout</button>
+            <div id='userInfo'>
+                <Role color={userInfo.userRole?typeColor[userInfo.userRole]:'black'}> {userInfo.userName} </Role>
+            </div>
+        </NavWrapper>
+    );
 }
 
-export default MyApp
-
-
-const Btn = styled(RoutingBtn)`
-&& {
-    box-shadow: none;
-    border-radius: 30px;
-    border: solid white 1px;
-    width: 100px;
-    height: 50px;
-    background-color: pink;
-
-}
-
-
-`
-
+export default Navbar;
 
 const NavWrapper = styled.div`
     display: flex;
@@ -101,4 +71,15 @@ const Role = styled.button<{color:string}>`
     height: 30px;
     width: 70px;
     
+`
+
+const Btn = styled(RoutingBtn)`
+&& {
+    box-shadow: none;
+    border-radius: 30px;
+    border: solid white 1px;
+    width: 100px;
+    height: 50px;
+    background-color: pink;
+}
 `

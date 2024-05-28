@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userIdState } from '@/recoil/userState';
 import { useRouter } from 'next/router';
+import { userNameState, roleState } from '@/recoil/state';
 
 const useLogin = () => {
     const [loading, setLoading] = useState(false);
@@ -10,6 +11,8 @@ const useLogin = () => {
     const router = useRouter();
 
     const [userId, setUserId] = useRecoilState(userIdState);
+    const[userName, setUserName] = useRecoilState(userNameState);
+    const [userRole, setUserRole] = useRecoilState(roleState);
 
     const login = async (username:string, password:string)=>{
         setLoading(true);
@@ -41,8 +44,10 @@ const useLogin = () => {
             setUserId(result.userId);
             localStorage.setItem('userId', result.userId);
             localStorage.setItem('userName', result.username);
-            localStorage.setItem('userRole', result.role);
-            router.push('project');
+            localStorage.setItem('userRole', result.role)
+            
+
+            router.push('/project');
             console.log(localStorage.getItem('userId'));
 
         } catch (err:any){

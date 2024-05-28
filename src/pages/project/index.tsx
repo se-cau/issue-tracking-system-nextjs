@@ -10,6 +10,7 @@ import { User, ProjectInfo } from '@/types/type';
 import { setCookie, getCookie } from '@/utils/cookie';
 import Cookies from 'js-cookie';
 import { userIdState } from '@/recoil/userState';
+import Navbar from '@/components/nav/Navbar';
 
 const fetchUserData = (data:any):User => ({
     userId: data.userId,
@@ -51,6 +52,8 @@ const Projects = () => {
 
 
     return (
+        <>
+        <Navbar/>
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
@@ -71,12 +74,11 @@ const Projects = () => {
             ))}
             </BoardWrapper>
         </Wrapper>
+        </>
     );
 };
 
 export default Projects;
-
-
 
 const Wrapper=styled.div`
 display: flex;
