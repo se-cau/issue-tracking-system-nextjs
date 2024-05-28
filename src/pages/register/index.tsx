@@ -1,6 +1,5 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import styled from 'styled-components';
-import Button from '@/components/Button';
 import Input from '@/components/Input';
 import InputToggle from '@/components/InputToggle';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -16,6 +15,11 @@ const Register = () => {
     const isVisible = useRecoilValue(visibleState);
 
     const {signup, loading, error, data} = useSignup();
+
+    useEffect(() => {
+        setUserName('');
+        setPassword(''); 
+    }, []); 
 
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{

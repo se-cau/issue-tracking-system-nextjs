@@ -23,7 +23,7 @@ function MyApp({Component, pageProps} :AppProps){
             setUserName(localStorage.getItem('userName'));
             setUserRole(localStorage.getItem('userRole'));
         }
-    }, []);
+    }, [userId, userName, userRole]);
 
     const handleClick = ()=>{
         localStorage.removeItem('userId');

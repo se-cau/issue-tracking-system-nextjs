@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { styled } from 'styled-components';
 import { useRouter } from 'next/router';
 import Input from '../../components/Input';
@@ -17,6 +17,10 @@ const Login = () => {
     const {login, loading, error, data} = useLogin();
 
     const router = useRouter();
+    useEffect(() => {
+        setUserName('');
+        setPassword(''); 
+    }, []); 
 
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
@@ -29,8 +33,8 @@ const Login = () => {
     return (
         <>
         <NavWrapper>
-                    <Btn text='← back' path='/'/>
-            </NavWrapper>
+                <Btn text='← back' path='/'/>
+        </NavWrapper>
         <Wrapper>
             
             <form onSubmit={handleSubmit}>            
@@ -57,7 +61,6 @@ const NavWrapper = styled.div`
     display: flex;
     width: 100%;
     height: 50px;
-    /* justify-content: space-around; */
     align-items: center;
     background-color: black;
     color: white;

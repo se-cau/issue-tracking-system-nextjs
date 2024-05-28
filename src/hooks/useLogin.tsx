@@ -43,7 +43,7 @@ const useLogin = () => {
             localStorage.setItem('userName', result.username);
             localStorage.setItem('userRole', result.role);
             router.push('project');
-            
+            console.log(localStorage.getItem('userId'));
 
         } catch (err:any){
             alert(err);
