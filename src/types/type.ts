@@ -51,4 +51,4 @@ export interface NewComment{
 }
 
 export const Status = ["ALL", "NEW","ASSIGNED","FIXED", "REOPENED", "RESOLVED", "CLOSED"];
-
+export type StatusType = (typeof Status)[number];
