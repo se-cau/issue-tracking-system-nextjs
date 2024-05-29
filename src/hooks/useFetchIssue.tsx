@@ -12,7 +12,6 @@ const [data, setData] = useState<T[] | null>(null);
 const [loading, setLoading] = useState<boolean>(false);
 const [error, setError] = useState<string | null>(null);
 
-// useEffect(() => {
 const fetchData = async () => {
         setLoading(true);
         try {

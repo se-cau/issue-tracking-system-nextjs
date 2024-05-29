@@ -6,12 +6,12 @@ interface FetchResult<T>{
     errorC: string | null;
 }
 
-const useFetchComment = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T> =>{
+const useFetchComment = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T>& { refetch: () => void } =>{
 const [comments, setData] = useState<T[] | null>(null);
 const [loadingC, setLoading] = useState<boolean>(false);
 const [errorC, setError] = useState<string | null>(null);
 
-useEffect(() => {
+
     const fetchData = async () => {
         setLoading(true);
         try {
@@ -39,10 +39,15 @@ useEffect(() => {
     }
     };
 
+useEffect(() => {
     fetchData();
 }, [endpoint]);
 
-    return {comments, loadingC, errorC};
+const refetch=()=>{
+    fetchData();
+}
+
+    return {comments, loadingC, errorC, refetch};
 };
 
 export default useFetchComment;

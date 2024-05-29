@@ -38,7 +38,7 @@ const Issue = () => {
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
     const endpointC = '/comments';
-    const {comments:initialComment, loadingC, errorC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
+    const {comments:initialComment, loadingC, errorC, refetch} = useFetchComment<CommentInfo>(endpointC, fetchComment);
 
     const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
@@ -54,17 +54,11 @@ const Issue = () => {
 
     const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        const authorid = localStorage.getItem('userId');
-
-        if (!authorid) {
-            alert('User ID is required to post a comment.');
-            return;
-        }
-
+        const authorId = localStorage.getItem('userId');
 
         const newComment: NewComment  = {
             message: messageC,
-            authorid: authorid
+            authorId: authorId
         }
         createComment(newComment);
     }
@@ -74,7 +68,13 @@ const Issue = () => {
         if(createdComment){
             setComments([...comments, createdComment]);
             setMessage('');
+            refetch();
+            
         }
+    }
+
+    const handleNewProjectCreated = ()=>{
+        refetch();
     }
 
     const handleDeleteComment = async (commentId:string) =>{
@@ -129,14 +129,14 @@ const Issue = () => {
                     <div id='desc-type'>Comment</div>
                     <div id="comment-input-container">
                         <input id='comment-input' placeholder='댓글 추가...' value={messageC} onChange={(e)=>setMessage(e.target.value)}></input>
-                        <button id="forIssue" type='submit'>Submit</button>
+                        <button id="forIssue" type="submit">Submit</button>
                     </div>
                 </InputBoxWrapper>
                 </form>
                     
                 <CommentBoxWrapper>
                     {comments&& comments.map(comment=>(
-                        <div id={comment.id.toString()} className='comment-container'>
+                        <div className='comment-container'>
                             <CommentUser id="userType" color={typeColor[comment.role]}> 
                                 <div id='user'>{comment.username}</div>
                                 <div id='user-type'>{comment.role}</div>
