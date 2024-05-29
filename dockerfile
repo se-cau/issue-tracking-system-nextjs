@@ -1,5 +1,5 @@
-# 1. Base image 설정: Node.js LTS 버전을 기반으로 함
-FROM node:16-alpine
+# 1. Base image 설정
+FROM node:18-alpine
 
 # 2. 작업 디렉토리 설정
 WORKDIR /app
