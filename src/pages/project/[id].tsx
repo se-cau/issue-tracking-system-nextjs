@@ -1,10 +1,10 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewIssue from '@/components/modal/NewIssue';
 import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
-import { IssueInfo } from '@/types/type';
+import { IssueInfo,Status,StatusType } from '@/types/type';
 import useFetchIssue from '../../hooks/useFetchIssue';
 import Navbar from '@/components/nav/Navbar';
 
@@ -27,8 +27,6 @@ const Issues = () => {
 
     const {data, loading, error, refetch} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
 
-    console.log("issue 상세:", data);
-
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
@@ -43,18 +41,53 @@ const Issues = () => {
     const handleNewIssueCreated = ()=>{
         refetch();
     }
+    
+    const projectName = localStorage.getItem('projectName');
+
+
+    const [isHovered, setIsHovered] = useState(false);
+    const[statusFilter, setStatusFilter] = useState<StatusType | null>(null);
+    const filteredData = statusFilter ? data?.filter(issue => issue.status===statusFilter):data;
+
+
+    const handleMouseHover = ()=>{
+        setIsHovered(true)
+    }
+    const handleMouseLeave=()=>{
+        setIsHovered(false);
+    }
+
+    const handleStatus =(status:StatusType)=>{
+        setStatusFilter(status==="ALL" ? null : status);
+        console.log(status);
+    }
+
 
     return (
         <>
         <Navbar/>
         <Wrapper>
             <BoardTopWrapper>
-                <div id='boardName'>Issue</div>
+                <div>
+                    <div id='projectName'>Project Title | {projectName}</div>
+                    <div id='boardName'>Issue</div>
+                </div>
+                
                 <ButtonWrapper>
-                    <ButtonSearch>전체 검색</ButtonSearch>
-                    <ButtonSearch>할당된 이슈</ButtonSearch>
-                    <button onClick={handleModal} id="forNew">New</button>
-                    {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
+                    {isHovered && (
+                        <HoverWrapper onMouseEnter={handleMouseHover} onMouseLeave={handleMouseLeave}>
+                            {Status.map((status, i)=>(
+                                <button key={status} onClick={()=>handleStatus(status)}>{status}</button>
+                                
+                            ))}
+
+                        </HoverWrapper>
+                    )}
+                    <div id="buttons">
+                        <ButtonSearch onMouseEnter={handleMouseHover} onMouseLeave={handleMouseLeave}>상태별 이슈</ButtonSearch>
+                        <button onClick={handleModal} id="forNew">New</button>
+                        {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
+                    </div>
                 </ButtonWrapper>
                 
             </BoardTopWrapper>
@@ -114,6 +147,26 @@ const BoardWrapper=styled.div`
     flex-direction: column;
     font-size: 20px;
     margin-top: 10px;
+
+`
+
+const HoverWrapper = styled.div`
+display: flex;
+position: relative;
+width: 50%;
+height: 100px;
+flex-wrap: wrap;
+justify-content: center;
+
+button{
+    display: flex;
+    margin: 0 5px;
+    font-size: 10px;
+    width: 60px;
+    border-radius: 50%;
+}
+
+
 
 `
 
@@ -178,6 +231,17 @@ cursor: pointer;
 
 const ButtonWrapper=styled.div`
 display: flex;
+flex-direction: column;
+align-items: end;
+justify-content: end;
+width:100%;
+height: 150px;
+
+
+#buttons{
+    display: flex;
+}
+
 `
 
 const ButtonSearch=styled.div`

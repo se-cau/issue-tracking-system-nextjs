@@ -49,3 +49,6 @@ export interface NewComment{
     message: string;
     authorid: string|null;
 }
+
+export const Status = ["ALL", "NEW","ASSIGNED","FIXED", "REOPENED", "RESOLVED", "CLOSED"];
+
