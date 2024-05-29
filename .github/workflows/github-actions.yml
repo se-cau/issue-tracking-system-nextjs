@@ -22,9 +22,7 @@ jobs:
         run: npm install
 
       - name: Build Next.js app
-        run: npm run build --no-optional
-        env:
-          CI: false
+        run: CI=npm run build
 
       - name: Login to DockerHub
         uses: docker/login-action@v3
