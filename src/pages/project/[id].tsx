@@ -85,7 +85,7 @@ const Issues = () => {
                     )}
                     <div id="buttons">
                         <ButtonSearch onMouseEnter={handleMouseHover} onMouseLeave={handleMouseLeave}>상태별 이슈</ButtonSearch>
-                        <button onClick={handleModal} id="forNew">New</button>
+                        <button onClick={handleModal} id="forNew">+</button>
                         {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
                     </div>
                 </ButtonWrapper>
@@ -101,7 +101,7 @@ const Issues = () => {
                     
                 </Attribute>
 
-                {data && data.map(item=>(
+                {filteredData && filteredData.map(item=>(
                 <Issue key={item.id} onClick={()=>{
                     handleClick(`/issue/${item.id}`)
                     localStorage.setItem('issueId', item.id.toString())
@@ -153,10 +153,12 @@ const BoardWrapper=styled.div`
 const HoverWrapper = styled.div`
 display: flex;
 position: relative;
-width: 50%;
+width: 30%;
 height: 100px;
 flex-wrap: wrap;
 justify-content: center;
+align-items: end;
+padding-bottom: 10px;
 
 button{
     display: flex;

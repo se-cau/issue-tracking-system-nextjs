@@ -38,8 +38,11 @@ const createNewIssue = () => {
             console.log(url);
 
             if(!response.ok){
-                const errorText = `Network response was not ok. Status: ${response.status} ${response.statusText}`
-                throw new Error(errorText);
+                const errorText = await response.json();
+                const errorCode = errorText.code;
+                const errorMessage = errorText.message;
+                throw new Error(`${errorMessage} ${errorCode} `);
+                
             }
 
             const result = await response;
@@ -47,10 +50,9 @@ const createNewIssue = () => {
             console.log(result.status);
 
         } catch (err:any){
-            alert(err);
             const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';
-            setError(err.message);
-            console.error("error:", errorMessage);
+            alert(errorMessage);
+            setError(errorMessage);
 
         }finally {
         }

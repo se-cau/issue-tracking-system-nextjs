@@ -59,7 +59,7 @@ const Projects = () => {
         <Wrapper>
             <BoardTopWrapper>
                 <div id='boardName'>Project</div>
-                <button onClick={handleModal} id="forNew">New</button>
+                <button onClick={handleModal} id="forNew">+</button>
                 {isVisible && <NewProject userData={data} onProjectCreated={handleNewProjectCreated}/>}
             </BoardTopWrapper>
             

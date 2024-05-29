@@ -38,15 +38,18 @@ const NewIssue = ({onIssueCreated }: IssueProps) => {
         
 
         await create(newIssue);
-        {!error && 
-            alert("성공적으로 생성했습니다.") 
+
+        if(!error){
+            alert("성공적으로 생성했습니다.") ;
             setVisiable(false); 
             onIssueCreated();
             setIssueTitle('');
             setIssuePrior('');
             setIssueDesc('');
         }
-        
+        else{
+            alert(error);
+        }
     }
 
     const handleClose = ()=>{
