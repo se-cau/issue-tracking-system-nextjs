@@ -8,7 +8,7 @@ export const issueTitleState = atom<string>({
 
 export const issuePriority = atom<string>({
     key:'issuePriority',
-    default:'Major'
+    default:'MAJOR'
 })
 
 export const issueDescState = atom<string>({

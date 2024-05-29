@@ -36,6 +36,8 @@ const Projects = () => {
 
     const endpointP = '/projects'; 
     const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
+
+    
     
 
     const handleModal = ()=>{
@@ -68,6 +70,7 @@ const Projects = () => {
                 <Project key={data.projectId} onClick={()=>{
                     handleClick(`/project/${data.projectId}`)
                     localStorage.setItem('projectId', data.projectId.toString())
+                    localStorage.setItem('projectName', data.title)
                     }}>
                     <div>{data.title}</div>
                 </Project>

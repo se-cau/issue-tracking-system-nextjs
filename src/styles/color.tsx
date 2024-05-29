@@ -5,11 +5,11 @@ interface TypeColor {
 
 
 //register 할 때 세팅하는 값
-export const matchedColor:{name:string, type:string, color:string}[]=[
-    {name:'Admin', type:'admin', color:'black'},
-    {name:'DEV', type:'dev', color:'#21A2FF'},
-    {name:'PL', type:'pl', color:'#FF9E59'},
-    {name:'Tester', type:'test', color:'#4BDD62'}
+export const matchedColor:{name:string, type:string, color:string, fullName:string}[]=[
+    {name:'Admin', type:'admin', color:'black', fullName:'Admin'},
+    {name:'Dev', type:'dev', color:'#21A2FF', fullName:'Developer'},
+    {name:'PL', type:'pl', color:'#FF9E59', fullName:'Project Leader'},
+    {name:'Tester', type:'test', color:'#4BDD62', fullName:'Tester'}
 ]
 
 
