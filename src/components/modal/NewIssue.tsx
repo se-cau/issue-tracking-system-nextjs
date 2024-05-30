@@ -8,7 +8,7 @@ import InputDesc from '../input/InputDesc';
 import PriorityToggle from '../input/PriorityToggle';
 import { NewIssue } from '@/types/type';
 import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueState';
-import useCreateNewIssue from '@/hooks/createNewIssue';
+import useCreateNewIssue from '@/hooks/useCreateNewIssue';
 
 interface IssueProps {
     onIssueCreated: () => void;
@@ -32,8 +32,8 @@ const NewIssue = ({onIssueCreated }: IssueProps) => {
             description: issueDesc,
             priority: issuePrior,
             status: 'NEW',
-            userid: userId,
-            assigneeid: 0,
+            userId: userId,
+            assigneeId: 0,
         }
         
 

@@ -31,8 +31,8 @@ export interface NewIssue{
     description: string;
     priority: string;
     status: string;
-    userid: number;
-    assigneeid: number;
+    userId: number;
+    assigneeId: number;
 }
 
 export interface CommentInfo{
