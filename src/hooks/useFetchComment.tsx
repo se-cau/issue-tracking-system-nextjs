@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface FetchResult<T>{
     comments: T[] | null;
@@ -12,7 +12,7 @@ const [loadingC, setLoading] = useState<boolean>(false);
 const [errorC, setError] = useState<string | null>(null);
 
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const id = localStorage.getItem('issueId');
@@ -37,7 +37,7 @@ const [errorC, setError] = useState<string | null>(null);
         } finally {
         setLoading(false);
     }
-    };
+    },[endpoint]);
 
 useEffect(() => {
     fetchData();

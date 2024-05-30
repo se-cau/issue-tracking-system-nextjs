@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react';
-import { getCookie } from '@/utils/cookie';
+import { useState, useEffect, useCallback } from 'react';
 import { userIdState } from '@/recoil/userState';
 import { useRecoilState } from 'recoil';
 
@@ -16,7 +15,7 @@ const [loadingP, setLoading] = useState<boolean>(false);
 const [errorP, setError] = useState<string | null>(null);
 const [userIdT, setUserId] = useRecoilState<number>(userIdState);
 
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const id = localStorage.getItem('userId');
@@ -38,7 +37,7 @@ const [userIdT, setUserId] = useRecoilState<number>(userIdState);
         } finally {
         setLoading(false);
     }
-    };
+    },[endpoint]);
 
 
 useEffect(()=>{
