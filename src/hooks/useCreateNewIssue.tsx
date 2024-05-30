@@ -1,5 +1,5 @@
 import { useState} from 'react';
-import {NewIssue} from '@/types/type'
+import {NewIssueInfo} from '@/types/type'
 import {useRouter} from 'next/router';
 
 const useCreateNewIssue = () => {
@@ -11,7 +11,7 @@ const useCreateNewIssue = () => {
     const projectId = Number(query.id);
 
 
-    const create = async (newIssue: NewIssue)=>{
+    const create = async (newIssue: NewIssueInfo)=>{
         setError(null);
         setData(null);
 

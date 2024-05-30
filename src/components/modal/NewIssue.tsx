@@ -6,7 +6,7 @@ import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 import InputDesc from '../input/InputDesc';
 import PriorityToggle from '../input/PriorityToggle';
-import { NewIssue } from '@/types/type';
+import { NewIssueInfo } from '@/types/type';
 import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueState';
 import useCreateNewIssue from '@/hooks/useCreateNewIssue';
 
@@ -27,7 +27,7 @@ const NewIssue = ({onIssueCreated }: IssueProps) => {
         e.preventDefault();
         const userId = parseInt(localStorage.getItem('userId')||'0', 10);
 
-        const newIssue: NewIssue  = {
+        const newIssue: NewIssueInfo  = {
             title: issueTitle,
             description: issueDesc,
             priority: issuePrior,

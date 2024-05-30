@@ -26,7 +26,7 @@ export interface IssueInfo{
 }
 
 
-export interface NewIssue{
+export interface NewIssueInfo{
     title: string;
     description: string;
     priority: string;
