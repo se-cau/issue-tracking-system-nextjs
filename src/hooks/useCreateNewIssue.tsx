@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import {NewIssue} from '@/types/type'
 import {useRouter} from 'next/router';
-
-
 
 const useCreateNewIssue = () => {
     const [error, setError] = useState<string|null>(null);
@@ -41,7 +39,9 @@ const useCreateNewIssue = () => {
                 const errorText = await response.json();
                 const errorCode = errorText.code;
                 const errorMessage = errorText.message;
+                console.error(errorText);
                 throw new Error(`${errorMessage} ${errorCode} `);
+                
                 
             }
 

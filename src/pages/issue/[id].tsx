@@ -6,7 +6,7 @@ import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
 import useAddComment from '@/hooks/useAddComment';
-import useDeleteComment from '@/hooks/deleteComment';
+import useDeleteComment from '@/hooks/useDeleteComment';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/nav/Navbar';
 

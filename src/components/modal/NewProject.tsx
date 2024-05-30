@@ -4,7 +4,7 @@ import Input from '../Input';
 import InputToggle from '../InputToggle';
 import {useRecoilState} from 'recoil';
 import { titleState, contributerId, modalState, contributerName} from '@/recoil/state';
-import useCreateNewProject from '@/hooks/createNewProject';
+import useCreateNewProject from '@/hooks/useCreateNewProject';
 import SubmitBtn from '../button/SubmitBtn';
 import { User } from '@/types/type';
 
