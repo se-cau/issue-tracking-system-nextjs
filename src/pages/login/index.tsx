@@ -20,7 +20,7 @@ const Login = () => {
     useEffect(() => {
         setUserName('');
         setPassword(''); 
-    }, []); 
+    }, [setUserName, setPassword]); 
 
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
