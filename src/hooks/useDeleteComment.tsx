@@ -12,10 +12,11 @@ const useDeleteComment = async (commentId: string): Promise<boolean> => {
             throw new Error('Failed to delete comment');
         }
 
-        return true; // 성공적으로 삭제됨을 반환
+        return true; 
+        
     } catch (error) {
         console.error('Error deleting comment:', error);
-        return false; // 삭제 실패를 반환
+        return false; 
     }
 };
 

@@ -43,6 +43,7 @@ const Issue = () => {
     const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
     const {create, errorA, dataA} = useAddComment();
+    const deleteComment = useDeleteComment;
     const router = useRouter();
 
     useEffect(() => {
@@ -76,7 +77,7 @@ const Issue = () => {
 
     const handleDeleteComment = async (commentId:string) =>{
         try {
-            const deleted = await useDeleteComment(commentId);
+            const deleted = await deleteComment(commentId);
             if (deleted) {
                 setComments(comments.filter(comment => comment.id !== Number(commentId)));
             }
