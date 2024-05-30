@@ -6,7 +6,7 @@ interface FetchResult<T>{
     errorC: string | null;
 }
 
-const useFetchComment = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T>& { refetch: () => void } =>{
+const useFetchComment = <T,>(endpoint: string, fetchedData: (data: any) => T): FetchResult<T>& { refetchC: () => void } =>{
 const [comments, setData] = useState<T[] | null>(null);
 const [loadingC, setLoading] = useState<boolean>(false);
 const [errorC, setError] = useState<string | null>(null);
@@ -43,11 +43,11 @@ useEffect(() => {
     fetchData();
 }, [endpoint]);
 
-const refetch=()=>{
+const refetchC=()=>{
     fetchData();
 }
 
-    return {comments, loadingC, errorC, refetch};
+    return {comments, loadingC, errorC, refetchC};
 };
 
 export default useFetchComment;

@@ -4,9 +4,10 @@ import {useRouter} from 'next/router';
 import NewIssue from '@/components/modal/NewIssue';
 import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
-import { IssueInfo,Status,StatusType } from '@/types/type';
+import { IssueInfo,Status,StatusType, CommentInfo } from '@/types/type';
 import useFetchIssue from '../../hooks/useFetchIssue';
 import Navbar from '@/components/nav/Navbar';
+import useFetchComment from '@/hooks/useFetchComment';
 
 const Issues = () => {
     const fetchIssueData = (data:any):IssueInfo => ({
@@ -22,10 +23,20 @@ const Issues = () => {
         updated_at: data.updated_at
     })
 
+    const fetchCommentData = (data: any): CommentInfo => ({
+        id: data.id,
+        message: data.message,
+        authorId: data.authorId,
+        created_at: data.created_at,
+        username: data.username,
+        role: data.role
+    });
+
     const router = useRouter();
     const endpoint = '/issues'; 
-
     const {data, loading, error, refetch} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
+    const endpointC = '/comments';
+    const { comments, loadingC: loadingComments, errorC: errorComments, refetchC} = useFetchComment<CommentInfo>(endpointC, fetchCommentData);
 
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
@@ -61,6 +72,10 @@ const Issues = () => {
         setStatusFilter(status==="ALL" ? null : status);
         console.log(status);
     }
+
+    const getCommentCount = (issueId: number) => {
+        return comments?.filter((comment:any) => comment.issueId === issueId).length || 0;
+    };
 
 
     return (

@@ -3,7 +3,7 @@ import {NewComment, CommentInfo} from '@/types/type'
 import axios from 'axios';
 import {useRouter} from 'next/router';
 
-const addComment = () => {
+const useAddComment = () => {
     const [errorA, setError] = useState<string|null>(null);
     const [dataA, setData] = useState<CommentInfo|null>(null);
     const router = useRouter();
@@ -52,5 +52,5 @@ const addComment = () => {
     return{create, errorA, dataA};
 };
 
-export default addComment;
+export default useAddComment;
 

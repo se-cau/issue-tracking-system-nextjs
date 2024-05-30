@@ -41,7 +41,7 @@ export interface CommentInfo{
     role: string;
     message: string;
     created_at: string;
-    authorid: number;
+    authorId: number;
 }
 
 

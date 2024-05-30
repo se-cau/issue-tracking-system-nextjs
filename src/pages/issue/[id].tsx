@@ -5,7 +5,7 @@ import InfoBox from '@/components/issue/InfoBox';
 import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
-import addComment from '@/hooks/addComment';
+import useAddComment from '@/hooks/useAddComment';
 import deleteComment from '@/hooks/deleteComment';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/nav/Navbar';
@@ -26,7 +26,7 @@ const fetchIssueData = (data:any):IssueInfo => ({
 const fetchComment = (data:any):CommentInfo => ({
     id: data.id,
     message: data.message,
-    authorid: data.authorid,
+    authorId: data.authorId,
     created_at: data.created_at,
     username: data.username,
     role: data.role
@@ -38,11 +38,11 @@ const Issue = () => {
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
 
     const endpointC = '/comments';
-    const {comments:initialComment, loadingC, errorC, refetch} = useFetchComment<CommentInfo>(endpointC, fetchComment);
+    const {comments:initialComment, loadingC, errorC, refetchC} = useFetchComment<CommentInfo>(endpointC, fetchComment);
 
     const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
-    const {create, errorA, dataA} = addComment();
+    const {create, errorA, dataA} = useAddComment();
     const router = useRouter();
 
     useEffect(() => {
@@ -63,18 +63,15 @@ const Issue = () => {
         createComment(newComment);
     }
 
+
     const createComment = async (newComment:NewComment) =>{
         const createdComment = await create(newComment);
         if(createdComment){
             setComments([...comments, createdComment]);
             setMessage('');
-            refetch();
+            refetchC();
             
         }
-    }
-
-    const handleNewProjectCreated = ()=>{
-        refetch();
     }
 
     const handleDeleteComment = async (commentId:string) =>{
@@ -136,7 +133,7 @@ const Issue = () => {
                     
                 <CommentBoxWrapper>
                     {comments&& comments.map(comment=>(
-                        <div className='comment-container'>
+                        <div className='comment-container' key={comment.id}>
                             <CommentUser id="userType" color={typeColor[comment.role]}> 
                                 <div id='user'>{comment.username}</div>
                                 <div id='user-type'>{comment.role}</div>
