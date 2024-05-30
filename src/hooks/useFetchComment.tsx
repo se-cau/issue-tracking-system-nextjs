@@ -41,7 +41,7 @@ const [errorC, setError] = useState<string | null>(null);
 
 useEffect(() => {
     fetchData();
-}, [endpoint]);
+}, [fetchData]);
 
 const refetchC=()=>{
     fetchData();

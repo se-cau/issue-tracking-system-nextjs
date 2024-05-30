@@ -41,7 +41,7 @@ const fetchData = useCallback(async () => {
 
 useEffect(()=>{
     fetchData();
-},[endpoint]);
+},[fetchData]);
 
 const refetch = () =>{
     fetchData();

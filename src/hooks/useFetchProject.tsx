@@ -42,7 +42,7 @@ const [userIdT, setUserId] = useRecoilState<number>(userIdState);
 
 useEffect(()=>{
     fetchData();
-},[endpoint]);
+},[fetchedData]);
 
 const refetch = () =>{
     fetchData();
