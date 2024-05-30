@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React ,{useState, useEffect} from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewIssue from '@/components/modal/NewIssue';
@@ -40,6 +40,14 @@ const Issues = () => {
 
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
+    const [projectName, setProjectname] = useState<string|null>(null);
+
+    useEffect(()=>{
+        if (typeof window!== 'undefined'){
+            setProjectname(localStorage.getItem('projectName'));
+        }
+
+    })
 
     const handleModal = ()=>{
         setVisiable(true);
@@ -53,7 +61,6 @@ const Issues = () => {
         refetch();
     }
     
-    const projectName = localStorage.getItem('projectName');
 
 
     const [isHovered, setIsHovered] = useState(false);
