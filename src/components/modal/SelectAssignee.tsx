@@ -26,11 +26,11 @@ const SelectAssignee=() => {
                         <div>Best Candidate</div>
                         <div id='item'> user01 </div>
                     </CandidateWrapper>
-                    <InputToggle text='Assignee' place='Choose the assignee' modal/>
+                    <InputToggle data={[]} text='Assignee' place='Choose the assignee' modal/>
                     
                     <div id='button'>
                         <div onClick={handleClose}>
-                            <Button text='Complete' path='/project'/>
+                            <Button type='submit' text='Complete' path='/project'/>
                         </div>
                     </div>
                 </ModalContainer>
