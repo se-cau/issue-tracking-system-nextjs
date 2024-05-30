@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const createNewProject = () => {
+const useCreateNewProject = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
@@ -55,5 +55,5 @@ const createNewProject = () => {
     return{create, loading, error, data};
 };
 
-export default createNewProject;
+export default useCreateNewProject;
 

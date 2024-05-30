@@ -7,8 +7,6 @@ import { modalState } from '@/recoil/state';
 import useFetchData from '@/hooks/useFetchData';
 import useFetchProject from '@/hooks/useFetchProject';
 import { User, ProjectInfo } from '@/types/type';
-import { setCookie, getCookie } from '@/utils/cookie';
-import Cookies from 'js-cookie';
 import { userIdState } from '@/recoil/userState';
 import Navbar from '@/components/nav/Navbar';
 

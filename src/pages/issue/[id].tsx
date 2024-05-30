@@ -6,7 +6,7 @@ import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
 import useAddComment from '@/hooks/useAddComment';
-import deleteComment from '@/hooks/deleteComment';
+import useDeleteComment from '@/hooks/deleteComment';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/nav/Navbar';
 
@@ -76,7 +76,7 @@ const Issue = () => {
 
     const handleDeleteComment = async (commentId:string) =>{
         try {
-            const deleted = await deleteComment(commentId);
+            const deleted = await useDeleteComment(commentId);
             if (deleted) {
                 setComments(comments.filter(comment => comment.id !== Number(commentId)));
             }

@@ -4,7 +4,7 @@ import Input from '../Input';
 import InputToggle from '../InputToggle';
 import {useRecoilState} from 'recoil';
 import { titleState, contributerId, modalState, contributerName} from '@/recoil/state';
-import createNewProject from '@/hooks/createNewProject';
+import useCreateNewProject from '@/hooks/createNewProject';
 import SubmitBtn from '../button/SubmitBtn';
 import { User } from '@/types/type';
 
@@ -21,7 +21,7 @@ const NewProject = ({userData, onProjectCreated}:UserProps )=> {
     const userId = parseInt(localStorage.getItem('userId')||'0');
     const [isVisible, setVisiable] = useRecoilState(modalState);
 
-    const {create, loading, error, data} = createNewProject();
+    const {create, loading, error, data} = useCreateNewProject();
 
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();

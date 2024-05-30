@@ -8,7 +8,7 @@ import InputDesc from '../input/InputDesc';
 import PriorityToggle from '../input/PriorityToggle';
 import { NewIssue } from '@/types/type';
 import { issueTitleState, issuePriority, issueDescState } from '@/recoil/issueState';
-import createNewIssue from '@/hooks/createNewIssue';
+import useCreateNewIssue from '@/hooks/createNewIssue';
 
 interface IssueProps {
     onIssueCreated: () => void;
@@ -19,7 +19,7 @@ const NewIssue = ({onIssueCreated }: IssueProps) => {
     const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
     const [issueDesc, setIssueDesc] = useRecoilState(issueDescState);
 
-    const {create, error, data} = createNewIssue();
+    const {create, error, data} = useCreateNewIssue();
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
 

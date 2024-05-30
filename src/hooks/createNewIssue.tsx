@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 
 
 
-const createNewIssue = () => {
+const useCreateNewIssue = () => {
     const [error, setError] = useState<string|null>(null);
     const [data, setData] = useState<any>(null);
 
@@ -62,5 +62,5 @@ const createNewIssue = () => {
     return{create, error, data};
 };
 
-export default createNewIssue;
+export default useCreateNewIssue;
 
