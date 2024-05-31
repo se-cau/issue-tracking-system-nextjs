@@ -21,14 +21,15 @@ const useLogin = () => {
 
         const requestBody = JSON.stringify({ username, password});
 
-        const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/users/login`;
+        const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        const endpoint='/users/login';
+        const url = `${apiBaseUrl}/api/v1/${endpoint}`;
 
         console.log(requestBody);
-        console.log(url);
 
         try{
             
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/users/login`,{
+            const response = await fetch(url,{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'
