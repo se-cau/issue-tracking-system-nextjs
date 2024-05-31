@@ -125,22 +125,22 @@ const Issue = () => {
             </BoardTopWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="State" data={data.status} patchData={updateIssueInfo} />
-                <InfoBox infoType="Priority" data={data.priority} patchData={updateIssueInfo} />
+                <InfoBox infoType="State" data={data.status} patchData={updateIssueInfo} isAssigned={Number(data.assignee)} />
+                <InfoBox infoType="Priority" data={data.priority} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Reporter" data={data.reporter} patchData={updateIssueInfo} />
-                <InfoBox infoType="Reported Date" data={data.created_at} patchData={updateIssueInfo} />
+                <InfoBox infoType="Reporter" data={data.reporter} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
+                <InfoBox infoType="Reported Date" data={data.created_at} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Assignee" data={data.assignee} patchData={updateIssueInfo} />
-                <InfoBox infoType="Fixer" data={data.fixer} patchData={updateIssueInfo}/>
+                <InfoBox infoType="Assignee" data={data.assignee} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
+                <InfoBox infoType="Fixer" data={data.fixer} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Description" data={data.description} patchData={updateIssueInfo} />
+                <InfoBox infoType="Description" data={data.description} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
             </DescWrapper>
 
             <CommentWrapper>

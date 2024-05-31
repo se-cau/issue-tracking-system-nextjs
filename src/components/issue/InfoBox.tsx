@@ -9,9 +9,10 @@ interface InputProps {
     infoType: string;
     data: string;
     patchData: UpdateIssueInfo;
+    isAssigned: number;
 }
 
-const InfoBox: React.FC<InputProps> = ({infoType, data, patchData}) => {
+const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
     const [issueId, setIssueId] = useState<string|null>(null);
     const patchStatus = usePatch('issues/status', issueId ? Number(issueId) : 0)
@@ -55,11 +56,11 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData}) => {
         <DescBoxWrapper>
             <div id='desc-container'>
                 <div>{infoType}</div>
-                {infoType=="State" &&
-                    <div id="change" onClick={() => handleStatusUpdate()}>변경</div>}
-                {infoType=="Assignee" &&
-                    <div id="change" onClick={handleAssignee}>변경</div>}
-                    {isVisible&&(
+                {(infoType=="State" && isAssigned!==0) &&(
+                    <div id="change" onClick={() => handleStatusUpdate()}>변경</div>)}
+                {(infoType==="Assignee" && isAssigned===0) && (
+                <div id="change" onClick={handleAssignee}>선택</div>)}
+                {isVisible&&(
                     <SelectAssignee />)}
             </div>
             <div className='forDesc'>
