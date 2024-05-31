@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import {useRouter} from 'next/router';
 import NewProject from '@/components/modal/NewProject';
-import { useRecoilState} from 'recoil';
-import { modalState } from '@/recoil/state';
+import { useRecoilState } from 'recoil';
+import { modalState, contributerName } from '@/recoil/state';
 import useFetchData from '@/hooks/useFetchData';
 import useFetchProject from '@/hooks/useFetchProject';
 import { User, ProjectInfo } from '@/types/type';
@@ -37,7 +37,6 @@ const Projects = () => {
 
     
     
-
     const handleModal = ()=>{
         setVisiable(true);
     }

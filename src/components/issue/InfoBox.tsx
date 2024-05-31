@@ -4,7 +4,10 @@ import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
 import SelectAssignee from '../modal/SelectAssignee';
 import  usePatch from '@/hooks/usePatch';
-import { UpdateIssueInfo } from '@/types/type';
+import { UpdateIssueInfo, ProjectInfo } from '@/types/type';
+import { projectState } from '@/recoil/projectState';
+import { contributerId } from '../../recoil/state';
+import useFetchProject from '@/hooks/useFetchProject';
 interface InputProps {
     infoType: string;
     data: string;
@@ -12,18 +15,49 @@ interface InputProps {
     isAssigned: number;
 }
 
+const fetchProjectData = (data:any):ProjectInfo=>({
+    projectId: data.projectId,
+    title: data.title,
+    adminName: data.adminName,
+    contributorNames: data.contributorNames
+
+})
+
 const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
     const [issueId, setIssueId] = useState<string|null>(null);
+    const [projectId, setProjectId] = useState<string|null>(null);
+    const [userId, setUserId] = useState<string|null>(null);
+
     const patchStatus = usePatch('issues/status', issueId ? Number(issueId) : 0)
+
+    const [projects, setProjects] = useRecoilState<ProjectInfo[]>(projectState);
+
+    const endpointP = '/projects';
+    const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, Number(userId));
 
     useEffect(() => {
         if (typeof window!== 'undefined'){
             setIssueId(localStorage.getItem('issueId'));
+            setProjectId(localStorage.getItem('projectId'));
+            setUserId(localStorage.getItem('userId'));
         }
-    }, [setIssueId]);
 
+        if (dataP) {
+            setProjects(dataP);
+        }
+
+    }, [dataP, setProjects, setIssueId, setProjectId]);
     
+
+    const contributerPerPj =  projects
+    ? (projects as ProjectInfo[])
+    .filter((item:ProjectInfo) => item.projectId===Number(projectId))
+    .map((item:ProjectInfo) => item.contributorNames) 
+    :[0, 1];
+
+    console.log(contributerPerPj);
+
 
     const handleAssignee = ()=>{
         setVisiable(true);

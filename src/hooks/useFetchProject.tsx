@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { userIdState } from '@/recoil/userState';
 import { useRecoilState } from 'recoil';
+import { projectState } from '@/recoil/projectState';
 
 interface FetchResult<T>{
     dataP: T[] | null;
@@ -14,19 +15,22 @@ const [dataP, setData] = useState<T[] | null>(null);
 const [loadingP, setLoading] = useState<boolean>(false);
 const [errorP, setError] = useState<string | null>(null);
 const [userIdT, setUserId] = useRecoilState<number>(userIdState);
+const [projectData, setProjectData] = useRecoilState(projectState);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const id = localStorage.getItem('userId');
             const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}?userId=${id}`);
-
             const response = await fetch(url.toString());
+
+            
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const result = await response.json();
         setData(result);
+        setProjectData(result);
         setError(null);
         console.log(result);
         

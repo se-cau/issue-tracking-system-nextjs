@@ -31,6 +31,11 @@ export const contributerName = atom<string[]>({
     default: []
 });
 
+export const contributerNamePerPj = atom<string[]>({
+    key: 'contributerNamePerPj',
+    default: []
+});
+
 export const contributerId = atom<number[]>({
     key: 'contributerId',
     default: []
