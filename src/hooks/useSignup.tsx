@@ -13,8 +13,7 @@ const useSignup = () => {
         setData(null);
         
 
-        const requestBody = JSON.stringify({ username, password, role });
-
+        const requestBody = JSON.stringify({ username, password, role});
         console.log(requestBody);
 
         try{
@@ -35,8 +34,8 @@ const useSignup = () => {
             }
 
             const result = await response;
+
             setData(result);
-            console.log(result.status);
             router.push('/login');
 
         } catch (err:any){

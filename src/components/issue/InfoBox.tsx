@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import { useRecoilState } from 'recoil';
 import { modalState } from '@/recoil/state';
 import SelectAssignee from '../modal/SelectAssignee';
-import usePatch from '@/hooks/usePatch';
+import  usePatch from '@/hooks/usePatch';
 import { UpdateIssueInfo } from '@/types/type';
-
-
 interface InputProps {
     infoType: string;
     data: string;
@@ -15,23 +13,35 @@ interface InputProps {
 
 const InfoBox: React.FC<InputProps> = ({infoType, data, patchData}) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
+    const [issueId, setIssueId] = useState<string|null>(null);
+    const patchStatus = usePatch('issues/status', issueId ? Number(issueId) : 0)
+
+    useEffect(() => {
+        if (typeof window!== 'undefined'){
+            setIssueId(localStorage.getItem('issueId'));
+        }
+    }, [setIssueId]);
+
+    
 
     const handleAssignee = ()=>{
         setVisiable(true);
     }
 
-    const updatedIssueData:UpdateIssueInfo={
-        title: patchData.title,
-        description: patchData.description,
-        priority: patchData.priority,
-        status: patchData.status,
-        userId: Number(patchData.userId),
-        assigneeId: patchData.assigneeId,
-    }
+
 
     const handleStatusUpdate = async () =>{
         try{
-            const updatedIssue = await usePatch('issues/status', Number(issueId), updatedIssueData);
+            const updatedIssueData:UpdateIssueInfo={
+                title: patchData.title,
+                description: patchData.description,
+                priority: patchData.priority,
+                status: patchData.status,
+                userId: Number(patchData.userId),
+                assigneeId: patchData.assigneeId,
+            }
+
+            const updatedIssue = await patchStatus.then(fn => fn(updatedIssueData));
             console.log('Updated Issue:', updatedIssue);
         } catch(error){
             console.error('Error updating issue status', error);
@@ -39,12 +49,6 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData}) => {
     
     }
 
-    const [issueId, setIssueId] = useState<string|null>(null);
-    useEffect(() => {
-        if (typeof window!== 'undefined'){
-            setIssueId(localStorage.getItem('issueId'));
-        }
-    }, [setIssueId]);
 
 
     return (
