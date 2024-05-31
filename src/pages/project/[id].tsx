@@ -84,6 +84,10 @@ const Issues = () => {
         return comments?.filter((comment:any) => comment.issueId === issueId).length || 0;
     };
 
+    const changeStatus = (issueId:number) =>{
+        
+    }
+
 
     return (
         <>

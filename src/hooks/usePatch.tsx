@@ -1,8 +1,9 @@
+import { UpdateIssueInfo } from "@/types/type";
 
 
 
-const changeStatus = async(endpoint:string, issueId:number, issueData:string) =>{
-    const url =  `${process.env.NEXT_PUBLIC_API_BASE_URL}status?issueId=${issueId}`;
+const usePatch = async(endpoint:string, issueId:number, issueData:UpdateIssueInfo) =>{
+    const url =  `${process.env.NEXT_PUBLIC_API_BASE_URL}/status?issueId=${issueId}`;
     const requestOption = {
         method: 'PATCH',
         headers: {
@@ -10,11 +11,12 @@ const changeStatus = async(endpoint:string, issueId:number, issueData:string) =>
         },
         body:JSON.stringify(issueData)
     }
+    console.log(url);
 
     try{
         const response = await fetch(url, requestOption);
         if(!response.ok){
-            throw new Error('HTTP error! status: ${response.status}');
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         return data;
@@ -24,3 +26,5 @@ const changeStatus = async(endpoint:string, issueId:number, issueData:string) =>
     }
 
     }
+
+    export default usePatch;

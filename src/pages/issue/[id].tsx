@@ -2,13 +2,14 @@ import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import { typeColor } from '@/styles/color';
 import InfoBox from '@/components/issue/InfoBox';
-import { CommentInfo, IssueInfo, NewComment } from '@/types/type';
+import { CommentInfo, IssueInfo, NewComment, NewIssueInfo, UpdateIssueInfo } from '@/types/type';
 import useFetchIssueDetail from '../../hooks/useFetchIssueDetail';
 import useFetchComment from '@/hooks/useFetchComment';
 import useAddComment from '@/hooks/useAddComment';
 import useDeleteComment from '@/hooks/useDeleteComment';
 import { useRouter } from 'next/router';
 import Navbar from '@/components/nav/Navbar';
+import usePatch from '../../hooks/usePatch';
 
 const fetchIssueData = (data:any):IssueInfo => ({
     id: data.id,
@@ -33,6 +34,7 @@ const fetchComment = (data:any):CommentInfo => ({
 })
 
 
+
 const Issue = () => {
     const endpoint = '/issues/details'; 
     const {data, loading, error} = useFetchIssueDetail<IssueInfo>(endpoint, fetchIssueData);
@@ -42,6 +44,8 @@ const Issue = () => {
 
     const [comments, setComments] = useState<CommentInfo[]>([]);
     const [messageC, setMessage] = useState('');
+    const [issueId, setIssueId] = useState<string|null>(null);
+    const [userId, setUserId] = useState<string|null>(null);
     const {create, errorA, dataA} = useAddComment();
     const deleteComment = useDeleteComment;
     const router = useRouter();
@@ -49,6 +53,11 @@ const Issue = () => {
     useEffect(() => {
         if (initialComment){
             setComments(initialComment);
+        }
+
+        if (typeof window!== 'undefined'){
+            setIssueId(localStorage.getItem('issueId'));
+            setUserId(localStorage.getItem('userId'));
         }
     }, [initialComment]);
 
@@ -90,6 +99,19 @@ const Issue = () => {
         router.push(`/project/${localStorage.getItem('projectId')}`);
     }
 
+    const getSafeString = (value: string | undefined): string => value ?? '';
+    const getSafeNumber = (value: number | undefined): number => value ?? 0;
+
+    const updateIssueInfo: UpdateIssueInfo = {
+        title: getSafeString(data?.title),
+        description: getSafeString(data?.description),
+        priority: getSafeString(data?.priority),
+        status: getSafeString(data?.status),
+        userId: getSafeNumber(Number(userId)),
+        assigneeId: getSafeNumber(Number(data?.assignee)) 
+    }
+
+
 
     return (
         <>
@@ -103,22 +125,22 @@ const Issue = () => {
             </BoardTopWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="State" data={data.status} />
-                <InfoBox infoType="Priority" data={data.priority} />
+                <InfoBox infoType="State" data={data.status} patchData={updateIssueInfo} />
+                <InfoBox infoType="Priority" data={data.priority} patchData={updateIssueInfo} />
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Reporter" data={data.reporter} />
-                <InfoBox infoType="Reported Date" data={data.created_at} />
+                <InfoBox infoType="Reporter" data={data.reporter} patchData={updateIssueInfo} />
+                <InfoBox infoType="Reported Date" data={data.created_at} patchData={updateIssueInfo} />
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Assignee" data={data.assignee} />
-                <InfoBox infoType="Fixer" data={data.fixer} />
+                <InfoBox infoType="Assignee" data={data.assignee} patchData={updateIssueInfo} />
+                <InfoBox infoType="Fixer" data={data.fixer} patchData={updateIssueInfo}/>
             </DescWrapper>
 
             <DescWrapper>
-                <InfoBox infoType="Description" data={data.description} />
+                <InfoBox infoType="Description" data={data.description} patchData={updateIssueInfo} />
             </DescWrapper>
 
             <CommentWrapper>
