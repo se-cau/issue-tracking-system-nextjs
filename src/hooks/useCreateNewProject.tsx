@@ -17,7 +17,7 @@ const useCreateNewProject = () => {
 
         try{
             
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/projects`,{
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/projects`,{
                 method: 'POST',
                 headers:{
                     'Content-Type': 'application/json'

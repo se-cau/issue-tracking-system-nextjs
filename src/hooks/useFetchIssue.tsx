@@ -16,7 +16,7 @@ const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const id = localStorage.getItem('projectId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}?projectId=${id}`);
+            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1${endpoint}?projectId=${id}`);
 
             console.log(url);
 

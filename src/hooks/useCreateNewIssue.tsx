@@ -20,7 +20,7 @@ const useCreateNewIssue = () => {
         console.log(requestBody);
 
         try{
-            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/issues?projectId=${projectId}`;
+            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/issues?projectId=${projectId}`;
             
             const response = await fetch(url,{
                 method: 'POST',
