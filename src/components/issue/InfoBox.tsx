@@ -31,9 +31,8 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData}) => {
 
     const handleStatusUpdate = async () =>{
         try{
-            const updatedIssue = await usePatch('status', Number(issueId), updatedIssueData);
+            const updatedIssue = await usePatch('issues/status', Number(issueId), updatedIssueData);
             console.log('Updated Issue:', updatedIssue);
-
         } catch(error){
             console.error('Error updating issue status', error);
         }
