@@ -1,13 +1,30 @@
 import React,{useState} from 'react';
 import styled from 'styled-components';
 import Input from '../Input';
-import InputToggle from '../InputToggle';
+import AssigneeToggle from '../input/AssigneeToggle';
 import Button from '../Button';
 import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
+import useFetchCandidate from '@/hooks/useFetchCandidate';
+import { CandidateInfo } from '@/types/type';
 
-const SelectAssignee=() => {
+interface SelectAssigneeProps {
+    assigneeList: string[];
+}
+
+const fetchCandidateData = (data:any):CandidateInfo => ({
+    userId: data.userId,
+    username: data.username,
+    role: data.role
+
+})
+
+
+const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList }) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
+
+    const endpoint = '/issues/candidates';
+    const {candidate, loading, error} = useFetchCandidate<CandidateInfo>(endpoint, fetchCandidateData);
 
     const handleClose = ()=>{
         setVisiable(false);
@@ -24,9 +41,12 @@ const SelectAssignee=() => {
                     <div id='modalName'>Select Assignee</div>
                     <CandidateWrapper>
                         <div>Best Candidate</div>
-                        <div id='item'> user01 </div>
+                        {candidate ?
+                        <div id='item'> {candidate.username} </div> :
+                        <div id='item'> 미배정 </div> 
+                        }
                     </CandidateWrapper>
-                    <InputToggle data={[]} text='Assignee' place='Choose the assignee' modal/>
+                    <AssigneeToggle datas={assigneeList} text='Assignee' place='Choose the assignee' modal/>
                     
                     <div id='button'>
                         <div onClick={handleClose}>

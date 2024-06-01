@@ -62,3 +62,15 @@ export interface UpdateIssueInfo {
     assigneeId: number;
 }
 
+
+export interface CandidateInfo {
+    userId: number,
+    username: string,
+    role: string,
+}
+
+export interface AssigneeList{
+    userId: number,
+    username:string,
+    role: string
+}
