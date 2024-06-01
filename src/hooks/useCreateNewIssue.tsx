@@ -45,9 +45,13 @@ const useCreateNewIssue = () => {
                 
             }
 
-            const result = await response;
+            const result = await response;  
+            console.log("status",result.status);
+            {result.status !==200 && console.log("성공적으로 생성하였습니다.")}
             setData(result);
             console.log(result.status);
+            
+
 
         } catch (err:any){
             const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred';

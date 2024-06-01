@@ -36,11 +36,10 @@ const NewIssue = ({onIssueCreated }: IssueProps) => {
             assigneeId: 0,
         }
         
-
         await create(newIssue);
 
         if(!error){
-            alert("성공적으로 생성했습니다.") ;
+            
             setVisiable(false); 
             onIssueCreated();
             setIssueTitle('');
