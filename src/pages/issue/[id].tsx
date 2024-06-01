@@ -20,8 +20,8 @@ const fetchIssueData = (data:any):IssueInfo => ({
     fixer: data.fixer,
     status: data.status,
     priority: data.priority,
-    createdAt: data.created_at,
-    updatedAt: data.updated_at
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt
 })
 
 const fetchComment = (data:any):CommentInfo => ({
