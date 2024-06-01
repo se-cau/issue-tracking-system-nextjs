@@ -21,11 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build Next.js app
-        run: npm run build
-        env:
-          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
-
       - name: Login to DockerHub
         uses: docker/login-action@v3
         with:
@@ -49,6 +44,7 @@ jobs:
             docker stop issue-tracking-system-nextjs || true
             docker rm issue-tracking-system-nextjs || true
             docker run -d -p 80:3000 --name issue-tracking-system-nextjs \
+            -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             ${{ secrets.DOCKERHUB_USERNAME }}/issue-tracking-system-nextjs:latest
             sleep 10
             docker logs issue-tracking-system-nextjs
