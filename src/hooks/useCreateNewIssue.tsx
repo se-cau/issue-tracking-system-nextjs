@@ -20,7 +20,7 @@ const useCreateNewIssue = () => {
         console.log(requestBody);
 
         try{
-            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/issues?projectId=${projectId}`;
+            const url = `http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1/issues?projectId=${projectId}`;
             
             const response = await fetch(url,{
                 method: 'POST',

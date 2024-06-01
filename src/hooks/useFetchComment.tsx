@@ -16,7 +16,7 @@ const [errorC, setError] = useState<string | null>(null);
         setLoading(true);
         try {
             const id = localStorage.getItem('issueId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}/api/v1?issueId=${id}`);
+            const url = new URL(`http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com${endpoint}/api/v1?issueId=${id}`);
 
             console.log(url);
 

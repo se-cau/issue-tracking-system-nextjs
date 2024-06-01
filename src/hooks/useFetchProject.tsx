@@ -21,7 +21,7 @@ const [projectData, setProjectData] = useRecoilState(projectState);
         setLoading(true);
         try {
             const id = localStorage.getItem('userId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1${endpoint}?userId=${id}`);
+            const url = new URL(`http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1${endpoint}?userId=${id}`);
             const response = await fetch(url.toString());
 
             

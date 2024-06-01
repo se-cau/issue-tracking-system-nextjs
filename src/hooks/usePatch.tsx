@@ -9,7 +9,7 @@ export type UsePatchReturnType = PatchFunction;
 const usePatch = async(endpoint:string, issueId:number): Promise<PatchFunction> =>{
     const patchStatus: PatchFunction = async (issueData: UpdateIssueInfo) => {
 
-    const url =  `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/${endpoint}?issueId=${issueId}`;
+    const url =  `http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1/${endpoint}?issueId=${issueId}`;
     const requestBody = JSON.stringify(issueData);
     const requestOption = {
         method: 'PATCH',

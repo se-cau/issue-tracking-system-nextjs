@@ -19,7 +19,7 @@ const [error, setError] = useState<string | null>(null);
         try {
 
             const id = localStorage.getItem('projectId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}${id}`);
+            const url = new URL(`http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com${endpoint}${id}`);
 
             console.log(url);
 

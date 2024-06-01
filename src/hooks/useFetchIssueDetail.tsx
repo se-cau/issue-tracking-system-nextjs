@@ -17,7 +17,7 @@ useEffect(() => {
         setLoading(true);
         try {
             const id = localStorage.getItem('issueId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1${endpoint}?issueId=${id}`);
+            const url = new URL(`http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1${endpoint}?issueId=${id}`);
 
             console.log(url);
 

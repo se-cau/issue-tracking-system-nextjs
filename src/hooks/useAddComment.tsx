@@ -16,7 +16,7 @@ const useAddComment = () => {
 
         try{
             const issueId = Number(localStorage.getItem('issueId'));
-            const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/comments?issueId=${issueId}`;
+            const url = `http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1/comments?issueId=${issueId}`;
             
             const response = await axios.post(url, newComment,{
                 headers:{
