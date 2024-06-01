@@ -3,25 +3,28 @@ import { userIdState } from '@/recoil/userState';
 import { useRecoilState } from 'recoil';
 
 interface FetchResult<T>{
-    dataP: T[] | null;
-    loadingP: boolean;
-    errorP: string | null;
+    data: T | null;
+    loading: boolean;
+    error: string | null;
 }
 
 
-const useFetchProject = <T,>(endpoint: string, fetchedData: (data: any) => T, userId:number): FetchResult<T> & { refetch: () => void } =>{
-const [dataP, setData] = useState<T[] | null>(null);
-const [loadingP, setLoading] = useState<boolean>(false);
-const [errorP, setError] = useState<string | null>(null);
-const [userIdT, setUserId] = useRecoilState<number>(userIdState);
+const useStatistics = <T,>(projectId:string, endpoint: string, fetchedData: (data: any) => T): FetchResult<T>  =>{
+const [data, setData] = useState<T | null>(null);
+const [loading, setLoading] = useState<boolean>(false);
+const [error, setError] = useState<string | null>(null);
 
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const id = localStorage.getItem('userId');
-            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1${endpoint}?userId=${id}`);
+
+            const id = localStorage.getItem('projectId');
+            const url = new URL(`${process.env.NEXT_PUBLIC_API_BASE_URL}${endpoint}${id}`);
+
+            console.log(url);
 
             const response = await fetch(url.toString());
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -29,6 +32,7 @@ const [userIdT, setUserId] = useRecoilState<number>(userIdState);
         setData(result);
         setError(null);
         console.log(result);
+        console.log("url:::",url);
         
 
     } catch (error:any) {
@@ -48,8 +52,8 @@ const refetch = () =>{
     fetchData();
 }
 
-    return { dataP, loadingP, errorP, refetch};
+    return { data, loading, error};
     
 };
 
-export default useFetchProject;
+export default useStatistics;

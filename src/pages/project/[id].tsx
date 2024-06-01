@@ -8,6 +8,8 @@ import { IssueInfo,Status,StatusType, CommentInfo } from '@/types/type';
 import useFetchIssue from '../../hooks/useFetchIssue';
 import Navbar from '@/components/nav/Navbar';
 import useFetchComment from '@/hooks/useFetchComment';
+import OverView from '@/components/OverView';
+
 
 const Issues = () => {
     const fetchIssueData = (data:any):IssueInfo => ({
@@ -41,10 +43,16 @@ const Issues = () => {
 
     const [isVisible, setVisiable] = useRecoilState(modalState);
     const [projectName, setProjectname] = useState<string|null>(null);
+    const [projectId, setProjectId] = useState<string>('');
 
     useEffect(()=>{
         if (typeof window!== 'undefined'){
             setProjectname(localStorage.getItem('projectName'));
+            const storedProjectId = localStorage.getItem('projectId');
+
+            if (storedProjectId !== null) {
+                setProjectId(storedProjectId);
+            }
         }
 
     })
@@ -96,8 +104,11 @@ const Issues = () => {
             <BoardTopWrapper>
                 <div>
                     <div id='projectName'>Project Title | {projectName}</div>
-                    <div id='boardName'>Issue</div>
+                    <OverView />
+                    <div id='boardName'>Issues</div>
                 </div>
+            </BoardTopWrapper>
+                
                 
                 <ButtonWrapper>
                     {isHovered && (
@@ -115,8 +126,6 @@ const Issues = () => {
                         {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
                     </div>
                 </ButtonWrapper>
-                
-            </BoardTopWrapper>
             
             <BoardWrapper>
                 <Attribute>
@@ -147,7 +156,6 @@ const Issues = () => {
 export default Issues;
 
 
-
 const Wrapper=styled.div`
 display: flex;
 flex-direction: column;
@@ -157,7 +165,6 @@ margin: 100px 100px 0 100px;
 
 #boardName{
     font-size:50px;
-
 }
 `
 
@@ -166,6 +173,7 @@ display: flex;
 flex-direction: row;
 justify-content: space-between;
 align-items: flex-end;
+width: 100%;
 `
 
 const BoardWrapper=styled.div`
@@ -263,7 +271,6 @@ flex-direction: column;
 align-items: end;
 justify-content: end;
 width:100%;
-height: 150px;
 
 
 #buttons{
