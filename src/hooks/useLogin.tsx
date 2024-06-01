@@ -21,9 +21,11 @@ const useLogin = () => {
 
         const requestBody = JSON.stringify({ username, password});
 
-        const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+        // const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
         const endpoint='/users/login';
-        const url = `${apiBaseUrl}/api/v1/${endpoint}`;
+        const apiBaseUrl = 'http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com';
+        const url = `${apiBaseUrl}/api/v1${endpoint}`;
+        
 
         console.log(requestBody);
 
