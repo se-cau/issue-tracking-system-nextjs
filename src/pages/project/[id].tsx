@@ -50,10 +50,10 @@ const Issues = () => {
             setProjectname(localStorage.getItem('projectName'));
             const storedProjectId = localStorage.getItem('projectId');
 
-            if (storedProjectId !== null) {
-                setProjectId(storedProjectId);
-            }
+        if (storedProjectId !== null) {
+            setProjectId(storedProjectId);
         }
+    }
 
     })
 
@@ -102,7 +102,7 @@ const Issues = () => {
         <Navbar/>
         <Wrapper>
             <BoardTopWrapper>
-                <div>
+                <div id='topWrapper'>
                     <div id='projectName'>Project Title | {projectName}</div>
                     <OverView />
                     <div id='boardName'>Issues</div>
@@ -111,16 +111,14 @@ const Issues = () => {
                 
                 
                 <ButtonWrapper>
+                    <div id="buttons">
                     {isHovered && (
                         <HoverWrapper onMouseEnter={handleMouseHover} onMouseLeave={handleMouseLeave}>
                             {Status.map((status, i)=>(
                                 <button key={status} onClick={()=>handleStatus(status)}>{status}</button>
-                                
                             ))}
-
                         </HoverWrapper>
                     )}
-                    <div id="buttons">
                         <ButtonSearch onMouseEnter={handleMouseHover} onMouseLeave={handleMouseLeave}>상태별 이슈</ButtonSearch>
                         <button onClick={handleModal} id="forNew">+</button>
                         {isVisible&&(<NewIssue onIssueCreated={handleNewIssueCreated}/>)}
@@ -174,6 +172,12 @@ flex-direction: row;
 justify-content: space-between;
 align-items: flex-end;
 width: 100%;
+#topWrapper{
+    width: 100%;
+}
+#projectName{
+    font-size: 20px;
+}
 `
 
 const BoardWrapper=styled.div`
@@ -187,17 +191,14 @@ const BoardWrapper=styled.div`
 const HoverWrapper = styled.div`
 display: flex;
 position: relative;
-width: 30%;
-height: 100px;
 flex-wrap: wrap;
 justify-content: center;
 align-items: end;
-padding-bottom: 10px;
 
 button{
     display: flex;
     margin: 0 5px;
-    font-size: 10px;
+    font-size: 8px;
     width: 60px;
     border-radius: 50%;
 }

@@ -66,17 +66,8 @@ const OverView = () => {
             </DistributionWrapper>
 
             <DistributionWrapper>
-                <div id='title'>reporter 분포</div>
-                <DistributionList>
-                    {statusL?.map(([status, count]) => (
-                            <div key={status}>{status}: {count}</div>
-                        ))}
-                </DistributionList>
-            </DistributionWrapper>
-
-            <DistributionWrapper>
                 <div id='title'> 이슈별 코멘트 분포</div>
-                <DistributionList>`
+                <DistributionList>
                     {topCommentIssue?.map((item) => (
                             <div key={item}>{item}</div>
                         ))}
@@ -90,7 +81,6 @@ const OverView = () => {
 export default OverView;
 
 const Wrapper = styled.div`
-background-color: pink;
 display: flex;
 flex-direction: row;
 justify-content: space-between;
@@ -98,12 +88,14 @@ justify-content: space-between;
 border: black solid 1.5px;
 border-radius: 20px;
 width: 100%;
+margin: 20px 0;
 `
 
 const DistributionWrapper = styled.div`
 display: flex;
 flex-direction: column;
 margin: 0 20px 0;
+padding: 10px;
 
 
 #title{
