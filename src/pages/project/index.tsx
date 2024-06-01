@@ -33,7 +33,8 @@ const Projects = () => {
     const {data, loading, error} = useFetchData<User>(endpoint, fetchUserData);
 
     const endpointP = '/projects'; 
-    const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, fetchProjectData, userId);
+    const query = '?userId=';
+    const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, query, fetchProjectData, userId);
 
     
     
