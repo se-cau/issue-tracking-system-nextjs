@@ -7,9 +7,16 @@ import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 import useFetchCandidate from '@/hooks/useFetchCandidate';
 import { CandidateInfo } from '@/types/type';
+import axios from 'axios';
+import { assigneeState } from '@/recoil/projectState';
 
 interface SelectAssigneeProps {
     assigneeList: string[];
+    assigneeListId: number[];
+    status: string[];
+    priority: string[];
+    title: string[];
+    description: string[];
 }
 
 const fetchCandidateData = (data:any):CandidateInfo => ({
@@ -20,8 +27,10 @@ const fetchCandidateData = (data:any):CandidateInfo => ({
 })
 
 
-const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList }) => {
+const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeListId, title, description, priority, status }) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
+    const [assignee, setAssignee] = useRecoilState<string>(assigneeState);
+    console.log(assignee);
 
     const endpoint = '/issues/candidates';
     const {candidate, loading, error} = useFetchCandidate<CandidateInfo>(endpoint, fetchCandidateData);
@@ -34,6 +43,56 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList }) => {
         e.stopPropagation();
     }
 
+    const handleSubmit = async() =>{
+        const id = localStorage.getItem('issueId');
+        const userId = localStorage.getItem('userId');
+
+        try {
+
+            const url = `http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1/issues/assignees?issueId=${id}`;
+            const issueData = {
+                title: title.toString(),  
+                description: description.toString(),
+                priority: priority.toString(),
+                status: status.toString(),
+                userId: userId ? Number(userId) : 0,
+                assigneeId: assigneeListId ? Number(assigneeListId) : 0 
+            };
+
+            console.log(issueData);
+            console.log(url);
+
+            const response = await fetch(url,{
+                method: 'POST',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(issueData)
+
+            });
+
+            if(!response.ok){
+                const errorText = await response.json();
+                const errorCode = errorText.code;
+                const errorMessage = errorText.message;
+                console.error(errorText);
+                throw new Error(`${errorMessage} ${errorCode} `);
+                
+                
+            }
+
+
+            const result = await response;
+            console.log(result);
+            console.error('성공적으로 배정했습니다');
+
+
+        } catch (error) {
+            console.error('Error assigning:', error);
+        }
+        handleClose();
+    }
+
     return (
         <ModalWrapper isVisible={isVisible} onClick={handleClose} >
                 <ModalContainer isVisible={isVisible} onClick={handleModalClick}>
@@ -41,15 +100,15 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList }) => {
                     <div id='modalName'>Select Assignee</div>
                     <CandidateWrapper>
                         <div>Best Candidate</div>
-                        {candidate ?
-                        <div id='item'> {candidate.username} </div> :
+                        {assignee ?
+                        <div id='item'> {assignee} </div> :
                         <div id='item'> 미배정 </div> 
                         }
                     </CandidateWrapper>
                     <AssigneeToggle datas={assigneeList} text='Assignee' place='Choose the assignee' modal/>
                     
                     <div id='button'>
-                        <div onClick={handleClose}>
+                        <div onClick={handleSubmit}>
                             <Button type='submit' text='Complete' path='/project'/>
                         </div>
                     </div>

@@ -9,6 +9,10 @@ import { projectState } from '@/recoil/projectState';
 import { contributerId } from '../../recoil/state';
 import useFetchProject from '@/hooks/useFetchProject';
 import useAssigneeList from '@/hooks/useAssigneeList';
+import useFetchIssue from '../../hooks/useFetchIssue';
+import { IssueInfo } from '@/types/type';
+
+
 interface InputProps {
     infoType: string;
     data: string;
@@ -31,6 +35,19 @@ const fetchAssigneeList = (data:any):AssigneeList=>({
 
 })
 
+const fetchIssueData = (data:any):IssueInfo => ({
+    id: data.id,
+    title: data.title,
+    description: data.description,
+    reporter: data.reporter,
+    assignee: data.assignee,
+    fixer: data.fixer,
+    status: data.status,
+    priority: data.priority,
+    createdAt: data.createdAt,
+    updatedAt: data.updatedAt
+})
+
 const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
     const [issueId, setIssueId] = useState<string|null>(null);
@@ -43,13 +60,13 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
 
     const endpointP = '/projects';
 
-    const query = '?userId=';
-    const {dataP, loadingP, errorP, refetch} = useFetchProject<ProjectInfo>(endpointP, query, fetchProjectData, Number(userId));
-
+    //assignee 배정에 필요한 props
+    const endpoint = '/issues'; 
+    const {data:dataI, loading, error, refetch} = useFetchIssue<IssueInfo>(endpoint, fetchIssueData);
+    console.log("Issueeeee::",dataI);
 
     const queryA = '?projectId='; 
-    const {dataA, loadingA, errorA, refetchA} = useAssigneeList<AssigneeList>(endpointP, query, fetchAssigneeList, Number(userId));
-
+    const {dataA, loadingA, errorA, refetchA} = useAssigneeList<AssigneeList>(endpointP, queryA, fetchAssigneeList, Number(userId));
     console.log(dataA);
 
 
@@ -69,13 +86,11 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
     
 
     const assigneeList = projects.map((assignee) => assignee.username);
-    // const assigneeList =  projects;
-    // ? (projects as ProjectInfo[])
-    // .filter((item:ProjectInfo) => item.projectId===Number(projectId))
-    // .flatMap((item:ProjectInfo) => item.contributorNames) 
-    // :[];
-
-    // console.log(typeof(assigneeList));
+    const assigneeListId = projects.map((assignee) => assignee.userId);
+    const title=  dataI?.map((i) => i.title) || [];
+    const description=  dataI?.map((i) => i.description) || [];
+    const priority=  dataI?.map((i) => i.priority)|| [];
+    const status=  dataI?.map((i) => i.status)|| [];
 
 
     const handleAssignee = ()=>{
@@ -114,7 +129,13 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
                 {(infoType==="Assignee" && isAssigned===0) && (
                 <div id="change" onClick={handleAssignee}>선택</div>)}
                 {isVisible&&(
-                    <SelectAssignee assigneeList={assigneeList} />)}
+                    <SelectAssignee 
+                    assigneeList={assigneeList} 
+                    assigneeListId={assigneeListId} 
+                    title={title}
+                    priority={priority}
+                    description={description}
+                    status={status} />)}
             </div>
             <div className='forDesc'>
                 {data}

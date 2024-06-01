@@ -2,6 +2,8 @@ import React,{useState} from 'react';
 import styled from 'styled-components';
 import { issuePriority } from '@/recoil/issueState';
 import { useRecoilState } from 'recoil';
+import { assigneeState } from '@/recoil/projectState';
+import { AssigneeList } from '../../types/type';
 
 interface InputProps{
     datas: string[];
@@ -19,9 +21,8 @@ interface CandidateInfo{
 
 const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
     const [isVisible, setIsVisible] = useState(false);
-    const [issuePrior, setIssuePrior] = useRecoilState(issuePriority);
+    const [assignee, setAssignee] = useRecoilState<string>(assigneeState);
 
-    
 
     const selectToggle = () =>{
         setIsVisible(!isVisible); 
@@ -33,10 +34,10 @@ const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
     }
 
 
-    const toggleItem = (issuePrior:string) =>{
-        setIssuePrior(issuePrior);
+    const toggleItem = (assignee:string) =>{
+        setAssignee(assignee);
         setIsVisible(false);
-        console.log(issuePrior);
+        console.log(assignee);
     }
 
 
@@ -45,7 +46,7 @@ const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
         <InputWrapper>
             <div>Select Assignee</div>
                 <div id='input' className='forModal'>
-                    <div id='toggle'>{issuePrior?issuePrior:place}</div>
+                    <div id='toggle'>{assignee?assignee:place}</div>
                     <div id='toggleButton' onClick={selectToggle}>{isVisible ? '▲' : '▼'}</div>
                 </div>
         </InputWrapper>

@@ -6,3 +6,8 @@ export const projectState = atom({
     key: 'projectState',
     default: [] as AssigneeList[],
 });
+
+export const assigneeState= atom<string>({
+    key:'assigneeState',
+    default:''
+})
