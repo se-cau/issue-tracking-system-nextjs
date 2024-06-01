@@ -20,15 +20,15 @@ const fetchIssueData = (data:any):IssueInfo => ({
     fixer: data.fixer,
     status: data.status,
     priority: data.priority,
-    created_at: data.created_at,
-    updated_at: data.updated_at
+    createdAt: data.created_at,
+    updatedAt: data.updated_at
 })
 
 const fetchComment = (data:any):CommentInfo => ({
     id: data.id,
     message: data.message,
     authorId: data.authorId,
-    created_at: data.created_at,
+    createdAt: data.createdAt,
     username: data.username,
     role: data.role
 })
@@ -64,11 +64,11 @@ const Issue = () => {
 
     const handleSubmit =async (e:React.FormEvent<HTMLFormElement>)=>{
         e.preventDefault();
-        const authorId = localStorage.getItem('userId');
+        const userId = localStorage.getItem('userId');
 
         const newComment: NewComment  = {
             message: messageC,
-            authorId: authorId
+            userId: userId
         }
         createComment(newComment);
     }
@@ -131,7 +131,7 @@ const Issue = () => {
 
             <DescWrapper>
                 <InfoBox infoType="Reporter" data={data.reporter} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
-                <InfoBox infoType="Reported Date" data={data.created_at} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
+                <InfoBox infoType="Reported Date" data={data.createdAt} patchData={updateIssueInfo} isAssigned={Number(data.assignee)}/>
             </DescWrapper>
 
             <DescWrapper>
@@ -162,6 +162,7 @@ const Issue = () => {
                                 <div id='user-type'>{comment.role}</div>
                             </CommentUser>
                             <div id="contents"> {comment.message} </div>
+                            <div id="contents"> {comment.createdAt} </div>
                             <button id="deleteBtn" onClick={() => handleDeleteComment(comment.id.toString())}> X </button>
                         </div>
                         ))}

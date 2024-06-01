@@ -21,15 +21,15 @@ const Issues = () => {
         fixer: data.fixer,
         status: data.status,
         priority: data.priority,
-        created_at: data.created_at,
-        updated_at: data.updated_at
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt
     })
 
     const fetchCommentData = (data: any): CommentInfo => ({
         id: data.id,
         message: data.message,
         authorId: data.authorId,
-        created_at: data.created_at,
+        createdAt: data.createdAt,
         username: data.username,
         role: data.role
     });

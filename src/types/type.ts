@@ -21,8 +21,8 @@ export interface IssueInfo{
     fixer: string;
     status: string; 
     priority: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
 }
 
 
@@ -40,14 +40,14 @@ export interface CommentInfo{
     username: string;
     role: string;
     message: string;
-    created_at: string;
+    createdAt: string;
     authorId: number;
 }
 
 
 export interface NewComment{
     message: string;
-    authorId: string|null;
+    userId: string|null;
 }
 
 export const Status = ["ALL", "NEW","ASSIGNED","FIXED", "REOPENED", "RESOLVED", "CLOSED"];
