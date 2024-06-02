@@ -66,7 +66,7 @@ const OverView = () => {
             </DistributionWrapper>
 
             <DistributionWrapper>
-                <div id='title'> 이슈별 코멘트 분포</div>
+                <div id='title'> 코멘트가 많은 이슈 </div>
                 <DistributionList>
                     {topCommentIssue?.map((item) => (
                             <div key={item}>{item}</div>
@@ -103,6 +103,7 @@ padding: 10px;
     color: white;
     padding: 5px;
     border-radius: 10px;
+    text-align: center;
 
 }
     
