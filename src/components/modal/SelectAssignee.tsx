@@ -7,16 +7,15 @@ import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 import useFetchCandidate from '@/hooks/useFetchCandidate';
 import { CandidateInfo } from '@/types/type';
-import axios from 'axios';
 import { assigneeState } from '@/recoil/projectState';
 
 interface SelectAssigneeProps {
     assigneeList: string[];
     assigneeListId: number[];
-    status: string[];
-    priority: string[];
-    title: string[];
-    description: string[];
+    status: string;
+    priority: string;
+    title: string;
+    description: string;
 }
 
 const fetchCandidateData = (data:any):CandidateInfo => ({
@@ -80,17 +79,15 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeL
                 
                 
             }
-
-
             const result = await response;
             console.log(result);
-            console.error('성공적으로 배정했습니다');
+            alert("성공적으로 제출하였습니다.");
 
 
         } catch (error) {
-            console.error('Error assigning:', error);
+            console.log('Error updating issue status', error);
+            alert(error);
         }
-        handleClose();
     }
 
     return (
@@ -100,8 +97,8 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeL
                     <div id='modalName'>Select Assignee</div>
                     <CandidateWrapper>
                         <div>Best Candidate</div>
-                        {assignee ?
-                        <div id='item'> {assignee} </div> :
+                        {candidate?
+                        <div id='item'> {candidate.username} </div> :
                         <div id='item'> 미배정 </div> 
                         }
                     </CandidateWrapper>

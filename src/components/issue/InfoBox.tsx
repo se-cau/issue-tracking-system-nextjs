@@ -67,7 +67,6 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
 
     const queryA = '?projectId='; 
     const {dataA, loadingA, errorA, refetchA} = useAssigneeList<AssigneeList>(endpointP, queryA, fetchAssigneeList, Number(userId));
-    console.log(dataA);
 
 
     useEffect(() => {
@@ -87,11 +86,14 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
 
     const assigneeList = projects.map((assignee) => assignee.username);
     const assigneeListId = projects.map((assignee) => assignee.userId);
-    const title=  dataI?.map((i) => i.title) || [];
-    const description=  dataI?.map((i) => i.description) || [];
-    const priority=  dataI?.map((i) => i.priority)|| [];
-    const status=  dataI?.map((i) => i.status)|| [];
 
+    const filteredIssue =  dataI?.filter(issue => issue.id === Number(issueId))[0];
+    console.log(filteredIssue);
+
+    const title= filteredIssue?.title|| "";
+    const description=  filteredIssue?.description || "";
+    const priority=  filteredIssue?.priority || "";
+    const status=  filteredIssue?.status || "";
 
     const handleAssignee = ()=>{
         setVisiable(true);
@@ -112,6 +114,7 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
 
             const updatedIssue = await patchStatus.then(fn => fn(updatedIssueData));
             console.log('Updated Issue:', updatedIssue);
+            
         } catch(error){
             console.error('Error updating issue status', error);
         }

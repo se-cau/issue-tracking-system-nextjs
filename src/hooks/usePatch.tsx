@@ -29,6 +29,7 @@ const usePatch = async(endpoint:string, issueId:number): Promise<PatchFunction> 
 
         }
         const data = await response.json();
+        alert("이슈 상태가 업데이트 되었습니다.");
         return data;
     } 
     catch (error:any){
