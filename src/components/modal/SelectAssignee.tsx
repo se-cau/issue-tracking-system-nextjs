@@ -7,7 +7,7 @@ import {useRecoilState} from 'recoil';
 import { modalState } from '@/recoil/state';
 import useFetchCandidate from '@/hooks/useFetchCandidate';
 import { CandidateInfo } from '@/types/type';
-import { assigneeState } from '@/recoil/projectState';
+import { assigneeState, assigneeIdState } from '@/recoil/projectState';
 
 interface SelectAssigneeProps {
     assigneeList: string[];
@@ -29,6 +29,8 @@ const fetchCandidateData = (data:any):CandidateInfo => ({
 const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeListId, title, description, priority, status }) => {
     const [isVisible, setVisiable] = useRecoilState(modalState);
     const [assignee, setAssignee] = useRecoilState<string>(assigneeState);
+    const [assigneeId, setAssigneeId] = useRecoilState<number>(assigneeIdState);
+
     console.log(assignee);
 
     const endpoint = '/issues/candidates';
@@ -55,7 +57,7 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeL
                 priority: priority.toString(),
                 status: status.toString(),
                 userId: userId ? Number(userId) : 0,
-                assigneeId: assigneeListId ? Number(assigneeListId) : 0 
+                assigneeId: assigneeId ? Number(assigneeId) : 0 
             };
 
             console.log(issueData);
@@ -86,7 +88,8 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeL
 
         } catch (error) {
             console.log('Error updating issue status', error);
-            alert(error);
+            // alert(error);
+            alert("담당자 배정은 PL의 권한입니다.");
         }
     }
 
@@ -102,13 +105,16 @@ const SelectAssignee: React.FC<SelectAssigneeProps> = ({ assigneeList, assigneeL
                         <div id='item'> 미배정 </div> 
                         }
                     </CandidateWrapper>
-                    <AssigneeToggle datas={assigneeList} text='Assignee' place='Choose the assignee' modal/>
+                    <AssigneeToggle datas={assigneeList} idData={assigneeListId} text='Assignee' place='Choose the assignee' modal/>
                     
-                    <div id='button'>
+                    {isVisible&&
+                        <div id='button'>
                         <div onClick={handleSubmit}>
                             <Button type='submit' text='Complete' path='/project'/>
                         </div>
                     </div>
+                    }
+                    
                 </ModalContainer>
             </ModalWrapper>
     );

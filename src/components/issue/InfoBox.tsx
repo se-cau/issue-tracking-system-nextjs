@@ -88,7 +88,8 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
     const assigneeListId = projects.map((assignee) => assignee.userId);
 
     const filteredIssue =  dataI?.filter(issue => issue.id === Number(issueId))[0];
-    console.log(filteredIssue);
+    // console.log(filteredIssue);
+    console.log("assginee",assigneeListId);
 
     const title= filteredIssue?.title|| "";
     const description=  filteredIssue?.description || "";
@@ -109,7 +110,7 @@ const InfoBox: React.FC<InputProps> = ({infoType, data, patchData, isAssigned}) 
                 priority: patchData.priority,
                 status: patchData.status,
                 userId: Number(patchData.userId),
-                assigneeId: patchData.assigneeId,
+                assigneeId: Number(patchData.assigneeId),
             }
 
             const updatedIssue = await patchStatus.then(fn => fn(updatedIssueData));

@@ -24,7 +24,6 @@ const [projectData, setProjectData] = useRecoilState(projectState);
             const id = localStorage.getItem('projectId');
             const url = `http://ec2-43-203-119-113.ap-northeast-2.compute.amazonaws.com/api/v1${endpoint}/${id}/dev`;
             const response = await fetch(url.toString());
-            console.log("url:::",url);
 
             
         if (!response.ok) {

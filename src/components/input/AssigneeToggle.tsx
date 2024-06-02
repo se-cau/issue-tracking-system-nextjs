@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import styled from 'styled-components';
 import { issuePriority } from '@/recoil/issueState';
 import { useRecoilState } from 'recoil';
-import { assigneeState } from '@/recoil/projectState';
+import { assigneeState, assigneeIdState } from '@/recoil/projectState';
 import { AssigneeList } from '../../types/type';
 
 interface InputProps{
@@ -10,18 +10,21 @@ interface InputProps{
     place: string;
     text: string;
     modal: boolean;
+    idData :number[];
 }
 
 interface CandidateInfo{
     userId: number,
     username: string,
     role: string
+
 }
 
 
-const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
+const AssigneeToggle: React.FC<InputProps> = ({datas, place, text, idData}) => {
     const [isVisible, setIsVisible] = useState(false);
     const [assignee, setAssignee] = useRecoilState<string>(assigneeState);
+    const [assigneeId, setAssigneeId] = useRecoilState<number>(assigneeIdState);
 
 
     const selectToggle = () =>{
@@ -34,8 +37,9 @@ const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
     }
 
 
-    const toggleItem = (assignee:string) =>{
+    const toggleItem = (assignee:string, id:number) =>{
         setAssignee(assignee);
+        setAssigneeId(id);
         setIsVisible(false);
         console.log(assignee);
     }
@@ -53,8 +57,10 @@ const AssigneeToggle: React.FC<InputProps> = ({datas, place, text}) => {
         
 
         <ToggleContainerM isVisible={isVisible}>
-        {datas.map(data=>(
-            <ToggleItem key={data} onClick={() => toggleItem(data)}>
+        {datas.map((data,i)=>(
+            <ToggleItem key={data} onClick={() => 
+                toggleItem(data, idData[i])
+                }>
                 <div>{data}</div>
             </ToggleItem>
         ))}
@@ -68,7 +74,7 @@ export default AssigneeToggle;
 const InputWrapper = styled.div`
 text-align: left;
 font-size: 20px;
-margin-bottom: 30px;
+/* margin-bottom: 30px; */
 
 #input{
     display: flex;
@@ -103,22 +109,25 @@ margin-bottom: 30px;
 const ToggleContainer = styled.div<{isVisible:boolean}>`
     display: ${({ isVisible}) => (isVisible ? 'block':'none')};
     text-align: left;
-    position: absolute;
+    /* position: absolute; */
     width: 500px;
-    top: 650px;
+    /* top: 650px; */
     background-color: white;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 3px 3px rgba(0,0,0,0.1);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    z-index: 1001;
 
 `
 
 const ToggleContainerM=styled(ToggleContainer)`
-    top: 360px;
+    /* top: 360px;
     width: 330px;
-    overflow: auto;
+    overflow: auto; */
+    width: 330px;
 
 `
+
 
 
 const ToggleItem = styled.div`

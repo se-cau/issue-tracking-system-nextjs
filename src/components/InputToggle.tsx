@@ -57,7 +57,7 @@ const InputToggle: React.FC<InputProps> = ({text, place, modal, data}) => {
             {modal?
                 <div id='input' className='forModal'>
                     <div id='toggle'>
-                        {contributerNames.length ? contributerNames+ " " : place}
+                        {contributerNames.length ? `${contributerNames}  `: place}
                     </div>
                     <div id='toggleButton' onClick={selectToggle}>{isVisible  ? '▲' : '▼'}</div>
                 </div>
@@ -122,6 +122,9 @@ font-size: 20px;
         font-size: 15px;
         margin: 5px 0;
         color: #757575;
+        width: 330px;
+        overflow: auto;
+
 
     }
 

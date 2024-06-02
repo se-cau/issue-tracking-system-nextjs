@@ -11,3 +11,8 @@ export const assigneeState= atom<string>({
     key:'assigneeState',
     default:''
 })
+
+export const assigneeIdState= atom<number>({
+    key:'assigneeIdState',
+    default:0
+})

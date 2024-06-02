@@ -50,7 +50,7 @@ export interface NewComment{
     userId: string|null;
 }
 
-export const Status = ["ALL", "NEW","ASSIGNED","FIXED", "REOPENED", "RESOLVED", "CLOSED"];
+export const Status = ["ALL", "NEW","ASSIGNED","FIXED", "REOPENED", "RESOLVED", "CLOSE"];
 export type StatusType = (typeof Status)[number];
 
 export interface UpdateIssueInfo {

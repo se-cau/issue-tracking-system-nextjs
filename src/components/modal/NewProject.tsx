@@ -53,9 +53,12 @@ const NewProject = ({userData, onProjectCreated}:UserProps )=> {
                     <Input text='Title' type='text' place={`Enter the project title`} modal value={projectTitle} onChange={(e)=>setTitle(e.target.value)}/>
                     <InputToggle text='Member' place='Choose the project member' modal data={userData}/>
                     
+
                     <div id="button">
-                        <SubmitBtn text='Create' path='/project' success={!!data} error={error}/>
+                    <SubmitBtn text='Create' path='/project' success={!!data} error={error}/>
                     </div>
+    
+                    
 
                     </form>
                     {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -104,6 +107,8 @@ padding: 40px;
     justify-content: center;
     align-items: center;
     margin-top: 100px;
+    position: relative;
+    padding: 0 60px;
 }
 
 `

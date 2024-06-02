@@ -69,7 +69,7 @@ const Role = styled.button<{color:string}>`
     justify-content: center;
     background-color: ${props=>props.color};
     height: 30px;
-    width: 70px;
+    /* width: 70px; */
     
 `
 
